@@ -6,6 +6,10 @@ require 'sinatra/reloader'
 require 'cgi'
 require 'json'
 require 'digest/md5'
+require 'curb'
+require 'zlib'
+require 'stringio'
+require 'geokit'
 
 if File.exists?(".env")
   require 'dotenv'
@@ -33,6 +37,8 @@ Dir[File.join(File.dirname(__FILE__),'config', 'initializers','*.rb')].
 
 [
  ['routes'],
+ ['models'],
+ ['lib'],
 ].each do |path|
   Dir[File.join(File.dirname(__FILE__), path, '*.rb')].each { |f| require f }
 end

@@ -1,1 +1,35 @@
-hello world
+%h3 My Google Maps Demo
+#map
+:javascript
+   function initMap() {
+     var map = new google.maps.Map(document.getElementById('map'), {
+       zoom: 15,
+       center: #{@car.json_location}
+     });
+
+     var m1 = new google.maps.Marker({
+       position: #{@car.json_location},
+       map: map,
+       title: "#{@car.name}"
+     });
+
+     var m2 = new google.maps.Marker({
+       position: #{@fs[0].json_location},
+       map: map,
+       label: 'S',
+       title: "#{@fs[0].name}"
+     });
+     var m3 = new google.maps.Marker({
+       position: #{@fs[1].json_location},
+       map: map,
+       label: 'S',
+       title: "#{@fs[1].name}"
+     });
+     var m4 = new google.maps.Marker({
+       position: #{@fs[2].json_location},
+       map: map,
+       label: 'S',
+       title: "#{@fs[2].name}"
+     });
+   }
+%script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_API_KEY']}&callback=initMap"}
