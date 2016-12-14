@@ -32,8 +32,9 @@ class Car
 
   def details
     "<img src='#{image_url}'/><p>" +
-    "#{@data["licensePlate"]}<br>" +
-      "Fuel level: #{@data["fuelLevelInPercent"]}%"
+      "#{@data["licensePlate"]} (#{@data["name"]})<br>" +
+      "Fuel level: #{@data["fuelLevelInPercent"]}%<br>" +
+      "<a href='#{reserve_url}'>Reserve</a>"
   end
 
   def image_url
@@ -43,5 +44,10 @@ class Car
   def marker_icon
     "/images/" + (is_electro? ? "marker_icon_car_active" : "marker_icon_car") +
       ".png"
+  end
+
+  def reserve_url
+    # this will open the drive now app but not much else.
+    "drivenow://filter?carId=#{@data["id"]}"
   end
 end

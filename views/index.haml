@@ -67,3 +67,25 @@
       }
 
 %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_API_KEY']}&callback=initMap"}
+
+#demo
+
+%form#location{ :method => "post", :action => "/cars" }
+  %input#lat{ :type => "hidden", :name => "lat", :value => "0" }
+  %input#lng{ :type => "hidden", :name => "lng", :value => "0" }
+
+:javascript
+  function getLocation() {
+    if (navigator.geolocation) {
+       navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+       $('#demo').html("Geolocation is not supported by this browser.");
+    }
+  }
+  function showPosition(position) {
+    $("#lat").attr('value', position.coords.latitude);
+    $("#lng").attr('value', position.coords.longitude);
+    $("#location").submit();
+  }
+
+%button#locbutt{ :onclick=>"getLocation()" } Update Location
