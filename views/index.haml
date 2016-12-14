@@ -15,7 +15,13 @@
      var map = new google.maps.Map(document.getElementById('map'), {
        zoom: 14,
        center: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
-       gestureHandling: 'greedy'
+       gestureHandling: 'greedy',
+       mapTypeControl: false,
+       streetViewControl: false,
+       zoomControl: true,
+       zoomControlOptions: {
+         position: google.maps.ControlPosition.TOP_LEFT
+       }
      });
 
      var content = "Current Location<br>"+

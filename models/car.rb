@@ -53,6 +53,6 @@ class Car
 
   def reserve_url
     # this will open the drive now app but not much else.
-    "drivenow://filter?carId=#{@data["id"]}"
+    "drivenow://car?id=#{@data["id"]}"
   end
 end
