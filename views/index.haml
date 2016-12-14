@@ -13,16 +13,31 @@
 
   function initMap() {
      var map = new google.maps.Map(document.getElementById('map'), {
-       zoom: 15,
-       center: {"lat": #{params[:lat]}, "lng": #{params[:lng]} }
+       zoom: 14,
+       center: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
+       gestureHandling: 'greedy'
      });
 
-     new google.maps.Marker({
+     var content = "Current Location<br>"+
+                   "<button onclick='getLocation()'>Update</button>"+
+                   "<img id='spinner' src='/images/spinner.gif' "+
+                   "style='display: none;'/>";
+
+     var yourinfo = new google.maps.InfoWindow({
+       content: content
+     });
+
+     var youmarker = new google.maps.Marker({
        position: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
        map: map,
        title: "You",
        icon: pinSymbolCar('#2f2')
      });
+
+     youmarker.addListener('click', function() {
+       yourinfo.open(map, youmarker);
+     });
+
      addCar0(map);
      addCar1(map);
      addCar2(map);
@@ -76,6 +91,7 @@
 
 :javascript
   function getLocation() {
+    $('#spinner').show();
     if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -83,9 +99,8 @@
     }
   }
   function showPosition(position) {
+    $('#spinner').hide();
     $("#lat").attr('value', position.coords.latitude);
     $("#lng").attr('value', position.coords.longitude);
     $("#location").submit();
   }
-
-%button#locbutt{ :onclick=>"getLocation()" } Update Location

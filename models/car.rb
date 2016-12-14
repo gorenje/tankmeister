@@ -33,8 +33,13 @@ class Car
   def details
     "<img src='#{image_url}'/><p>" +
       "#{@data["licensePlate"]} (#{@data["name"]})<br>" +
+      "#{address_line}<br>" +
       "Fuel level: #{@data["fuelLevelInPercent"]}%<br>" +
       "<a href='#{reserve_url}'>Reserve</a>"
+  end
+
+  def address_line
+    @data["address"].first + ", " + @data["address"].last
   end
 
   def image_url
