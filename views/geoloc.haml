@@ -3,6 +3,7 @@
 %form#location{ :method => "post", :action => "/cars" }
   %input#lat{ :type => "hidden", :name => "lat", :value => "0" }
   %input#lng{ :type => "hidden", :name => "lng", :value => "0" }
+  %input#cardata{ :type => "hidden", :name => "cd", :value => "0" }
 
 :javascript
 
@@ -23,5 +24,26 @@
       x.submit();
   }
 
+  $(document).ready(function(){
+    $.ajax({
+      type: 'GET',
+      url: 'https://api2.drive-now.com/cities/6099?expand=full',
+      dataType: 'text',
+      async: true,
+      headers: {
+        "Accept": "application/json;v=1.8",
+        "Origin": "https://de.drive-now.com",
+        "X-Language": "de",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 YaBrowser/16.10.0.2309 Safari/537.36",
+        "X-Api-Key": "#{ENV['DRIVE_NOW_API_KEY']}",
+        "Referer": "https://de.drive-now.com/",
+        "Accept-Language": "ru,en;q=0.8",
+      },
+      success: function(data) {
+        $("#cardata").attr('value',data);
+        $("#locbutt").prop('disabled', false);
+      }
+    });
+  });
 
-%button{ :onclick=>"getLocation()" } Get location
+%button#locbutt{ :onclick=>"getLocation()", :disabled => "disabled" } Get My Location

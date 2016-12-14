@@ -25,4 +25,9 @@ class Car
   def name
     @data["licensePlate"]
   end
+
+  def marker_icon
+    "/images/" + (is_electro? ? "marker_icon_car_active" : "marker_icon_car") +
+      ".png"
+  end
 end

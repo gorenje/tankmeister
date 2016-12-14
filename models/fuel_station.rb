@@ -24,7 +24,13 @@ class FuelStation
 end
 
 class ElecroFS < FuelStation
+  def marker_icon
+    "/images/marker_icon_loading.png"
+  end
 end
 
 class PetrolFS < FuelStation
+  def marker_icon
+    "/images/marker_icon_fueling.png"
+  end
 end

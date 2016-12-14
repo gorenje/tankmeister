@@ -11,18 +11,7 @@
      };
    }
 
-   function pinSymbolStation(color) {
-      return {
-          path: 'm0,0c1,-6.94777 -2,-16.84834 -10,-24.75143a10,8.25048 0 1 1 20,0c-12.30769,3.70425 -11,31.6992 -10,24.75143zm-2,-24.75143a2,1.6501 0 1 1 4,0a2,1.6501 0 1 1 -4,0',
-          fillColor: color,
-          fillOpacity: 1,
-          strokeColor: '#000',
-          strokeWeight: 2,
-          scale: 1,
-     };
-   }
-
-   function initMap() {
+  function initMap() {
      var map = new google.maps.Map(document.getElementById('map'), {
        zoom: 15,
        center: {"lat": #{params[:lat]}, "lng": #{params[:lng]} }
@@ -37,7 +26,7 @@
      addCar0(map);
      addCar1(map);
      addCar2(map);
-   }
+  }
 
 - @results.each_with_index do |(car, fs), idx|
   :javascript
@@ -47,24 +36,25 @@
          position: #{car.json_location},
          map: map,
          title: "#{car.name}",
-         icon: pinSymbolCar(clr)
+         icon: "#{car.marker_icon}"
        });
-       var m2 = new google.maps.Marker({
+
+       new google.maps.Marker({
          position: #{fs[0].json_location},
          map: map,
-         icon: pinSymbolStation(clr),
+         icon: "#{fs[0].marker_icon}",
          title: "#{fs[0].name}"
        });
-       var m3 = new google.maps.Marker({
+       new google.maps.Marker({
          position: #{fs[1].json_location},
          map: map,
-         icon: pinSymbolStation(clr),
+         icon: "#{fs[1].marker_icon}",
          title: "#{fs[1].name}"
        });
-       var m4 = new google.maps.Marker({
+       new google.maps.Marker({
          position: #{fs[2].json_location},
          map: map,
-         icon: pinSymbolStation(clr),
+         icon: "#{fs[2].marker_icon}",
          title: "#{fs[2].name}"
        });
       }

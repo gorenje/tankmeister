@@ -3,10 +3,11 @@ get '/' do
 end
 
 post '/cars' do
-  c = Curlobj.prepare("https://api2.drive-now.com/cities/6099?expand=full")
-  c.perform
-  gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
-  data = JSON(gz.read)
+  # c = Curlobj.prepare("https://api2.drive-now.com/cities/6099?expand=full")
+  # c.perform
+  # gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
+  # data = JSON(gz.read)
+  data = JSON(params[:cd])
 
   electro_stations = data["chargingStations"]["items"].map do |hsh|
     ElecroFS.new(hsh)
