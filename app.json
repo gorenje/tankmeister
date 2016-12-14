@@ -17,7 +17,7 @@
       "generator": "secret"
     },
     "GOOGLE_API_KEY": {
-      "description": "Google maps api key".
+      "description": "Google maps api key",
       "required": true
     },
     "DRIVE_NOW_API_KEY": {
