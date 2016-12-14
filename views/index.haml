@@ -1,35 +1,72 @@
-%h3 My Google Maps Demo
 #map
 :javascript
+  function pinSymbolCar(color) {
+      return {
+          path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+          fillColor: color,
+          fillOpacity: 1,
+          strokeColor: '#000',
+          strokeWeight: 2,
+          scale: 1,
+     };
+   }
+
+   function pinSymbolStation(color) {
+      return {
+          path: 'm0,0c1,-6.94777 -2,-16.84834 -10,-24.75143a10,8.25048 0 1 1 20,0c-12.30769,3.70425 -11,31.6992 -10,24.75143zm-2,-24.75143a2,1.6501 0 1 1 4,0a2,1.6501 0 1 1 -4,0',
+          fillColor: color,
+          fillOpacity: 1,
+          strokeColor: '#000',
+          strokeWeight: 2,
+          scale: 1,
+     };
+   }
+
    function initMap() {
      var map = new google.maps.Map(document.getElementById('map'), {
        zoom: 15,
-       center: #{@car.json_location}
+       center: {"lat": #{params[:lat]}, "lng": #{params[:lng]} }
      });
 
-     var m1 = new google.maps.Marker({
-       position: #{@car.json_location},
+     new google.maps.Marker({
+       position: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
        map: map,
-       title: "#{@car.name}"
+       title: "You",
+       icon: pinSymbolCar('#2f2')
      });
-
-     var m2 = new google.maps.Marker({
-       position: #{@fs[0].json_location},
-       map: map,
-       label: 'S',
-       title: "#{@fs[0].name}"
-     });
-     var m3 = new google.maps.Marker({
-       position: #{@fs[1].json_location},
-       map: map,
-       label: 'S',
-       title: "#{@fs[1].name}"
-     });
-     var m4 = new google.maps.Marker({
-       position: #{@fs[2].json_location},
-       map: map,
-       label: 'S',
-       title: "#{@fs[2].name}"
-     });
+     addCar0(map);
+     addCar1(map);
+     addCar2(map);
    }
+
+- @results.each_with_index do |(car, fs), idx|
+  :javascript
+    function addCar#{idx}(map){
+       var clr = { 0: '#f22', 1: '#ff2', 2: '#2ff' }[#{idx}];
+       new google.maps.Marker({
+         position: #{car.json_location},
+         map: map,
+         title: "#{car.name}",
+         icon: pinSymbolCar(clr)
+       });
+       var m2 = new google.maps.Marker({
+         position: #{fs[0].json_location},
+         map: map,
+         icon: pinSymbolStation(clr),
+         title: "#{fs[0].name}"
+       });
+       var m3 = new google.maps.Marker({
+         position: #{fs[1].json_location},
+         map: map,
+         icon: pinSymbolStation(clr),
+         title: "#{fs[1].name}"
+       });
+       var m4 = new google.maps.Marker({
+         position: #{fs[2].json_location},
+         map: map,
+         icon: pinSymbolStation(clr),
+         title: "#{fs[2].name}"
+       });
+      }
+
 %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_API_KEY']}&callback=initMap"}

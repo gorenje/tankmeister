@@ -1,0 +1,27 @@
+#demo
+
+%form#location{ :method => "post", :action => "/cars" }
+  %input#lat{ :type => "hidden", :name => "lat", :value => "0" }
+  %input#lng{ :type => "hidden", :name => "lng", :value => "0" }
+
+:javascript
+
+  function getLocation() {
+      var x = document.getElementById("demo");
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+  }
+  function showPosition(position) {
+      var x = document.getElementById("lat");
+      x.value = position.coords.latitude;
+      var x = document.getElementById("lng");
+      x.value = position.coords.longitude;
+      var x = document.getElementById("location");
+      x.submit();
+  }
+
+
+%button{ :onclick=>"getLocation()" } Get location

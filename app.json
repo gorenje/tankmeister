@@ -1,0 +1,28 @@
+{
+  "name" : "DriveNow Closest Empty Cars",
+  "description": "Show the closest empty cars",
+  "keywords": [
+    "drivenow",
+    "fueling"
+  ],
+  "website": "https://github.com/gorenje/drivenow",
+  "repository": "https://github.com/gorenje/drivenow",
+  "env": {
+    "RACK_ENV": {
+      "description": "Rack environment",
+      "value": "production"
+    },
+    "COOKIE_SECRET": {
+      "description": "Secret for the cookie storage",
+      "generator": "secret"
+    },
+    "GOOGLE_API_KEY": {
+      "description": "Google maps api key".
+      "required": true
+    },
+    "DRIVE_NOW_API_KEY": {
+      "description": "DriveNow API Key.",
+      "required": true
+    }
+  }
+}

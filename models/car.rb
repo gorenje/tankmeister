@@ -14,6 +14,10 @@ class Car
     { "lat" => @data["latitude"], "lng" => @data["longitude"] }.to_json
   end
 
+  def distance(loc)
+    @location.distance_to(loc)
+  end
+
   def to_s
     @data.to_s
   end
