@@ -30,6 +30,16 @@ class Car
     @data["isCharging"]
   end
 
+  def details
+    "<img src='#{image_url}'/><p>" +
+    "#{@data["licensePlate"]}<br>" +
+      "Fuel level: #{@data["fuelLevelInPercent"]}%"
+  end
+
+  def image_url
+    @data["carImageUrl"].gsub(/\{density\}/, "hdpi")
+  end
+
   def marker_icon
     "/images/" + (is_electro? ? "marker_icon_car_active" : "marker_icon_car") +
       ".png"

@@ -50,11 +50,19 @@
          title: "#{fs[2].name}"
        });
 
-       new google.maps.Marker({
+       var infowindow = new google.maps.InfoWindow({
+         content: "#{car.details}"
+       });
+
+       var carmarker = new google.maps.Marker({
          position: #{car.json_location},
          map: map,
          title: "#{car.name}",
          icon: "#{car.marker_icon}"
+       });
+
+       carmarker.addListener('click', function(){
+          infowindow.open(map, carmarker);
        });
       }
 
