@@ -3,52 +3,19 @@
 %form#location{ :method => "post", :action => "/cars" }
   %input#lat{ :type => "hidden", :name => "lat", :value => "0" }
   %input#lng{ :type => "hidden", :name => "lng", :value => "0" }
-  %input#cardata{ :type => "hidden", :name => "cd", :value => "0" }
 
 :javascript
-
   function getLocation() {
-      var x = document.getElementById("demo");
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-      }
+    if (navigator.geolocation) {
+       navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+       $('#demo').html("Geolocation is not supported by this browser.");
+    }
   }
   function showPosition(position) {
-      var x = document.getElementById("lat");
-      x.value = position.coords.latitude;
-      var x = document.getElementById("lng");
-      x.value = position.coords.longitude;
-      var x = document.getElementById("location");
-      x.submit();
+    $("#lat").attr('value', position.coords.latitude);
+    $("#lng").attr('value', position.coords.longitude);
+    $("#location").submit();
   }
 
-  $(document).ready(function(){
-    $.ajax({
-      type: 'GET',
-      url: 'https://api2.drive-now.com/cities/6099?expand=full',
-      dataType: 'text',
-      async: true,
-      headers: {
-        "Accept": "application/json;v=1.8",
-        "Origin": "https://de.drive-now.com",
-        "origin": "https://de.drive-now.com",
-        "X-Language": "de",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 YaBrowser/16.10.0.2309 Safari/537.36",
-        "X-Api-Key": "#{ENV['DRIVE_NOW_API_KEY']}",
-        "Referer": "https://de.drive-now.com/",
-        "Accept-Language": "ru,en;q=0.8",
-      },
-      success: function(data) {
-        $("#cardata").attr('value',data);
-        $("#locbutt").prop('disabled', false);
-      },
-      error: function(jqxhr, status, errorThrown) {
-        $('#demo').html("Error, unable to obtain DN data: " + status + ", " +
-                           errorThrown);
-      }
-    });
-  });
-
-%button#locbutt{ :onclick=>"getLocation()", :disabled => "disabled" } Get My Location
+%button#locbutt{ :onclick=>"getLocation()" } Get My Location

@@ -3,11 +3,10 @@ get '/' do
 end
 
 post '/cars' do
-  # c = Curlobj.prepare("https://api2.drive-now.com/cities/6099?expand=full")
-  # c.perform
-  # gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
-  # data = JSON(gz.read)
-  data = JSON(params[:cd])
+  c = Curlobj.prepare("https://api2.drive-now.com/cities/6099?expand=full")
+  c.perform
+  gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
+  data = JSON(gz.read)
 
   electro_stations = data["chargingStations"]["items"].map do |hsh|
     ElecroFS.new(hsh)
@@ -24,14 +23,18 @@ post '/cars' do
 
   my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
 
-  nearest_cars = cars.map { |c| [c, c.distance(my_location)]}.
-    sort_by { |_,dist| dist }[0..2].map { |c,_| c }
+  nearest_cars = cars.
+    reject { |car| car.is_charging? }.
+    map { |c| [c, c.distance(my_location)]}.
+    sort_by { |_,dist| dist }[0..2].
+    map { |c,_| c }
 
   @results = Hash[nearest_cars.map do |car|
                     [car,
                      (car.is_electro? ? electro_stations : petrol_stations).
                      map { |a| [a, a.distance(car)] }.
-                     sort_by { |_,dist| dist }[0..2].map { |fs,dist| fs }]
+                     sort_by { |_,dist| dist }[0..2].
+                     map { |fs,dist| fs }]
                   end]
 
   haml :index

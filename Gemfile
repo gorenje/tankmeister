@@ -15,5 +15,8 @@ gem 'sinatra-contrib'
 gem 'haml'
 gem 'foreman'
 gem 'unicorn'
-gem 'dotenv'
-gem 'html2haml'
+
+group :development do
+  gem 'html2haml'
+  gem 'dotenv'
+end

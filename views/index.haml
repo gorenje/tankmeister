@@ -31,14 +31,6 @@
 - @results.each_with_index do |(car, fs), idx|
   :javascript
     function addCar#{idx}(map){
-       var clr = { 0: '#f22', 1: '#ff2', 2: '#2ff' }[#{idx}];
-       new google.maps.Marker({
-         position: #{car.json_location},
-         map: map,
-         title: "#{car.name}",
-         icon: "#{car.marker_icon}"
-       });
-
        new google.maps.Marker({
          position: #{fs[0].json_location},
          map: map,
@@ -56,6 +48,13 @@
          map: map,
          icon: "#{fs[2].marker_icon}",
          title: "#{fs[2].name}"
+       });
+
+       new google.maps.Marker({
+         position: #{car.json_location},
+         map: map,
+         title: "#{car.name}",
+         icon: "#{car.marker_icon}"
        });
       }
 

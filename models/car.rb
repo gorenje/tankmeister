@@ -23,7 +23,11 @@ class Car
   end
 
   def name
-    @data["licensePlate"]
+    @data["licensePlate"] + " - " + @data["name"]
+  end
+
+  def is_charging?
+    @data["isCharging"]
   end
 
   def marker_icon
