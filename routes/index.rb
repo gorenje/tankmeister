@@ -3,6 +3,12 @@ get '/' do
 end
 
 post '/cars' do
+  haml :cars
+end
+
+get '/nearest' do
+  content_type :json
+
   c = Curlobj.prepare("https://api2.drive-now.com/cities/6099?expand=full")
   c.perform
   gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
@@ -29,13 +35,16 @@ post '/cars' do
     sort_by { |_,dist| dist }[0..2].
     map { |c,_| c }
 
-  @results = Hash[nearest_cars.map do |car|
-                    [car,
-                     (car.is_electro? ? electro_stations : petrol_stations).
-                     map { |a| [a, a.distance(car)] }.
-                     sort_by { |_,dist| dist }[0..2].
-                     map { |fs,dist| fs }]
-                  end]
+  fuelstations = []
+  nearest_cars.map do |car|
+    fuelstations +=
+      (car.is_electro? ? electro_stations : petrol_stations).
+      map { |a| [a, a.distance(car)] }.
+      sort_by { |_,dist| dist }[0..2].
+      map { |fs,dist| fs }
+  end
 
-  haml :index
+  { "cars" => nearest_cars.map { |c| c.to_hash },
+    "fs"   => fuelstations.map { |fs| fs.to_hash }
+  }.to_json
 end

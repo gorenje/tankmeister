@@ -15,7 +15,7 @@ class FuelStation
   end
 
   def json_location
-    { "lat" => @data["latitude"], "lng" => @data["longitude"] }.to_json
+    { "lat" => @data["latitude"], "lng" => @data["longitude"] }
   end
 
   def name
@@ -26,6 +26,15 @@ class FuelStation
     "%s<br>%s<br>%s<br>" % [@data["name"],
                             @data["address"].join(", "),
                             @data["organisation"]]
+  end
+
+  def to_hash
+    {
+      "details"       => details,
+      "marker_icon"   => marker_icon,
+      "name"          => name,
+      "json_location" => json_location
+    }
   end
 end
 
