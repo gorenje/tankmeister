@@ -23,23 +23,15 @@ class Car
   end
 
   def name
-    @data["licensePlate"] + " - " + @data["name"]
+    "%s (%s)" % [@data["licensePlate"], @data["name"]]
   end
 
   def is_charging?
     @data["isCharging"]
   end
 
-  def details
-    "<img src='#{image_url}'/><p>" +
-      "#{@data["licensePlate"]} (#{@data["name"]})<br>" +
-      "#{address_line}<br>" +
-      "Fuel level: #{@data["fuelLevelInPercent"]}%<br>" +
-      "<a href='#{reserve_url}'>Reserve</a>"
-  end
-
   def address_line
-    @data["address"].first + ", " + @data["address"].last
+    @data["address"].join(", ")
   end
 
   def image_url
@@ -54,5 +46,13 @@ class Car
   def reserve_url
     # this will open the drive now app but not much else.
     "drivenow://car?id=#{@data["id"]}"
+  end
+
+  def details
+    "<img src='#{image_url}'/><p>" +
+      "#{name}<br>" +
+      "#{address_line}<br>" +
+      "Fuel level: #{@data["fuelLevelInPercent"]}%<br>" +
+      "<a href='#{reserve_url}'>Reserve</a>"
   end
 end

@@ -21,6 +21,12 @@ class FuelStation
   def name
     @data["name"]
   end
+
+  def details
+    "%s<br>%s<br>%s<br>" % [@data["name"],
+                            @data["address"].join(", "),
+                            @data["organisation"]]
+  end
 end
 
 class ElecroFS < FuelStation

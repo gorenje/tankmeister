@@ -52,34 +52,63 @@
 - @results.each_with_index do |(car, fs), idx|
   :javascript
     function addCar#{idx}(map){
-       new google.maps.Marker({
+
+       var fs0marker = new google.maps.Marker({
          position: #{fs[0].json_location},
          map: map,
          icon: "#{fs[0].marker_icon}",
          title: "#{fs[0].name}"
        });
-       new google.maps.Marker({
+
+       var fs0info = new google.maps.InfoWindow({
+         content: "#{fs[0].details}"
+       });
+
+       fs0marker.addListener("click", function(){
+         fs0info.open(map, fs0marker);
+       });
+
+       var fs1marker = new google.maps.Marker({
          position: #{fs[1].json_location},
          map: map,
          icon: "#{fs[1].marker_icon}",
          title: "#{fs[1].name}"
        });
-       new google.maps.Marker({
+
+       var fs1info = new google.maps.InfoWindow({
+         content: "#{fs[1].details}"
+       });
+
+       fs1marker.addListener("click", function(){
+         fs1info.open(map, fs1marker);
+       });
+
+
+       var fs2marker = new google.maps.Marker({
          position: #{fs[2].json_location},
          map: map,
          icon: "#{fs[2].marker_icon}",
          title: "#{fs[2].name}"
        });
 
-       var infowindow = new google.maps.InfoWindow({
-         content: "#{car.details}"
+       var fs2info = new google.maps.InfoWindow({
+         content: "#{fs[2].details}"
        });
+
+       fs2marker.addListener("click", function(){
+         fs2info.open(map, fs2marker);
+       });
+
 
        var carmarker = new google.maps.Marker({
          position: #{car.json_location},
          map: map,
          title: "#{car.name}",
          icon: "#{car.marker_icon}"
+       });
+
+       var infowindow = new google.maps.InfoWindow({
+         content: "#{car.details}"
        });
 
        carmarker.addListener('click', function(){
