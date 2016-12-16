@@ -33,9 +33,7 @@
                    "<img id='spinner' src='/images/spinner.gif' "+
                    "style='display: none;'/>";
 
-     var yourinfo = new google.maps.InfoWindow({
-       content: content
-     });
+     var infowin = new google.maps.InfoWindow({content: ""});
 
      var youmarker = new google.maps.Marker({
        position: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
@@ -45,7 +43,8 @@
      });
 
      youmarker.addListener('click', function() {
-       yourinfo.open(map, youmarker);
+       infowin.setContent(content);
+       infowin.open(map, youmarker);
      });
 
      $('#loader').show();
@@ -64,12 +63,9 @@
            title: fs.name
          });
 
-         var fsinfo = new google.maps.InfoWindow({
-           content: fs.details
-         });
-
          fsmarker.addListener("click", function(){
-           fsinfo.open(map, fsmarker);
+           infowin.setContent(fs.details);
+           infowin.open(map, fsmarker);
          });
        });
 
@@ -81,12 +77,9 @@
            icon: car.marker_icon
          });
 
-         var infowindow = new google.maps.InfoWindow({
-           content: car.details
-         });
-
          carmarker.addListener('click', function(){
-           infowindow.open(map, carmarker);
+           infowin.setContent(car.details);
+           infowin.open(map, carmarker);
          });
        })
      });
