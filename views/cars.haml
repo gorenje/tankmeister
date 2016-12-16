@@ -16,9 +16,11 @@
    }
 
   function initMap() {
+     var origin = new google.maps.LatLng(#{params[:lat]}, #{params[:lng]});
+
      var map = new google.maps.Map(document.getElementById('map'), {
        zoom: 14,
-       center: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
+       center: origin,
        gestureHandling: 'greedy',
        mapTypeControl: false,
        streetViewControl: false,
@@ -36,7 +38,7 @@
      var infowin = new google.maps.InfoWindow({content: ""});
 
      var youmarker = new google.maps.Marker({
-       position: {"lat": #{params[:lat]}, "lng": #{params[:lng]} },
+       position: origin,
        map: map,
        title: "You",
        icon: pinSymbolCar('#2f2')
@@ -47,7 +49,17 @@
        infowin.open(map, youmarker);
      });
 
+     var directionsDisplay = new google.maps.DirectionsRenderer({
+       suppressInfoWindows: true,
+       suppressMarkers: true,
+       preserveViewport: true,
+       routeIndex: 0,
+       map: map
+     });
+     var directionsService = new google.maps.DirectionsService();
+
      $('#loader').show();
+
      $.ajax({
        url: "/nearest?lat=#{params[:lat]}&lng=#{params[:lng]}&cid=#{@city.id}",
        method: 'get',
@@ -78,8 +90,27 @@
          });
 
          carmarker.addListener('click', function(){
-           infowin.setContent(car.details);
-           infowin.open(map, carmarker);
+           var request = {
+             origin: origin,
+             destination: carmarker.getPosition(),
+             travelMode: 'WALKING'
+           };
+
+           directionsService.route(request, function(result, status) {
+             if (status == 'OK') {
+               var rt = result.routes[directionsDisplay.getRouteIndex()];
+               directionsDisplay.setDirections(result);
+
+               var totaltime = 0;
+               $.each(rt.legs, function(idx, leg){
+                 totaltime += leg.duration.value;
+               });
+
+               infowin.setContent(car.details + "<br>Walking time: " +
+                                  Math.ceil(totaltime/60) + " mins");
+               infowin.open(map, carmarker);
+             }
+           });
          });
        })
      });
