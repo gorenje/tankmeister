@@ -4,17 +4,6 @@
 
 #map
 :javascript
-  function pinSymbolCar(color) {
-      return {
-          path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-          fillColor: color,
-          fillOpacity: 1,
-          strokeColor: '#000',
-          strokeWeight: 2,
-          scale: 1,
-     };
-   }
-
   function initMap() {
      var origin = new google.maps.LatLng(#{params[:lat]}, #{params[:lng]});
 
@@ -41,7 +30,7 @@
        position: origin,
        map: map,
        title: "You",
-       icon: pinSymbolCar('#2f2')
+       icon: '/images/marker_icon_me.png'
      });
 
      youmarker.addListener('click', function() {
