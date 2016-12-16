@@ -6,8 +6,8 @@ class FuelStation
     @location = Geokit::LatLng.new(hsh["latitude"], hsh["longitude"])
   end
 
-  def distance(car)
-    location.distance_to(car.location)
+  def distance(loc)
+    @location.distance_to(loc)
   end
 
   def to_s

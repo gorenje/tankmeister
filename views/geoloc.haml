@@ -20,9 +20,20 @@
 
 
 %center
-  DriveNow closest cars that need refueling
+  Find the DriveNow cars closest to you that need refuelling.
   %p
-  Please provide your location so that the cars nearest to you
-  may be determined.
+  Please provide your location so that the we can determine your
+  city and which cars are currently closest to you. We also show the
+  nearest fueling station (either petrol or electric) to the respective
+  car.
   %p
-  %button#locbutt{ :onclick=>"getLocation()" } Get My Location
+  %button#locbutt{ :onclick=>"getLocation()" } Send My Location
+  %p
+  Your location is not sent to DriveNow and we do not store it. We use
+  it once to determine city and cars and that's it! We don't use cookies
+  but google will set cookies.
+  %p
+  If you would like to contact the
+  <a href='https://github.com/gorenje/'>author</a> or
+  view the <a href='https://github.com/gorenje/drivenow'>code</a>,
+  both are hosted on GitHub.

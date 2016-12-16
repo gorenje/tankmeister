@@ -1,4 +1,11 @@
 class Curlobj
+  def self.data_for(url)
+    c = prepare(url)
+    c.perform
+    gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
+    JSON(gz.read)
+  end
+
   def self.prepare(urlstr)
     Curl::Easy.new.tap do |w|
       w.url = urlstr

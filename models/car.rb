@@ -26,6 +26,10 @@ class Car
     "%s (%s)" % [@data["licensePlate"], @data["name"]]
   end
 
+  def needs_fuelling?
+    @data["fuelLevel"] <= 0.25
+  end
+
   def is_charging?
     @data["isCharging"]
   end
