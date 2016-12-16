@@ -25,7 +25,10 @@
                    "<center><button onclick='getLocation()'>"+
                    "Update Location & Cars</button>"+
                    "<img id='spinner' src='/images/spinner.gif' "+
-                   "style='display: none;'/></center>";
+                   "style='display: none;'/></center>"+
+                   "<div style='display: none;' id='carloader'>"+
+                   "Car data being loaded <img id='spinner' "+
+                   "src='/images/spinner.gif' /></div>";
 
      infowin = new google.maps.InfoWindow({content: ""});
 
@@ -33,7 +36,8 @@
        position: origin,
        map: map,
        title: "You",
-       icon: '/images/marker_icon_me.png'
+       icon: '/images/marker_icon_me.png',
+       zIndex: google.maps.Marker.MAX_ZINDEX - 1
      });
 
      youmarker.addListener('click', function() {
@@ -138,8 +142,7 @@
 
     var origin = new google.maps.LatLng(lat,lng);
     youmarker.setPosition(origin);
-    infowin.close();
-    $('#loader').show();
+    $('#carloader').show();
 
     $.ajax({
       url: "/city?lat=" + lat + "&lng=" + lng,
@@ -163,7 +166,8 @@
            carmarkers[idx].setTitle(car.name);
            carmarkers[idx]._details = car.details;
          });
-         $('#loader').hide();
+         $('#carloader').hide();
+         infowin.close();
        });
     });
   }
