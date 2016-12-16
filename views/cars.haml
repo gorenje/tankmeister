@@ -4,10 +4,12 @@
 
 #map
 :javascript
+  var map, infowin, youmarker, carmarkers = [], fsmarkers = [];
+
   function initMap() {
      var origin = new google.maps.LatLng(#{params[:lat]}, #{params[:lng]});
 
-     var map = new google.maps.Map(document.getElementById('map'), {
+     map = new google.maps.Map(document.getElementById('map'), {
        zoom: 14,
        center: origin,
        gestureHandling: 'greedy',
@@ -20,13 +22,14 @@
      });
 
      var content = "Current Location:<br>#{@city.name}<p>"+
-                   "<center><button onclick='getLocation()'>Update</button>"+
+                   "<center><button onclick='getLocation()'>"+
+                   "Update Location & Cars</button>"+
                    "<img id='spinner' src='/images/spinner.gif' "+
                    "style='display: none;'/></center>";
 
-     var infowin = new google.maps.InfoWindow({content: ""});
+     infowin = new google.maps.InfoWindow({content: ""});
 
-     var youmarker = new google.maps.Marker({
+     youmarker = new google.maps.Marker({
        position: origin,
        map: map,
        title: "You",
@@ -57,31 +60,34 @@
        $('#loader').hide();
 
        $.each(data.fs, function(idx, fs) {
-         var fsmarker = new google.maps.Marker({
+         fsmarkers[idx] = new google.maps.Marker({
            position: fs.json_location,
            map: map,
            icon: fs.marker_icon,
            title: fs.name
          });
 
-         fsmarker.addListener("click", function(){
-           infowin.setContent(fs.details);
-           infowin.open(map, fsmarker);
+         fsmarkers[idx]._details = fs.details;
+         fsmarkers[idx].addListener("click", function(){
+           infowin.setContent(fsmarkers[idx]._details);
+           infowin.open(map, fsmarkers[idx]);
          });
        });
 
        $.each(data.cars, function(idx, car) {
-         var carmarker = new google.maps.Marker({
+         carmarkers[idx] = new google.maps.Marker({
            position: car.json_location,
            map: map,
            title: car.name,
            icon: car.marker_icon
          });
 
-         carmarker.addListener('click', function(){
+         carmarkers[idx]._details = car.details;
+
+         carmarkers[idx].addListener('click', function(){
            var request = {
-             origin: origin,
-             destination: carmarker.getPosition(),
+             origin: youmarker.getPosition(),
+             destination: carmarkers[idx].getPosition(),
              travelMode: 'WALKING'
            };
 
@@ -95,9 +101,10 @@
                  totaltime += leg.duration.value;
                });
 
-               infowin.setContent(car.details + "<br>Walking time: " +
+               infowin.setContent(carmarkers[idx]._details +
+                                  "<br>Walking time: " +
                                   Math.ceil(totaltime/60) + " mins");
-               infowin.open(map, carmarker);
+               infowin.open(map, carmarkers[idx]);
              }
            });
          });
@@ -122,9 +129,41 @@
        $('#demo').html("Geolocation is not supported by this browser.");
     }
   }
+
   function showPosition(position) {
     $('#spinner').hide();
-    $("#lat").attr('value', position.coords.latitude);
-    $("#lng").attr('value', position.coords.longitude);
-    $("#location").submit();
+    var lat = position.coords.latitude,
+        lng = position.coords.longitude;
+
+    var origin = new google.maps.LatLng(lat,lng);
+    youmarker.setPosition(origin);
+    map.setCenter(origin);
+    infowin.close();
+    $('#loader').show();
+
+    $.ajax({
+      url: "/city?lat=" + lat + "&lng=" + lng,
+      method: 'get',
+      dataType: 'json'
+    }).done(function(data){
+      $.ajax({
+        url: "/nearest?lat="+lat+"&lng="+lng+"&cid="+data.cityid,
+        method: 'get',
+        dataType: 'json'
+      }).done(function(data){
+         $.each(data.fs, function(idx, fs) {
+           fsmarkers[idx].setPosition(fs.json_location);
+           fsmarkers[idx].setIcon(fs.marker_icon);
+           fsmarkers[idx].setTitle(fs.name);
+           fsmarkers[idx]._details = fs.details;
+         });
+         $.each(data.cars, function(idx, car) {
+           carmarkers[idx].setPosition(car.json_location);
+           carmarkers[idx].setIcon(car.marker_icon);
+           carmarkers[idx].setTitle(car.name);
+           carmarkers[idx]._details = car.details;
+         });
+         $('#loader').hide();
+       });
+    });
   }

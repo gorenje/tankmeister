@@ -19,6 +19,18 @@ post '/cars' do
   haml :cars
 end
 
+get '/city' do
+  content_type :json
+  data = Curlobj.
+    data_for("https://api2.drive-now.com/cities?expand=cities")
+
+  my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
+
+  city = data["items"].map { |hsh| City.new(hsh) }.nearest(my_location).first
+
+  { :cityid => city.id }.to_json
+end
+
 get '/nearest' do
   content_type :json
 
