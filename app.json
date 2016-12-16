@@ -12,10 +12,6 @@
       "description": "Rack environment",
       "value": "production"
     },
-    "COOKIE_SECRET": {
-      "description": "Secret for the cookie storage",
-      "generator": "secret"
-    },
     "GOOGLE_API_KEY": {
       "description": "Google maps api key",
       "required": true
