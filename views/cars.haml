@@ -79,7 +79,8 @@
            position: car.json_location,
            map: map,
            title: car.name,
-           icon: car.marker_icon
+           icon: car.marker_icon,
+           zIndex: google.maps.Marker.MAX_ZINDEX
          });
 
          carmarkers[idx]._details = car.details;
@@ -137,7 +138,6 @@
 
     var origin = new google.maps.LatLng(lat,lng);
     youmarker.setPosition(origin);
-    map.setCenter(origin);
     infowin.close();
     $('#loader').show();
 
