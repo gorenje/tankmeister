@@ -1,4 +1,14 @@
 class Curlobj
+  def self.body(url)
+    c = Curl::Easy.new.tap do |w|
+      w.url = url
+      w.follow_location = true
+      w.timeout = 10
+    end
+    c.perform
+    c.body.to_s
+  end
+
   def self.data_for(url)
     c = prepare(url)
     c.perform

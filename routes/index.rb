@@ -2,6 +2,12 @@ get '/' do
   haml :geoloc
 end
 
+get '/google.js' do
+  content_type "application/javascript"
+  Curlobj.body("https://maps.googleapis.com/maps/api/js?key="+
+               "#{ENV['GOOGLE_API_KEY']}&callback=initMap")
+end
+
 post '/cars' do
   data = Curlobj.
     data_for("https://api2.drive-now.com/cities?expand=cities")
