@@ -38,7 +38,7 @@ class FuelStation
   end
 end
 
-class ElecroFS < FuelStation
+class ElectroFS < FuelStation
   def marker_icon
     "/images/marker_icon_loading.png"
   end

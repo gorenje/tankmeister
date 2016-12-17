@@ -1,18 +1,13 @@
-#getgeoloc{ :style => 'display: none;' }
-  Obtaining your location....
-  %img{ :src => '/images/spinner.gif' }
-
-#getdncity{ :style => 'display: none;' }
-  Obtaining your DriveNow city....
-  %img{ :src => '/images/spinner.gif' }
-
-#getcardata{ :style => 'display: none;' }
-  Loading Cars, please wait....
-  %img{ :src => '/images/spinner.gif' }
+- [[:getgeoloc,"location"], [:getdncity,"city"], |
+  [:getcardata,"cars"]].each do |id, txt|
+  %div{ :id => id, :style => 'display: none;' }
+    = "Obtaining your #{txt} ...."
+    %img{ :src => '/images/spinner.gif' }
 
 #map
+
 :javascript
-  var map, infowin, youmarker,
+  var map, infowin, youmarker, ym_base_content,
                carmarkers = [], fsmarkers = [], directionsDisplay;
 
   function initMap() {
@@ -56,17 +51,16 @@
    }
 
    function setUpMarkers(origin, city) {
-     var content = "Current Location:<br>"+city.name+"<p>"+
-                   "<button onclick='updateLocation()'>"+
-                   "Update Location</button>"+
-                   "<img id='spinner' src='/images/spinner.gif' "+
-                   "style='display: none;'/>"+
-                   "<div style='display: none;' id='cityloader'>"+
-                   "City data being loaded ... <img "+
-                   "src='/images/spinner.gif' /></div>" +
-                   "<div style='display: none;' id='carloader'>"+
-                   "Car data being loaded ... <img "+
-                   "src='/images/spinner.gif' /></div>";
+     ym_base_content = "<button onclick='updateLocation()'>" +
+                       "Update Location</button>" +
+                       "<img id='spinner' src='/images/spinner.gif' " +
+                       "style='display: none;'/>" +
+                       "<div style='display: none;' id='cityloader'>" +
+                       "City data being loaded ... <img " +
+                       "src='/images/spinner.gif' /></div>" +
+                       "<div style='display: none;' id='carloader'>" +
+                       "Car data being loaded ... <img " +
+                       "src='/images/spinner.gif' /></div>";
 
      infowin = new google.maps.InfoWindow({content: ""});
 
@@ -78,8 +72,10 @@
        zIndex: google.maps.Marker.MAX_ZINDEX - 1
      });
 
+     youmarker._details = "Current Location:<br>" + city.name + "<p>" +
+                          ym_base_content;
      youmarker.addListener('click', function() {
-       infowin.setContent(content);
+       infowin.setContent(youmarker._details);
        infowin.open(map, youmarker);
      });
 
@@ -128,6 +124,11 @@
          carmarkers[idx]._details = car.details;
 
          carmarkers[idx].addListener('click', function(){
+           infowin.setContent(carmarkers[idx]._details +
+                              "<br>Walking time: <span style='font-weight: "+
+                              "bold;' id='wktime'>...</span> mins");
+           infowin.open(map, carmarkers[idx]);
+
            var request = {
              origin: youmarker.getPosition(),
              destination: carmarkers[idx].getPosition(),
@@ -143,11 +144,7 @@
                $.each(rt.legs, function(idx, leg){
                  totaltime += leg.duration.value;
                });
-
-               infowin.setContent(carmarkers[idx]._details +
-                                  "<br>Walking time: " +
-                                  Math.ceil(totaltime/60) + " mins");
-               infowin.open(map, carmarkers[idx]);
+               $('#wktime').html(Math.ceil(totaltime/60));
              }
            });
          });
@@ -156,9 +153,6 @@
      });
   }
 
-%script{:async => "", :defer => "defer", :src => "/google.js"}
-
-:javascript
   function updateLocation() {
     $('#spinner').show();
     if (navigator.geolocation) {
@@ -183,12 +177,14 @@
       url: "/city?lat=" + lat + "&lng=" + lng,
       method: 'get',
       dataType: 'json'
-    }).done(function(data){
+    }).done(function(city){
+      youmarker._details = "Current Location:<br>" + city.name + "<p>" +
+                            ym_base_content;
       $('#cityloader').hide();
       $('#carloader').show();
 
       $.ajax({
-        url: "/nearest?lat="+lat+"&lng="+lng+"&cid="+data.cityid,
+        url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid,
         method: 'get',
         dataType: 'json'
       }).done(function(data){
@@ -210,3 +206,5 @@
        });
     });
   }
+
+%script{:async => "", :defer => "defer", :src => "/google.js"}

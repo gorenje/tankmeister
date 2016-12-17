@@ -29,7 +29,7 @@ task :cars do
   data = JSON(gz.read)
 
   electro_stations = data["chargingStations"]["items"].map do |hsh|
-    ElecroFS.new(hsh)
+    ElectroFS.new(hsh)
   end
 
   petrol_stations = data["petrolStations"]["items"].map do |hsh|
