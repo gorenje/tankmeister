@@ -57,12 +57,15 @@
 
    function setUpMarkers(origin, city) {
      var content = "Current Location:<br>"+city.name+"<p>"+
-                   "<center><button onclick='getLocation()'>"+
-                   "Update Location & Cars</button>"+
+                   "<button onclick='updateLocation()'>"+
+                   "Update Location</button>"+
                    "<img id='spinner' src='/images/spinner.gif' "+
-                   "style='display: none;'/></center>"+
+                   "style='display: none;'/>"+
+                   "<div style='display: none;' id='cityloader'>"+
+                   "City data being loaded ... <img "+
+                   "src='/images/spinner.gif' /></div>" +
                    "<div style='display: none;' id='carloader'>"+
-                   "Car data being loaded <img id='spinner' "+
+                   "Car data being loaded ... <img "+
                    "src='/images/spinner.gif' /></div>";
 
      infowin = new google.maps.InfoWindow({content: ""});
@@ -156,18 +159,16 @@
 %script{:async => "", :defer => "defer", :src => "/google.js"}
 
 :javascript
-  function getLocation() {
+  function updateLocation() {
     $('#spinner').show();
     if (navigator.geolocation) {
-       navigator.geolocation.getCurrentPosition(showPosition);
+       navigator.geolocation.getCurrentPosition(updateMarkers);
     } else {
        $('#map').html("Geolocation is not supported by this browser.");
     }
   }
 
-  function showPosition(position) {
-    $('#spinner').hide();
-
+  function updateMarkers(position) {
     directionsDisplay.setDirections({routes: []});
 
     var lat = position.coords.latitude,
@@ -175,13 +176,17 @@
 
     var origin = new google.maps.LatLng(lat,lng);
     youmarker.setPosition(origin);
-    $('#carloader').show();
+    $('#spinner').hide();
+    $('#cityloader').show();
 
     $.ajax({
       url: "/city?lat=" + lat + "&lng=" + lng,
       method: 'get',
       dataType: 'json'
     }).done(function(data){
+      $('#cityloader').hide();
+      $('#carloader').show();
+
       $.ajax({
         url: "/nearest?lat="+lat+"&lng="+lng+"&cid="+data.cityid,
         method: 'get',
@@ -199,6 +204,7 @@
            carmarkers[idx].setTitle(car.name);
            carmarkers[idx]._details = car.details;
          });
+
          $('#carloader').hide();
          infowin.close();
        });
