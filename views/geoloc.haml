@@ -1,27 +1,3 @@
-#demo
-
-%form#location{ :method => "post", :action => "/cars" }
-  %input#lat{ :type => "hidden", :name => "lat", :value => "0" }
-  %input#lng{ :type => "hidden", :name => "lng", :value => "0" }
-
-:javascript
-  function getLocation() {
-    $('#spinner').show();
-    if (navigator.geolocation) {
-       navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-       $('#demo').html("Geolocation is not supported by this browser.");
-       $('#spinner').hide();
-    }
-  }
-  function showPosition(position) {
-    $("#lat").attr('value', position.coords.latitude);
-    $("#lng").attr('value', position.coords.longitude);
-    $('#spinner').hide();
-    $("#location").submit();
-  }
-
-
 %center
   Find the DriveNow cars closest to you that need refuelling.
   %p
@@ -30,8 +6,7 @@
   nearest fueling station (either petrol or electric) to the respective
   car.
   %p
-  %button#locbutt{ :onclick=>"getLocation()" } Send My Location
-  %img#spinner{ :src => "/images/spinner.gif", :style => "display: none;" }
+  %a{ :href => "/cars" } Show Cars
   %p
   Your location is not sent to DriveNow and we do not store it. We use
   it once to determine city and cars and that's it! We don't use cookies

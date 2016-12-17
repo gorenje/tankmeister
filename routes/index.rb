@@ -2,21 +2,14 @@ get '/' do
   haml :geoloc
 end
 
+get '/cars' do
+  haml :cars
+end
+
 get '/google.js' do
   content_type "application/javascript"
   Curlobj.body("https://maps.googleapis.com/maps/api/js?key="+
                "#{ENV['GOOGLE_API_KEY']}&callback=initMap")
-end
-
-post '/cars' do
-  data = Curlobj.
-    data_for("https://api2.drive-now.com/cities?expand=cities")
-
-  my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
-
-  @city = data["items"].map { |hsh| City.new(hsh) }.nearest(my_location).first
-
-  haml :cars
 end
 
 get '/city' do
@@ -28,7 +21,7 @@ get '/city' do
 
   city = data["items"].map { |hsh| City.new(hsh) }.nearest(my_location).first
 
-  { :cityid => city.id }.to_json
+  { :cityid => city.id, :name => city.name }.to_json
 end
 
 get '/nearest' do
