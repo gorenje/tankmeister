@@ -6,15 +6,18 @@
 
 :javascript
   function getLocation() {
+    $('#spinner').show();
     if (navigator.geolocation) {
        navigator.geolocation.getCurrentPosition(showPosition);
     } else {
        $('#demo').html("Geolocation is not supported by this browser.");
+       $('#spinner').hide();
     }
   }
   function showPosition(position) {
     $("#lat").attr('value', position.coords.latitude);
     $("#lng").attr('value', position.coords.longitude);
+    $('#spinner').hide();
     $("#location").submit();
   }
 
@@ -28,6 +31,7 @@
   car.
   %p
   %button#locbutt{ :onclick=>"getLocation()" } Send My Location
+  %img#spinner{ :src => "/images/spinner.gif", :style => "display: none;" }
   %p
   Your location is not sent to DriveNow and we do not store it. We use
   it once to determine city and cars and that's it! We don't use cookies

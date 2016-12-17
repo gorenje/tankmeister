@@ -4,7 +4,8 @@
 
 #map
 :javascript
-  var map, infowin, youmarker, carmarkers = [], fsmarkers = [];
+  var map, infowin, youmarker,
+               carmarkers = [], fsmarkers = [], directionsDisplay;
 
   function initMap() {
      var origin = new google.maps.LatLng(#{params[:lat]}, #{params[:lng]});
@@ -45,7 +46,7 @@
        infowin.open(map, youmarker);
      });
 
-     var directionsDisplay = new google.maps.DirectionsRenderer({
+     directionsDisplay = new google.maps.DirectionsRenderer({
        suppressInfoWindows: true,
        suppressMarkers: true,
        preserveViewport: true,
@@ -137,6 +138,9 @@
 
   function showPosition(position) {
     $('#spinner').hide();
+
+    directionsDisplay.setDirections({routes: []});
+
     var lat = position.coords.latitude,
         lng = position.coords.longitude;
 
