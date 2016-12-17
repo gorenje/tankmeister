@@ -43,8 +43,7 @@ class Car
   end
 
   def marker_icon
-    "/images/" + (is_electro? ? "marker_icon_car_active" : "marker_icon_car") +
-      ".png"
+    "/images/marker_icon_car.png"
   end
 
   def reserve_url

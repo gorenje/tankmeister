@@ -2,3 +2,8 @@
  height: 800px;
  width: 100%;
 }
+
+body {
+    background-color: #eeeeee;
+    color: #111111;
+}
