@@ -53,11 +53,14 @@ class Car
   end
 
   def details
-    "<img src='#{image_url}'/><p>" +
-      "#{name}<br>" +
-      "#{address_line}<br>" +
-      "Fuel level: #{@data["fuelLevelInPercent"]}%<br>" +
+    "<img src='#{image_url}'/><p>#{name}<br>#{address_line}<br>" +
+      "Fuel level: #{@data["fuelLevelInPercent"]}% - <span " +
+      "style='font-weight: bold;'>#{fuel_type}</span><br>" +
       "<a href='#{reserve_url}'>Reserve</a>"
+  end
+
+  def fuel_type
+    is_electro? ? "Electro" : (@data["fuelType"] == "P" ? "Super" : "Diesel")
   end
 
   def to_hash
