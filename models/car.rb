@@ -1,6 +1,16 @@
 class Car
   attr_reader :location
 
+  def self.all_free_cars
+    Curlobj.data_for("https://api2.drive-now.com/cars")["items"].map do |hsh|
+      Car.new(hsh)
+    end
+  end
+
+  def self.total_free_cars
+    Curlobj.data_for("https://api2.drive-now.com/cars", :timeout => 60)["count"]
+  end
+
   def initialize(hsh)
     @data = hsh
     @location = Geokit::LatLng.new(hsh["latitude"], hsh["longitude"])
