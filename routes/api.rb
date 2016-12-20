@@ -1,43 +1,45 @@
 get '/city' do
   content_type :json
-  data = Curlobj.
-    data_for("https://api2.drive-now.com/cities?expand=cities")
+
+  klz = case (params[:csc] || 'dnw')
+        when 'dnw' then DriveNow::City
+        when 'ctg' then Car2Go::City
+        else DriveNow::City
+        end
 
   my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
+  city        = klz.all.nearest(my_location).first
 
-  city = data["items"].map { |hsh| City.new(hsh) }.nearest(my_location).first
-
-  { :cityid => city.id, :name => city.name }.to_json
+  { :cityid => CGI::escape(city.id), :name => city.name }.to_json
 end
 
 get '/nearest' do
   content_type :json
 
-  data = Curlobj.
-    data_for("https://api2.drive-now.com/cities/#{params[:cid]}?expand=full")
+  city = case (params[:csc] || 'dnw')
+         when 'dnw' then DriveNow::City.new("id" => params[:cid])
+         when 'ctg' then Car2Go::City.new("locationName" => params[:cid])
+         else DriveNow::City.new("id" => params[:cid])
+         end
 
-  electro_stations = data["chargingStations"]["items"].map do |hsh|
-    ElectroFS.new(hsh)
-  end
-
-  petrol_stations = data["petrolStations"]["items"].map do |hsh|
-    PetrolFS.new(hsh)
-  end
-
-  cars = data["cars"]["items"].map { |hsh| Car.new(hsh) }.
-    select { |c| c.needs_fuelling? }.
-    reject { |c| c.is_charging? }
+  data = city.car_details
 
   my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
 
-  nearest_cars = cars.nearest(my_location)[0..2]
+  nearest_cars = data[:cars].
+    select { |c| c.needs_fuelling? }.
+    reject { |c| c.is_charging? }.
+    nearest(my_location)[0..2]
 
   fuelstations = nearest_cars.map do |car|
-    (car.is_electro? ? electro_stations : petrol_stations).
+    (car.is_electro? ? data[:electro_stations] : data[:petrol_stations]).
       nearest(car.location)[0..2]
   end.flatten
 
+  resilts =
   { "cars" => nearest_cars.map(&:to_hash),
     "fs"   => fuelstations.map(&:to_hash)
-  }.to_json
+  }
+  puts resilts
+  resilts.to_json
 end

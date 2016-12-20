@@ -19,6 +19,10 @@
     "DRIVE_NOW_API_KEY": {
       "description": "DriveNow API Key.",
       "required": true
+    }.
+    "CAR2GO_CONSUMER_KEY": {
+      "description": "Car2Go oauth consumer key.",
+      "required": true
     }
   }
 }

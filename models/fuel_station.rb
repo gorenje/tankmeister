@@ -7,7 +7,7 @@ class FuelStation
   end
 
   def distance(loc)
-    @location.distance_to(loc)
+    location.distance_to(loc)
   end
 
   def to_s
@@ -15,7 +15,7 @@ class FuelStation
   end
 
   def json_location
-    { "lat" => @data["latitude"], "lng" => @data["longitude"] }
+    { "lat" => location.lat, "lng" => location.lng }
   end
 
   def name

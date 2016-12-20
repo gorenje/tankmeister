@@ -1,15 +1,7 @@
+# Since DriveNow was here first, this Car model assumes DriveNow structured
+# data. Car2Go redefines this class to make it work for its data structure.
 class Car
   attr_reader :location
-
-  def self.all_free_cars
-    Curlobj.data_for("https://api2.drive-now.com/cars")["items"].map do |hsh|
-      Car.new(hsh)
-    end
-  end
-
-  def self.total_free_cars
-    Curlobj.data_for("https://api2.drive-now.com/cars", :timeout => 60)["count"]
-  end
 
   def initialize(hsh)
     @data = hsh
@@ -21,11 +13,11 @@ class Car
   end
 
   def json_location
-    { "lat" => @data["latitude"], "lng" => @data["longitude"] }
+    { "lat" => location.lat, "lng" => location.lng }
   end
 
   def distance(loc)
-    @location.distance_to(loc)
+    location.distance_to(loc)
   end
 
   def to_s
@@ -61,9 +53,13 @@ class Car
     "drivenow://car?id=#{@data["id"]}"
   end
 
+  def fuel_in_percent
+    @data["fuelLevelInPercent"]
+  end
+
   def details
     "<img src='#{image_url}'/><p>#{name}<br>#{address_line}<br>" +
-      "Fuel level: #{@data["fuelLevelInPercent"]}% - <span " +
+      "Fuel level: #{fuel_in_percent}% - <span " +
       "style='font-weight: bold;'>#{fuel_type}</span><br>" +
       "<a href='#{reserve_url}'>Reserve</a>"
   end

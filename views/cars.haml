@@ -42,7 +42,7 @@
      $('#getdncity').show();
 
      $.ajax({
-       url: "/city?lat=" + lat + "&lng=" + lng,
+       url: "/city?lat=" + lat + "&lng=" + lng + "&csc=#{params[:csc]}",
        method: 'get',
        dataType: 'json'
      }).done(function(data){
@@ -93,7 +93,7 @@
 
      $.ajax({
        url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() +
-              "&cid=" + city.cityid,
+              "&cid=" + city.cityid + "&csc=#{params[:csc]}",
        method: 'get',
        dataType: 'json'
      }).done(function(data){
@@ -174,7 +174,7 @@
     $('#cityloader').show();
 
     $.ajax({
-      url: "/city?lat=" + lat + "&lng=" + lng,
+      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=#{params[:csc]}",
       method: 'get',
       dataType: 'json'
     }).done(function(city){
@@ -184,7 +184,8 @@
       $('#carloader').show();
 
       $.ajax({
-        url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid,
+        url: "/nearest?lat=" + lat + "&lng=" + lng +
+                 "&cid=" + city.cityid + "&csc=#{params[:csc]}",
         method: 'get',
         dataType: 'json'
       }).done(function(data){
