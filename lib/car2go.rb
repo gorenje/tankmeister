@@ -47,7 +47,7 @@ module Car2Go
     end
 
     def reserve_url
-      "car2go://vehicle/%s?latlng=%s" % [ vin, latlng ]
+      "car2go://car2go.com/vehicle/%s?latlng=%s" % [ vin, latlng ]
     end
 
     def fuel_in_percent

@@ -36,10 +36,7 @@ get '/nearest' do
       nearest(car.location)[0..2]
   end.flatten
 
-  resilts =
   { "cars" => nearest_cars.map(&:to_hash),
     "fs"   => fuelstations.map(&:to_hash)
-  }
-  puts resilts
-  resilts.to_json
+  }.to_json
 end
