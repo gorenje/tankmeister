@@ -1,0 +1,11 @@
+%button{ :onclick => "updateLocation()" } Update Location
+%img#spinner{:src=>"/images/spinner.gif", :style=>"display: none;"}
+#cityloader{ :style=>"display: none;" }
+  City data being loaded ...
+  %img{ :src => "/images/spinner.gif" }
+#carloader{ :style => "display: none;" }
+  Car data being loaded ...
+  %img{ :src => "/images/spinner.gif" }
+
+= you_marker_car_sharing_company
+%a{ :href => "/" } Change

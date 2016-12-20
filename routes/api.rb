@@ -1,14 +1,15 @@
 get '/city' do
   content_type :json
 
-  klz = case (params[:csc] || 'dnw')
-        when 'dnw' then DriveNow::City
-        when 'ctg' then Car2Go::City
-        else DriveNow::City
-        end
+  klzs = case (params[:csc] || 'dnw')
+         when 'dnw' then [DriveNow::City]
+         when 'ctg' then [Car2Go::City]
+         when 'all', 'any' then [DriveNow::City, Car2Go::City]
+         else [DriveNow::City]
+         end
 
   my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
-  city        = klz.all.nearest(my_location).first
+  city        = klzs.map(&:all).flatten.nearest(my_location).first
 
   { :cityid => CGI::escape(city.id), :name => city.name }.to_json
 end
@@ -16,27 +17,26 @@ end
 get '/nearest' do
   content_type :json
 
-  city = case (params[:csc] || 'dnw')
-         when 'dnw' then DriveNow::City.new("id" => params[:cid])
-         when 'ctg' then Car2Go::City.new("locationName" => params[:cid])
-         else DriveNow::City.new("id" => params[:cid])
-         end
-
-  data = city.car_details
-
   my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
 
-  nearest_cars = data[:cars].
-    select { |c| c.needs_fuelling? }.
-    reject { |c| c.is_charging? }.
-    nearest(my_location)[0..2]
+  cities = case (params[:csc] || 'dnw')
+           when 'dnw' then [DriveNow::City.new("id" => params[:cid])]
+           when 'ctg' then [Car2Go::City.new("locationName" => params[:cid])]
+           when 'all', 'any'
+             [DriveNow::City.all.nearest(my_location).first,
+              Car2Go::City.all.nearest(my_location).first]
+           else [DriveNow::City.new("id" => params[:cid])]
+           end
 
-  fuelstations = nearest_cars.map do |car|
-    (car.is_electro? ? data[:electro_stations] : data[:petrol_stations]).
-      nearest(car.location)[0..2]
-  end.flatten
+  resp = cities.map do |city|
+    map_car_details_to_result_hash(city.car_details, my_location, params)
+  end.map do |rs|
+    [ rs["cars"], rs["fs"] ]
+  end.inject( [[],[]] ) do |result, ary|
+    result[0] += ary.first
+    result[1] += ary.last
+    result
+  end
 
-  { "cars" => nearest_cars.map(&:to_hash),
-    "fs"   => fuelstations.map(&:to_hash)
-  }.to_json
+  { "cars" => resp[0].map(&:to_hash), "fs" => resp[1].map(&:to_hash) }.to_json
 end

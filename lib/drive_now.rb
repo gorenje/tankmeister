@@ -1,6 +1,4 @@
 module DriveNow
-  extend self
-
   class City < City
     def self.all
       Curlobj.

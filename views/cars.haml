@@ -7,8 +7,11 @@
 #map
 
 :javascript
-  var map, infowin, youmarker, ym_base_content,
+  var map, infowin, youmarker, ym_base_content, csc,
                carmarkers = [], fsmarkers = [], directionsDisplay;
+
+  ym_base_content = #{@ym_base_content};
+  csc = "#{params[:csc]}";
 
   function initMap() {
      map = new google.maps.Map(document.getElementById('map'), {
@@ -42,7 +45,7 @@
      $('#getdncity').show();
 
      $.ajax({
-       url: "/city?lat=" + lat + "&lng=" + lng + "&csc=#{params[:csc]}",
+       url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
        method: 'get',
        dataType: 'json'
      }).done(function(data){
@@ -51,17 +54,6 @@
    }
 
    function setUpMarkers(origin, city) {
-     ym_base_content = "<button onclick='updateLocation()'>" +
-                       "Update Location</button>" +
-                       "<img id='spinner' src='/images/spinner.gif' " +
-                       "style='display: none;'/>" +
-                       "<div style='display: none;' id='cityloader'>" +
-                       "City data being loaded ... <img " +
-                       "src='/images/spinner.gif' /></div>" +
-                       "<div style='display: none;' id='carloader'>" +
-                       "Car data being loaded ... <img " +
-                       "src='/images/spinner.gif' /></div>";
-
      infowin = new google.maps.InfoWindow({content: ""});
 
      youmarker = new google.maps.Marker({
@@ -93,7 +85,7 @@
 
      $.ajax({
        url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() +
-              "&cid=" + city.cityid + "&csc=#{params[:csc]}",
+              "&cid=" + city.cityid + "&csc=" + csc,
        method: 'get',
        dataType: 'json'
      }).done(function(data){
@@ -174,7 +166,7 @@
     $('#cityloader').show();
 
     $.ajax({
-      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=#{params[:csc]}",
+      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
       method: 'get',
       dataType: 'json'
     }).done(function(city){
@@ -185,7 +177,7 @@
 
       $.ajax({
         url: "/nearest?lat=" + lat + "&lng=" + lng +
-                 "&cid=" + city.cityid + "&csc=#{params[:csc]}",
+                 "&cid=" + city.cityid + "&csc=" + csc,
         method: 'get',
         dataType: 'json'
       }).done(function(data){

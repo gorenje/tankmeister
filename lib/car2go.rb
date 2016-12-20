@@ -1,8 +1,4 @@
-require_relative '../models/car.rb'
-
 module Car2Go
-  extend self
-
   class Car < Car
     def initialize(hsh)
       @data = hsh
@@ -47,7 +43,7 @@ module Car2Go
     end
 
     def reserve_url
-      "car2go://car2go.com/vehicle/%s?latlng=%s" % [ vin, latlng ]
+      "https://car2go.com/vehicle/%s?latlng=%s" % [ vin, latlng ]
     end
 
     def fuel_in_percent
@@ -56,6 +52,22 @@ module Car2Go
 
     def fuel_type
       is_electro? ? "Electro" : "Super - E10"
+    end
+  end
+
+  class PetrolFS < PetrolFS
+    def initialize(hsh)
+      org, addr = hsh["name"].split(/,/).map(&:strip)
+      hsh["latitude"]     = hsh["coordinates"][1]
+      hsh["longitude"]    = hsh["coordinates"][0]
+      hsh["name"]         = org
+      hsh["address"]      = [addr]
+      hsh["organisation"] = org
+      super(hsh)
+    end
+
+    def marker_icon
+      "/images/marker_car2go_tankstation.png"
     end
   end
 
@@ -92,19 +104,15 @@ module Car2Go
                           CGI::escape(id))["placemarks"].map do |hsh|
           Car2Go::Car.new(hsh)
         end
+
         resp[:electro_stations] = []
+
         resp[:petrol_stations] = Curlobj.
           car2go_data_for("https://www.car2go.com/api/v2.1/gasstations"+
                           "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
                           "&format=json&loc=" +
                           CGI::escape(id))["placemarks"].map do |hsh|
-          org, addr = hsh["name"].split(/,/).map(&:strip)
-          hsh["latitude"]     = hsh["coordinates"][1]
-          hsh["longitude"]    = hsh["coordinates"][0]
-          hsh["name"]         = org
-          hsh["address"]      = [addr]
-          hsh["organisation"] = org
-          PetrolFS.new(hsh)
+          Car2Go::PetrolFS.new(hsh)
         end
       end
     end
