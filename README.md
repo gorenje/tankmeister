@@ -1,16 +1,21 @@
-Drive Now - Find the closest cars that need refilling
+Bonus Minutes - Show the closest three DriveNow or Car2Go cars that need refuelling
 ---
 
 Tiny webapp that takes your location and shows you the three closest
-DriveNow cars that need refuelling (so you can earn bonus minutes).
+cars that need refuelling (so you can earn bonus minutes). This works for
+[DriveNow](https://dnbm.herokuapp.com/cars?csc=dnw) and
+[Car2Go](https://dnbm.herokuapp.com/cars?csc=ctg).
 
 Also shown are the nearest tank stations (or electro charging stations)
-where you can refill the car.
+where the car can be refilled.
 
 Unfortunately since the applink options for DriveNow aren't clear or
 obvious, the reserve link will only open the DriveNow app but doesn't
 link directly to the car.
 
+Car2Go has far better [deeplinks](https://github.com/car2go/openAPI/wiki/Deeplinks-to-car2go-app), making
+reservation far simpler. Unfortunately you only get 10 bonus minutes,
+so it's actually hardly further the effort (at least in Berlin).
 Website is running on [heroku](https://dnbm.herokuapp.com).
 
 Deployment
@@ -33,6 +38,12 @@ a) DriveNow decides to block the requests coming from the backend server (which 
 b) DriveNow decides to change their API, i.e. make it more restrictive.
 
 So this might fail without warning.
+
+Car2Go API
+---
+
+They have a very good [description](https://github.com/car2go/openAPI),
+including applinks (aka deeplinks).
 
 License
 ---
