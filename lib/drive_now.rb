@@ -4,8 +4,8 @@ module DriveNow
   class City < City
     def self.all
       Curlobj.
-        data_for("https://api2.drive-now.com/"+
-                 "cities?expand=cities")["items"].map do |hsh|
+        drivenow_data_for("https://api2.drive-now.com/"+
+                          "cities?expand=cities")["items"].map do |hsh|
         DriveNow::City.new(hsh)
       end
     end
@@ -25,7 +25,7 @@ module DriveNow
 
     def car_details
       data = Curlobj.
-        data_for("https://api2.drive-now.com/cities/#{id}?expand=full")
+        drivenow_data_for("https://api2.drive-now.com/cities/#{id}?expand=full")
 
       {}.tap do |resp|
         resp[:electro_stations] = data["chargingStations"]["items"].map do |hsh|

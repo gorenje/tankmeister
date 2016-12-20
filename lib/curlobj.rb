@@ -9,7 +9,7 @@ class Curlobj
     c.body.to_s
   end
 
-  def self.data_for(url, opts = {})
+  def self.drivenow_data_for(url, opts = {})
     perform_and_return_json(prepare(url, opts))
   end
 

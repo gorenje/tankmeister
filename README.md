@@ -29,13 +29,20 @@ directions api.
 
 [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/gorenje/drivenow)
 
+Supported Locations
+---
+
+All cities for both DriveNow and Car2Go are supported. The exact city is
+determined by your location, so this will work even if you're in the
+middle of nowhere!
+
 DriveNow API
 ---
 
 Since there isn't an "official" API from DriveNow, this code will fail if
 
-a) DriveNow decides to block the requests coming from the backend server (which they already do for servers located in Amazon Europe).
-b) DriveNow decides to change their API, i.e. make it more restrictive.
+1. DriveNow decides to block the requests coming from the backend server (which they already do for servers located in Amazon Europe).
+2. DriveNow decides to change their API, i.e. make it more restrictive.
 
 So this might fail without warning.
 
