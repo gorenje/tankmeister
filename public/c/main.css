@@ -1,9 +1,21 @@
 #map {
- height: 800px;
- width: 100%;
+    height: 800px;
+    width: 100%;
 }
 
 body {
     background-color: #eeeeee;
     color: #111111;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.hide {
+    display: none;
 }

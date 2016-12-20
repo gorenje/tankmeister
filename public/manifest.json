@@ -1,0 +1,25 @@
+{
+  "short_name": "Carsharing Bonusminutes",
+  "name": "Carsharing bonus minutes collection",
+  "background_color": "blue",
+  "icons": [
+    {
+      "src": "/images/appicon_96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/appicon_144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/appicon_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/cars",
+  "display": "standalone",
+  "orientation": "portrait"
+}

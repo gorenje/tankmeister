@@ -1,6 +1,6 @@
 - [[:getgeoloc,"location"], [:getdncity,"city"], |
   [:getcardata,"cars"]].each do |id, txt|
-  %div{ :id => id, :style => 'display: none;' }
+  %div.hide.center{ :id => id }
     = "Obtaining your #{txt} ...."
     %img{ :src => '/images/spinner.gif' }
 
@@ -64,7 +64,7 @@
        zIndex: google.maps.Marker.MAX_ZINDEX - 1
      });
 
-     youmarker._details = "Current Location:<br>" + city.name + "<p>" +
+     youmarker._details = "Current Location:<br>" + city.name + "<br>" +
                           ym_base_content;
      youmarker.addListener('click', function() {
        infowin.setContent(youmarker._details);
