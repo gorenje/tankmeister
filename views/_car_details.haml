@@ -1,0 +1,16 @@
+%p
+  %img{ :src => image_url }
+  %br
+  = name
+  %br
+  = address_line
+  %br
+  Fuel level:
+  = "#{fuel_in_percent}% -"
+  %span.bold= fuel_type
+  %br
+  Walking time:
+  %span#wktime.bold ...
+  mins
+  %p
+  %a.button{ :href=> reserve_url } Reserve

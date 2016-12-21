@@ -27,3 +27,7 @@ a.button {
     text-decoration: none;
     color: initial;
 }
+
+.bold {
+    font-weight: bold;
+}

@@ -58,12 +58,10 @@ class Car
   end
 
   def details
-    "<img src='#{image_url}'/><p>#{name}<br>#{address_line}<br>" +
-      "Fuel level: #{fuel_in_percent}% - <span " +
-      "style='font-weight: bold;'>#{fuel_type}</span><br>" +
-      "Walking time: <span style='font-weight: "+
-      "bold;' id='wktime'>...</span> mins<p>" +
-      "<a class='button' href='#{reserve_url}'>Reserve</a>"
+    require 'haml'
+    engine = Haml::Engine.new(File.read(File.dirname(__FILE__)+
+                                        "/../views/_car_details.haml"))
+    engine.render(binding)
   end
 
   def fuel_type
