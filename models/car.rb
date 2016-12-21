@@ -61,7 +61,9 @@ class Car
     "<img src='#{image_url}'/><p>#{name}<br>#{address_line}<br>" +
       "Fuel level: #{fuel_in_percent}% - <span " +
       "style='font-weight: bold;'>#{fuel_type}</span><br>" +
-      "<a href='#{reserve_url}'>Reserve</a>"
+      "Walking time: <span style='font-weight: "+
+      "bold;' id='wktime'>...</span> mins<p>" +
+      "<a class='button' href='#{reserve_url}'>Reserve</a>"
   end
 
   def fuel_type
