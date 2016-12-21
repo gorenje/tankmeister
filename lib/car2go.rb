@@ -1,7 +1,7 @@
 module Car2Go
   class Car < Car
     def initialize(hsh)
-      @data = hsh
+      super(hsh)
       crds = @data["coordinates"]
       @location = Geokit::LatLng.new(crds[1],crds[0])
     end

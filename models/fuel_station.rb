@@ -22,10 +22,18 @@ class FuelStation
     @data["name"]
   end
 
+  def organisation
+    @data["organisation"]
+  end
+
+  def address_line
+    @data["address"].join(", ")
+  end
+
   def details
-    "%s<br>%s<br>%s<br>" % [@data["name"],
-                            @data["address"].join(", "),
-                            @data["organisation"]]
+    Haml::Engine.new(File.read(File.dirname(__FILE__)+
+                               "/../views/_fs_details.haml")).
+      render(binding)
   end
 
   def to_hash

@@ -10,6 +10,7 @@ require 'curb'
 require 'zlib'
 require 'stringio'
 require 'geokit'
+require 'haml'
 
 if File.exists?(".env")
   require 'dotenv'
