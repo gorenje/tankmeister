@@ -52,6 +52,20 @@ Car2Go API
 They have a very good [description](https://github.com/car2go/openAPI),
 including applinks (aka deeplinks).
 
+Running Locally
+---
+
+To run this locally, simply do the following:
+
+```
+bundle
+rake appjson:to_dotenv
+$EDITOR .env
+foreman start web
+```
+
+Then ```open -a Firefox http://localhost:5000```
+
 License
 ---
 
