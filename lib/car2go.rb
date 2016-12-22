@@ -26,10 +26,6 @@ module Car2Go
       @data["address"]
     end
 
-    def image_url
-      "/images/transparent.png"
-    end
-
     def marker_icon
       "/images/marker_car2go_car.png"
     end

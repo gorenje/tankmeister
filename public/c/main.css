@@ -26,6 +26,7 @@ a.button {
     appearance: button;
     text-decoration: none;
     color: initial;
+    padding: 2px;
 }
 
 .bold {

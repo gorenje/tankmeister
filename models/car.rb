@@ -17,6 +17,10 @@ class Car
     @data.to_s
   end
 
+  def image_url
+    "/images/transparent.png"
+  end
+
   def details
     Haml::Engine.new(File.read(File.dirname(__FILE__)+
                                "/../views/_car_details.haml")).
