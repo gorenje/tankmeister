@@ -14,16 +14,13 @@ if File.exists?(".env")
   Dotenv.load
 end
 
+Dir[File.join(File.dirname(__FILE__), 'lib', 'tasks','*.rake')].each do |f|
+  load f
+end
+
 [
  ['models'],
  ['lib'],
 ].each do |path|
   Dir[File.join(File.dirname(__FILE__), path, '*.rb')].each { |f| require f }
-end
-
-desc "Start a pry shell and load all gems"
-task :shell  do
-  require 'pry'
-  Pry.editor = ENV['PRY_EDITOR'] || ENV['EDITOR'] || 'emacs'
-  Pry.start
 end

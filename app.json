@@ -3,7 +3,7 @@
   "description": "Show the closest empty cars",
   "keywords": [
     "drivenow",
-    "fueling"
+    "fuelling"
   ],
   "website": "https://github.com/gorenje/drivenow",
   "repository": "https://github.com/gorenje/drivenow",
@@ -19,7 +19,7 @@
     "DRIVE_NOW_API_KEY": {
       "description": "DriveNow API Key.",
       "required": true
-    }.
+    },
     "CAR2GO_CONSUMER_KEY": {
       "description": "Car2Go oauth consumer key.",
       "required": true
