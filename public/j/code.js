@@ -1,5 +1,5 @@
 function initMap() {
-   map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
      zoom: 14,
      gestureHandling: 'greedy',
      mapTypeControl: false,
@@ -8,44 +8,46 @@ function initMap() {
      zoomControlOptions: {
        position: google.maps.ControlPosition.TOP_LEFT
      }
-   });
+  });
 
-   $('#getgeoloc').show();
-   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(setUpMap);
-   } else {
-      $('#map').html("Geolocation is not supported by this browser.");
-      $('#getgeoloc').hide();
-   }
+  $('#getgeoloc').show();
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(setUpMap);
+  } else {
+    $('#map').html("Geolocation is not supported by this browser.");
+    $('#getgeoloc').hide();
+  }
 }
 
 function updateLocation() {
   $('#spinner').show();
   if (navigator.geolocation) {
-     navigator.geolocation.getCurrentPosition(updateMarkers);
+    navigator.geolocation.getCurrentPosition(updateMarkers);
   } else {
-     $('#map').html("Geolocation is not supported by this browser.");
+    $('#map').html("Geolocation is not supported by this browser.");
+    $('#spinner').hide();
   }
 }
 
 function setUpMap(position) {
-   var lat = position.coords.latitude,
-       lng = position.coords.longitude;
+  var lat = position.coords.latitude,
+      lng = position.coords.longitude;
 
-   var origin = new google.maps.LatLng(lat,lng);
-   map.setCenter(origin);
+  var origin = new google.maps.LatLng(lat,lng);
+  map.setCenter(origin);
 
-   $('#getgeoloc').hide();
-   $('#getdncity').show();
+  $('#getgeoloc').hide();
+  $('#getdncity').show();
 
-   $.ajax({
+  $.ajax({
      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
      method: 'get',
      dataType: 'json'
-   }).done(function(data){
-     setUpMarkers(origin, data);
-   });
- }
+  }).done(function(data){
+    setUpMarkers(origin, data);
+  });
+}
 
 function setUpMarkers(origin, city) {
   infowin = new google.maps.InfoWindow({content: ""});
