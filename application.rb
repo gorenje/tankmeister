@@ -9,7 +9,6 @@ require 'digest/md5'
 require 'curb'
 require 'zlib'
 require 'stringio'
-require 'geokit'
 require 'haml'
 
 if File.exists?(".env")
@@ -32,6 +31,9 @@ set :dump_errors, true
 if settings.environment == :development
   require 'pry'
 end
+
+Dir[File.join(File.dirname(__FILE__),'config', 'initializers','*.rb')].
+  each { |a| require_relative a }
 
 [
  ['routes'],

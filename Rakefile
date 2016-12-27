@@ -7,7 +7,6 @@ require 'zlib'
 require 'stringio'
 require 'pry'
 require 'json'
-require 'geokit'
 
 if File.exists?(".env")
   require 'dotenv'
@@ -17,6 +16,9 @@ end
 Dir[File.join(File.dirname(__FILE__), 'lib', 'tasks','*.rake')].each do |f|
   load f
 end
+
+Dir[File.join(File.dirname(__FILE__),'config', 'initializers','*.rb')].
+  each { |a| require_relative a }
 
 [
  ['models'],

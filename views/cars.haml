@@ -1,10 +1,11 @@
 - [[:getgeoloc,"location"], [:getdncity,"city"], |
   [:getcardata,"cars"]].each do |id, txt|
   %div.hide.center{ :id => id }
-    = "Obtaining your #{txt} ...."
+    = "Locating your #{txt} ...."
     %img{ :src => '/images/spinner.gif' }
 
 #map
+#timestamp
 
 :javascript
   var map, infowin, youmarker, ym_base_content, csc, glb_city,
@@ -13,5 +14,6 @@
   ym_base_content = #{@ym_base_content};
   csc = "#{params[:csc]}";
 
+%script{:async => "", :defer => "defer", :src => "/j/notify.js"}
 %script{:async => "", :defer => "defer", :src => "/j/code.js"}
 %script{:async => "", :defer => "defer", :src => "/google.js"}

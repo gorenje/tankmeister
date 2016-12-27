@@ -38,5 +38,10 @@ get '/nearest' do
     result
   end
 
-  { "cars" => resp[0].map(&:to_hash), "fs" => resp[1].map(&:to_hash) }.to_json
+  tz = Timezone.lookup(params["lat"], params["lng"])
+
+  { "cars"   => resp[0].map(&:to_hash),
+    "fs"     => resp[1].map(&:to_hash),
+    "tstamp" => tz.utc_to_local(DateTime.now).strftime("%H:%M:%S %d/%m/%Y")
+  }.to_json
 end

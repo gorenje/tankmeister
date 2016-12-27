@@ -10,7 +10,7 @@ class Car
   end
 
   def distance(loc)
-    location.distance_to(loc)
+    @last_distance = location.distance_to(loc)
   end
 
   def to_s
@@ -36,7 +36,8 @@ class Car
       "details"       => details,
       "marker_icon"   => marker_icon,
       "name"          => name,
-      "json_location" => json_location
+      "json_location" => json_location,
+      "distance"      => @last_distance
     }
   end
 end

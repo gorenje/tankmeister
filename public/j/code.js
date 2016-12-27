@@ -111,6 +111,7 @@ function setUpMarkers(origin, city) {
       });
 
       carmarkers[idx]._details = car.details;
+      notifyCloseCars(car);
 
       carmarkers[idx].addListener('click', function(){
         infowin.setContent(carmarkers[idx]._details);
@@ -173,6 +174,7 @@ function updateMarkers(position) {
          fsmarkers[idx]._details = fs.details;
        });
        $.each(data.cars, function(idx, car) {
+         notifyCloseCars(car);
          carmarkers[idx].setPosition(car.json_location);
          carmarkers[idx].setIcon(car.marker_icon);
          carmarkers[idx].setTitle(car.name);
@@ -181,6 +183,7 @@ function updateMarkers(position) {
 
        $('#carloader').hide();
        infowin.close();
+       $('#timestamp').html("Last update: " + data.tstamp);
      });
   });
 }

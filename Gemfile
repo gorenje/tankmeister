@@ -15,6 +15,7 @@ gem 'sinatra-contrib'
 gem 'haml'
 gem 'foreman'
 gem 'unicorn'
+gem 'timezone'
 
 group :development do
   gem 'html2haml'
