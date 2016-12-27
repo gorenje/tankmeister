@@ -6,6 +6,9 @@
 
 #map
 #timestamp
+%form
+  %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+    %label{ :for => "autoupdate" } Automatic Update
 
 :javascript
   var map, infowin, youmarker, ym_base_content, csc, glb_city,
@@ -16,4 +19,5 @@
 
 %script{:async => "", :defer => "defer", :src => "/j/notify.js"}
 %script{:async => "", :defer => "defer", :src => "/j/code.js"}
+%script{:async => "", :defer => "defer", :src => "/j/automatic_update.js"}
 %script{:async => "", :defer => "defer", :src => "/google.js"}
