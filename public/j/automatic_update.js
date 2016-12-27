@@ -1,3 +1,5 @@
+var currTimer = null;
+
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(getCarAndCityData);
@@ -30,15 +32,19 @@ function autoNotification() {
   try {
     getLocation();
   } catch (x) {
-    console.log(x);
   }
-  setTimeout(autoNotification, 10000);
+  currTimer = setTimeout(autoNotification, 10000);
 }
 
 $(document).ready(function(){
   $('#autoupdate').change(function() {
      if(this.checked) {
-       setTimeout( autoNotification, 10000 );
+       currTimer = setTimeout( autoNotification, 10000 );
+     } else {
+       if ( currTimer ) {
+         clearTimeout(currTimer);
+         currTimer = null;
+       }
      }
- });
+  });
 });

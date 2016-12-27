@@ -128,11 +128,13 @@ function setUpMarkers(origin, city) {
             var rt = result.routes[directionsDisplay.getRouteIndex()];
             directionsDisplay.setDirections(result);
 
-            var totaltime = 0;
+            var totaltime = 0, totaldistance = 0;
             $.each(rt.legs, function(idx, leg){
+              totaldistance += leg.distance.value;
               totaltime += leg.duration.value;
             });
             $('#wktime').html(Math.ceil(totaltime/60));
+            $('#wkdist').html((totaldistance/1000).toFixed(1));
           }
         });
       });
