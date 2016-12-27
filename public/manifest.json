@@ -21,5 +21,11 @@
   ],
   "start_url": "/cars",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "permissions": {
+    "desktop-notification": {
+      "description": "Needed notifying of nearby cars."
+    }
+  },
+  "messages": [{"notification": "/cars"}]
 }
