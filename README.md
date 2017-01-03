@@ -3,8 +3,8 @@ Tankmeister
 
 Tiny webapp that takes your location and shows you the three closest
 cars that need refuelling (so you can earn bonus minutes). This works for
-[DriveNow](https://dnbm.herokuapp.com/cars?csc=dnw) and
-[Car2Go](https://dnbm.herokuapp.com/cars?csc=ctg).
+[DriveNow](http://dn.tankmeister.de) and
+[Car2Go](http://c2g.tankmeister.de).
 
 Also shown are the nearest tank stations (or electro charging stations)
 where the car can be refilled.
