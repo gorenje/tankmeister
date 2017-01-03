@@ -1,5 +1,5 @@
 {
-  "short_name": "Carsharing Bonusminutes",
+  "short_name": "Tankmeister",
   "name": "Carsharing bonus minutes collection",
   "background_color": "blue",
   "icons": [
@@ -29,7 +29,7 @@
   "orientation": "portrait",
   "permissions": {
     "desktop-notification": {
-      "description": "Needed notifying of nearby cars."
+      "description": "Needed to notify of nearby cars."
     }
   },
   "messages": [{"notification": "/cars"}]
