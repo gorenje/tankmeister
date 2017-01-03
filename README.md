@@ -1,4 +1,4 @@
-Bonus Minutes - Show the closest three DriveNow or Car2Go cars that need refuelling
+Tankmeister
 ---
 
 Tiny webapp that takes your location and shows you the three closest
@@ -28,6 +28,18 @@ For the google api key, you'll need to enable the maps api and the
 directions api.
 
 [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/gorenje/drivenow)
+
+Google API Token
+---
+
+Since this app uses various services of google, you'll need to enable the
+following services for the API token/key:
+
+1. Google Maps Time Zone API
+2. Google Maps Javascript API
+3. Google Maps Directions API
+
+Otherwise app won't work!
 
 Supported Locations
 ---
