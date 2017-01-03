@@ -11,34 +11,12 @@ function initMap() {
   });
 
   $('#getgeoloc').show();
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(setUpMap,
-                                             geoLocationErrorHandler,
-                                             {timeout: 10000});
-  } else {
-    $('#map').html("Geolocation is not supported by this browser.");
-    $('#getgeoloc').hide();
-  }
+  retrieveLocation(setUpMap, '#getgeoloc');
 }
 
 function updateLocation() {
   $('#spinner').show();
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(updateMarkers,
-                                             geoLocationErrorHandler,
-                                             {timeout: 10000});
-  } else {
-    $('#map').html("Geolocation is not supported by this browser.");
-    $('#spinner').hide();
-  }
-}
-
-function geoLocationErrorHandler() {
-  $('#map').html("Geolocation is not supported by this browser "+
-                 "or location is not turned on.");
-  $('#getgeoloc').hide();
-  $('#spinner').hide();
+  retrieveLocation(updateMarkers, '#spinner');
 }
 
 function setUpMap(position) {
