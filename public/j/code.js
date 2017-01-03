@@ -150,6 +150,8 @@ function updateMarkers(position) {
 
   var origin = new google.maps.LatLng(lat,lng);
   youmarker.setPosition(origin);
+  map.setCenter(origin);
+
   $('#spinner').hide();
   $('#cityloader').show();
 
