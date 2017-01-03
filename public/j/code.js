@@ -13,7 +13,9 @@ function initMap() {
   $('#getgeoloc').show();
 
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(setUpMap);
+    navigator.geolocation.getCurrentPosition(setUpMap,
+                                             geoLocationErrorHandler,
+                                             {timeout: 10000});
   } else {
     $('#map').html("Geolocation is not supported by this browser.");
     $('#getgeoloc').hide();
@@ -23,11 +25,20 @@ function initMap() {
 function updateLocation() {
   $('#spinner').show();
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(updateMarkers);
+    navigator.geolocation.getCurrentPosition(updateMarkers,
+                                             geoLocationErrorHandler,
+                                             {timeout: 10000});
   } else {
     $('#map').html("Geolocation is not supported by this browser.");
     $('#spinner').hide();
   }
+}
+
+function geoLocationErrorHandler() {
+  $('#map').html("Geolocation is not supported by this browser "+
+                 "or location is not turned on.");
+  $('#getgeoloc').hide();
+  $('#spinner').hide();
 }
 
 function setUpMap(position) {
