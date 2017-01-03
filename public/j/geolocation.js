@@ -1,18 +1,24 @@
-function retrieveLocation(success_function, spinner_element) {
+function retrieveLocation(success_function) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(success_function,
                                              geoLocationErrorHandler,
-                                             {timeout: 10000});
+                                             {timeout: 30000});
   } else {
     $('#map').html("Geolocation is not supported by this browser.");
-    $(spinner_element).hide();
+    $('#autoform').hide();
+    $('#timestamp').hide();
+    $('#getgeoloc').hide();
+    $('#spinner').hide();
   }
 }
 
 
 function geoLocationErrorHandler() {
-  $('#map').html("Geolocation is not supported by this browser "+
-                 "or location is not turned on.");
+  $('#map').html("Location is either not supported by this device "+
+                 "or GPS is turned off. <br><a class='button' "+
+                 "href='javascript:location.reload(true);'>Retry</a>");
+  $('#autoform').hide();
+  $('#timestamp').hide();
   $('#getgeoloc').hide();
   $('#spinner').hide();
 }

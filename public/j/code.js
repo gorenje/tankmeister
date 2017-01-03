@@ -11,12 +11,12 @@ function initMap() {
   });
 
   $('#getgeoloc').show();
-  retrieveLocation(setUpMap, '#getgeoloc');
+  retrieveLocation(setUpMap);
 }
 
 function updateLocation() {
   $('#spinner').show();
-  retrieveLocation(updateMarkers, '#spinner');
+  retrieveLocation(updateMarkers);
 }
 
 function setUpMap(position) {

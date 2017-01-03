@@ -1,12 +1,12 @@
-- [[:getgeoloc,"location"], [:getdncity,"city"], |
-  [:getcardata,"cars"]].each do |id, txt|
+- [[:getgeoloc,"Locating you"], [:getdncity,"Identifying your city"], |
+  [:getcardata,"Finding cars"]].each do |id, txt|
   %div.hide.center{ :id => id }
-    = "Locating your #{txt} ...."
+    = "#{txt} ...."
     %img{ :src => '/images/spinner.gif' }
 
 #map
 #timestamp
-%form
+%form#autoform
   %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
     %label{ :for => "autoupdate" } Automatic Notification
 
