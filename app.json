@@ -1,9 +1,12 @@
 {
-  "name" : "DriveNow Closest Empty Cars",
+  "name" : "Tankmeister",
   "description": "Show the closest empty cars",
   "keywords": [
     "drivenow",
-    "fuelling"
+    "fuelling",
+    "car2go",
+    "tanking",
+    "bonus minutes"
   ],
   "website": "https://github.com/gorenje/drivenow",
   "repository": "https://github.com/gorenje/drivenow",
@@ -11,6 +14,10 @@
     "RACK_ENV": {
       "description": "Rack environment",
       "value": "production"
+    },
+    "HOSTS_WITH_NO_SSL": {
+      "description": "Comma separated list of non-ssl hosts",
+      "value": "localhost"
     },
     "GOOGLE_API_KEY": {
       "description": "Google maps api key",
@@ -23,6 +30,14 @@
     "CAR2GO_CONSUMER_KEY": {
       "description": "Car2Go oauth consumer key.",
       "required": true
+    },
+    "ACME_KEY[ONE]": {
+      "description": "Let's encrypt key",
+      "required": false
+    },
+    "ACME_TOKEN[ONE]": {
+      "description": "Let's encrypt token",
+      "required": false
     }
   }
 }

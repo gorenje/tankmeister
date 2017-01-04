@@ -1,8 +1,5 @@
 get '/' do
-  if request.scheme == 'http' && request.host != 'localhost'
-    redirect "https://#{request.host}"
-  end
-
+  redirect("https://#{request.host}") if redirect_host_to_ssl?
   haml :index
 end
 

@@ -38,4 +38,9 @@ module ViewHelpers
     { "cars" => nearest_cars.map(&:to_hash),
       "fs"   => fuelstations.map(&:to_hash)}
   end
+
+  def redirect_host_to_ssl?
+    request.scheme == 'http' &&
+      !ENV['HOSTS_WITH_NO_SSL'].split(",").map(&:strip).include?(request.host)
+  end
 end
