@@ -32,3 +32,9 @@ a.button {
 .bold {
     font-weight: bold;
 }
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
