@@ -8,7 +8,7 @@
     "tanking",
     "bonus minutes"
   ],
-  "website": "https://github.com/gorenje/drivenow",
+  "website": "https://tankmeister.de",
   "repository": "https://github.com/gorenje/drivenow",
   "env": {
     "RACK_ENV": {
