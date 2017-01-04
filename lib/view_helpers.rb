@@ -38,9 +38,4 @@ module ViewHelpers
     { "cars" => nearest_cars.map(&:to_hash),
       "fs"   => fuelstations.map(&:to_hash)}
   end
-
-  def redirect_to_host(path)
-    host = request.host.split(/\./)[1..-1].join(".")
-    redirect("%s://%s:%s%s" % [request.scheme, host, request.port, path])
-  end
 end

@@ -1,11 +1,9 @@
 get '/' do
-  case request.host.split(/\./).first
-  when 'dn' then redirect_to_host("/cars?csc=dnw")
-  when 'c2g' then redirect_to_host("/cars?csc=ctg")
-  when 'all' then redirect_to_host("/cars?csc=all")
-  else
-    haml :geoloc
+  if request.scheme == 'http' && request.host != 'localhost'
+    redirect "https://#{request.host}"
   end
+
+  haml :index
 end
 
 get '/cars' do
