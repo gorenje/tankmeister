@@ -3,7 +3,7 @@ namespace :manifestjson do
   task :verify do
     require 'json'
 
-    cfg = JSON(File.read("public/manifest.json"))
+    cfg = JSON(File.read("public/manifest.webapp"))
     puts "Seems ok"
   end
 end

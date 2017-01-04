@@ -22,6 +22,11 @@
       "src": "/images/appicon_192x192.png",
       "sizes": "192x192",
       "type": "image/png"
+    },
+    {
+      "src": "/images/appicon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": "/cars",
@@ -30,6 +35,9 @@
   "permissions": {
     "desktop-notification": {
       "description": "Needed to notify of nearby cars."
+    },
+    "geolocation": {
+      "description": "Needed to get location of the user."
     }
   },
   "messages": [{"notification": "/cars"}]
