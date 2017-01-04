@@ -19,5 +19,5 @@ gem 'timezone'
 
 group :development do
   gem 'html2haml'
-  gem 'dotenv'
+  gem 'dotenv', :git => 'https://github.com/gorenje/dotenv.git', :branch => 'squaure_brackets'
 end
