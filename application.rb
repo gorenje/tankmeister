@@ -39,6 +39,7 @@ Dir[File.join(File.dirname(__FILE__),'config', 'initializers','*.rb')].
  ['routes'],
  ['models'],
  ['lib'],
+ ['models/csc'],
 ].each do |path|
   Dir[File.join(File.dirname(__FILE__), path, '*.rb')].each { |f| require f }
 end

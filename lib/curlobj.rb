@@ -17,6 +17,19 @@ class Curlobj
     perform_and_return_json(car2go_prepare(url, opts))
   end
 
+  def self.multicity_data_for(url, opts = {})
+    if opts[:post]
+      c = Curl::Easy.new(url)
+      c.multipart_form_post = true
+      post_field =
+        Curl::PostField.content(opts[:data][:name], opts[:data][:value])
+      c.http_post(post_field)
+      JSON(c.body)
+    else
+      perform_and_return_json(car2go_prepare(url, opts))
+    end
+  end
+
   def self.prepare(urlstr, opts = {})
     Curl::Easy.new.tap do |w|
       w.url = urlstr
@@ -47,8 +60,12 @@ class Curlobj
 
   def self.perform_and_return_json(c)
     c.perform
-    gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
-    JSON(gz.read)
+    begin
+      gz = Zlib::GzipReader.new(StringIO.new(c.body.to_s))
+      JSON(gz.read)
+    rescue Zlib::GzipFile::Error => e
+      JSON(c.body)
+    end
   end
 
 end

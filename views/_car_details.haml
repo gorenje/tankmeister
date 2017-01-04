@@ -3,7 +3,10 @@
   %br
   = name
   %br
-  = address_line
+  - if address_line
+    = address_line
+  - else
+    %span#addrline ...
   %br
   Fuel level:
   = "#{fuel_in_percent}% -"

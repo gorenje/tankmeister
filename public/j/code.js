@@ -121,6 +121,7 @@ function setUpMarkers(origin, city) {
               totaldistance += leg.distance.value;
               totaltime += leg.duration.value;
             });
+            $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
             $('#wktime').html(Math.ceil(totaltime/60));
             $('#wkdist').html((totaldistance/1000).toFixed(1));
           }
