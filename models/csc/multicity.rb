@@ -75,15 +75,20 @@ module Multicity
     end
 
     def is_full?
-      @mrkinfo["free"].to_i == 0
+      capacity_info[:free] == 0
     end
 
     def is_crowded?
-      @mrkinfo["free"].to_i != @mrkinfo["capacity"].to_i
+      cpi = capacity_info
+      cpi[:free] != cpi[:total]
     end
 
     def marker_icon
       "/images/marker_mc_ladesaeule" + (is_crowded? ? "_crowded" : "") + ".png"
+    end
+
+    def capacity_info
+      { :free => @mrkinfo["free"].to_i, :total => @mrkinfo["capacity"].to_i }
     end
   end
 

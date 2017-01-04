@@ -31,9 +31,13 @@ class FuelStation
   end
 
   def details
-    Haml::Engine.new(File.read(File.dirname(__FILE__)+
+    Haml::Engine.new(File.read(File.dirname(__FILE__) +
                                "/../views/_fs_details.haml")).
       render(binding)
+  end
+
+  def capacity_info
+    false
   end
 
   def to_hash

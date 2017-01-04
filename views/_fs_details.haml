@@ -4,3 +4,9 @@
   = address_line
   %br
   = name
+  - if cpi = capacity_info
+    %br
+    Capacity:
+    %span.bold= cpi[:free]
+    spot(s) free of
+    %span.bold= cpi[:total]
