@@ -3,8 +3,8 @@ Tankmeister
 
 Tiny webapp that takes your location and shows you the three closest
 cars that need refuelling (so you can earn bonus minutes). This works for
-[DriveNow](http://dn.tankmeister.de) and
-[Car2Go](http://c2g.tankmeister.de).
+[DriveNow](https://tankmeister.de/cars?csc=dnw) and
+[Car2Go](https://tankmeister.de/cars?csc=ctg).
 
 Also shown are the nearest tank stations (or electro charging stations)
 where the car can be refilled.
@@ -77,6 +77,34 @@ foreman start web
 ```
 
 Then ```open -a Firefox http://localhost:5000```
+
+Let's Encrypt Support
+---
+
+If you want to setup a SSL certificate (which is a [good idea](http://stackoverflow.com/questions/32106849/getcurrentposition-and-watchposition-are-deprecated-on-insecure-origins)), then you can use [let's encrypt](https://letsencrypt.org/) to get a free ssl certificate.
+
+Follow this [guide](http://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku/) to find out what needs to be done.
+
+To provide the correct response, you'll need to setup two (or more) environment
+variables at heroku. These are:
+
+```
+ACME_KEY[domain]=xxx
+ACME_TOKEN[domain]=yyy
+```
+
+where ```domain``` can be anything as long as they match and ```KEY```
+is the response for the ```TOKEN```. Example using the data found
+in the [guide](http://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku/):
+
+```
+ACME_KEY[ONE]=ya6k1edW38z-your-value-here
+ACME_TOKEN[ONE]=ya6k1ed-SOME-LONG-URL
+```
+
+You might need multiple key/token pairs, one for which domain that you
+need a certificate for. For example, tankmeister.de and www.tankmeister.de
+are two different domains, hence two key/token pairs.
 
 License
 ---
