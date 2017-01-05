@@ -74,15 +74,6 @@ module Multicity
       super(hsh)
     end
 
-    def is_full?
-      capacity_info[:free] == 0
-    end
-
-    def is_crowded?
-      cpi = capacity_info
-      cpi[:free] != cpi[:total]
-    end
-
     def marker_icon
       "/images/marker_mc_ladesaeule" + (is_crowded? ? "_crowded" : "") + ".png"
     end

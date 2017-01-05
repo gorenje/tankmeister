@@ -43,6 +43,23 @@ module DriveNow
     end
   end
 
+  class ElectroFS < ElectroFS
+    AssumedCapacity = 2
+
+    def initialize(hsh)
+      super(hsh)
+      @free = AssumedCapacity
+    end
+
+    def increment_car_count
+      @free -= 1
+    end
+
+    def capacity_info
+      { :free => @free, :total => AssumedCapacity }
+    end
+  end
+
   class City < City
     def self.all
       Curlobj.
@@ -71,7 +88,7 @@ module DriveNow
 
       {}.tap do |resp|
         resp[:electro_stations] = data["chargingStations"]["items"].map do |hsh|
-          ElectroFS.new(hsh)
+          DriveNow::ElectroFS.new(hsh)
         end
 
         resp[:petrol_stations] = data["petrolStations"]["items"].map do |hsh|
@@ -81,6 +98,14 @@ module DriveNow
         resp[:cars] = data["cars"]["items"].map do |hsh|
           DriveNow::Car.new(hsh)
         end
+
+        resp[:cars].
+          select { |car| car.is_charging? }.
+          each do |car|
+          resp[:electro_stations].nearest( car.location ).first.
+            increment_car_count
+        end
+        resp[:electro_stations].reject! { |fs| fs.is_full? }
       end
     end
   end

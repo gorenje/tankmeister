@@ -36,6 +36,15 @@ class FuelStation
       render(binding)
   end
 
+  def is_full?
+    capacity_info[:free] == 0
+  end
+
+  def is_crowded?
+    cpi = capacity_info
+    cpi[:free] != cpi[:total]
+  end
+
   def capacity_info
     false
   end
