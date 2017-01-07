@@ -1,4 +1,5 @@
 var watch_position_id = null;
+var current_location = null;
 
 function retrieveLocation(success_function) {
   if (navigator.geolocation) {

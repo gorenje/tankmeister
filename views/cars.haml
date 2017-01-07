@@ -7,11 +7,13 @@
 #map
 #timestamp
 %form#autoform
+  %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+    %label{ :for => "autonotify" } Auto. Notify
   %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-    %label{ :for => "autoupdate" } Automatic Notification
+    %label{ :for => "autoupdate" } Auto. Update
 
 :javascript
-  var map, infowin, youmarker, ym_base_content, csc, glb_city, current_location,
+  var map, infowin, youmarker, ym_base_content, csc, glb_city,
                carmarkers = [], fsmarkers = [], directionsDisplay;
 
   ym_base_content = #{@ym_base_content};

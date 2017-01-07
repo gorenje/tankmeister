@@ -17,7 +17,6 @@ function initMap() {
 function updateLocation() {
   $('#spinner').show();
   retrieveLocation(updateMarkers);
-  // autoUpdateCarsTrigger();
 }
 
 function setUpMap(position) {
@@ -25,7 +24,6 @@ function setUpMap(position) {
       lng = position.coords.longitude;
 
   var origin = new google.maps.LatLng(lat,lng);
-  current_location = new google.maps.LatLng(lat,lng);
   map.setCenter(origin);
 
   $('#getgeoloc').hide();
@@ -138,12 +136,9 @@ function updateMarkers(position) {
   directionsDisplay.setDirections({routes: []});
 
   var lat = position.coords.latitude,
-       lng = position.coords.longitude;
-  // var lat = position.lat(), lng = position.lng();
+      lng = position.coords.longitude;
 
   var origin = new google.maps.LatLng(lat,lng);
-  current_location = new google.maps.LatLng(lat,lng);
-
   youmarker.setPosition(origin);
   map.setCenter(origin);
 
