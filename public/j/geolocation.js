@@ -1,3 +1,5 @@
+var watch_position_id = null;
+
 function retrieveLocation(success_function) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(success_function,
@@ -23,3 +25,19 @@ function geoLocationErrorHandler() {
   $('#spinner').hide();
 }
 
+function listenForLocationChange() {
+  watch_position_id = 
+    navigator.geolocation.watchPosition(updateCurrentLocation);
+}
+
+function stopListeningForLocationChange() {
+  if ( watch_position_id !== null ) {
+    navigator.geolocation.clearWatch(watch_position_id);
+    watch_position_id = null;
+  }
+}
+
+function updateCurrentLocation(pos) {
+  current_location = new google.maps.LatLng(pos.coords.latitude,
+                                            pos.coords.longitude);
+}

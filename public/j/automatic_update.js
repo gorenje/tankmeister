@@ -1,14 +1,8 @@
-var currTimer = null;
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getCarAndCityData);
-  }
-}
+var current_timer_id = null;
+var current_auto_update_timer_id = null;
 
 function getCarAndCityData(position){
-  var lat = position.coords.latitude,
-      lng = position.coords.longitude;
+  var lat = position.lat(), lng = position.lng();
 
   $.ajax({
     url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
@@ -30,21 +24,36 @@ function getCarAndCityData(position){
 
 function autoNotification() {
   try {
-    getLocation();
+    getCarAndCityData(current_location);
   } catch (x) {
   }
-  currTimer = setTimeout(autoNotification, 10000);
+  current_timer_id = setTimeout(autoNotification, 10000);
 }
 
 $(document).ready(function(){
   $('#autoupdate').change(function() {
      if(this.checked) {
-       currTimer = setTimeout( autoNotification, 10000 );
+       current_timer_id = setTimeout( autoNotification, 10000 );
+       listenForLocationChange();
      } else {
-       if ( currTimer ) {
-         clearTimeout(currTimer);
-         currTimer = null;
+       if ( current_timer_id !== null ) {
+         clearTimeout(current_timer_id);
+         current_timer_id = null;
        }
+       stopListeningForLocationChange();
      }
   });
 });
+
+function autoUpdateCars() {
+  try {
+    updateMarkers(current_location);
+  } catch (x) {
+  }
+  setTimeout(autoUpdateCars, 10000 );
+}
+
+function autoUpdateCarsTrigger() {
+  listenForLocationChange();
+  setTimeout(autoUpdateCars, 10000 );
+}
