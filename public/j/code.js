@@ -26,9 +26,6 @@ function setUpMap(position) {
 
   map.setCenter(origin);
 
-  $('#getgeoloc').hide();
-  $('#getdncity').show();
-
   $.ajax({
      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
      method: 'get',
@@ -58,6 +55,13 @@ function setUpMarkers(origin, city) {
     $('#cityname').html(glb_city.name);
   });
 
+  var infoWinListener = infowin.addListener('domready', function(){
+    $('#cityname').html(glb_city.name);
+    $('#carloader').show();
+  });
+  infowin.setContent(ym_base_content);
+  infowin.open(map, youmarker);
+
   directionsDisplay = new google.maps.DirectionsRenderer({
     suppressInfoWindows: true,
     suppressMarkers: true,
@@ -66,9 +70,6 @@ function setUpMarkers(origin, city) {
     map: map
   });
   var directionsService = new google.maps.DirectionsService();
-
-  $('#getdncity').hide();
-  $('#getcardata').show();
 
   $.ajax({
     url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() +
@@ -129,7 +130,10 @@ function setUpMarkers(origin, city) {
         });
       });
     });
-    $('#getcardata').hide();
+
+    infoWinListener.remove();
+    $('#carloader').hide();
+    infowin.close();
   });
 }
 

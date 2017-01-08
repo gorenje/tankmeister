@@ -29,12 +29,6 @@
     %a{ :href => "https://github.com" } GitHub.
 
 #mainmap.hide
-  - [[:getgeoloc,"Locating you"], [:getdncity,"Identifying your city"], |
-    [:getcardata,"Finding cars"]].each do |id, txt|
-    %div.hide.center{ :id => id }
-      = "#{txt} ...."
-      %img{ :src => '/images/spinner.gif' }
-
   #map
   #timestamp
   %form#autoform
