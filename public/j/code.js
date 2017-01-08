@@ -1,4 +1,18 @@
 function initMap() {
+  listenForLocationChange();
+}
+
+function updateLocation() {
+  $('#spinner').show();
+  updateMarkers(clToPosition());
+}
+
+function setUpMap(position) {
+  var lat = position.coords.latitude,
+      lng = position.coords.longitude;
+
+  var origin = new google.maps.LatLng(lat,lng);
+
   map = new google.maps.Map(document.getElementById('map'), {
      zoom: 14,
      gestureHandling: 'greedy',
@@ -10,20 +24,6 @@ function initMap() {
      }
   });
 
-  $('#getgeoloc').show();
-  retrieveLocation(setUpMap);
-}
-
-function updateLocation() {
-  $('#spinner').show();
-  retrieveLocation(updateMarkers);
-}
-
-function setUpMap(position) {
-  var lat = position.coords.latitude,
-      lng = position.coords.longitude;
-
-  var origin = new google.maps.LatLng(lat,lng);
   map.setCenter(origin);
 
   $('#getgeoloc').hide();
@@ -40,6 +40,7 @@ function setUpMap(position) {
 
 function setUpMarkers(origin, city) {
   infowin = new google.maps.InfoWindow({content: ""});
+  ym_base_content = city.ym_base_content;
 
   youmarker = new google.maps.Marker({
     position: origin,

@@ -32,13 +32,7 @@ function autoNotification() {
 
 function autoUpdateCars() {
   try {
-    var pos = {
-      coords: {
-        latitude: current_location.lat(),
-        longitude: current_location.lng()
-      }
-    };
-    updateMarkers(pos);
+    updateMarkers(clToPosition());
   } catch (x) {
   }
   current_auto_update_timer_id = setTimeout(autoUpdateCars, 10000);
@@ -48,29 +42,22 @@ $(document).ready(function(){
   $('#autonotify').change(function() {
      if(this.checked) {
        current_timer_id = setTimeout(autoNotification, 10000);
-       listenForLocationChange();
      } else {
        if ( current_timer_id !== null ) {
          clearTimeout(current_timer_id);
          current_timer_id = null;
        }
-       stopListeningForLocationChange();
      }
   });
-
 
   $('#autoupdate').change(function() {
      if(this.checked) {
        current_auto_update_timer_id = setTimeout(autoUpdateCars, 10000);
-       listenForLocationChange();
      } else {
        if ( current_auto_update_timer_id !== null ) {
          clearTimeout(current_auto_update_timer_id);
          current_auto_update_timer_id = null;
        }
-       stopListeningForLocationChange();
      }
   });
 });
-
-

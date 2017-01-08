@@ -38,3 +38,9 @@ a.button {
     bottom: 0;
     text-align: center;
 }
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+}

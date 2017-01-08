@@ -29,7 +29,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/cars",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "permissions": {
@@ -40,5 +40,5 @@
       "description": "Needed to get location of the user."
     }
   },
-  "messages": [{"notification": "/cars"}]
+  "messages": [{"notification": "/"}]
 }

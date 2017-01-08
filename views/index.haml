@@ -1,28 +1,55 @@
-%center
-  Collect Bonus Minutes by fuelling cars.
-  %p
-  Every car sharing company gives drivers who fuel their cars bonus minutes.
-  To make it easier to find the cars that need fuelling, this site will
-  show you the closest three cars that need fuelling. In addition, the
-  closest petrol stations (to the cars) are also shown - not all car sharing
-  companies use the same petrol stations.
-  %p
-  Ensure your location is turned on and allow this site to access your
-  location. We do not store your location or send it to the car sharing
-  company, we only use it to determine the closest cars to you.
-  %p
-  %a{ :href => "/cars?csc=dnw" } DriveNow (30 bonus mins)
-  %br
-  %a{ :href => "/cars?csc=ctg" } Car2Go (10 bonus mins)
-  %br
-  %a{ :href => "/cars?csc=mcy" } Multicity (15 bonus mins)
-  %br
-  %a{ :href => "/cars?csc=all" } All cars
+#mainhowto
+  %center
+    Collect Bonus Minutes by fuelling cars.
+    %p
+    Every car sharing company gives drivers who fuel their cars bonus minutes.
+    To make it easier to find the cars that need fuelling, this site will
+    show you the closest three cars that need fuelling. In addition, the
+    closest petrol stations (to the cars) are also shown - not all car sharing
+    companies use the same petrol stations.
+    %p
+    Ensure your location is turned on and allow this site to access your
+    location. We do not store your location or send it to the car sharing
+    company, we only use it to determine the closest cars to you.
+    %p
+    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'dnw'} } DriveNow (30 bonus mins)
+    %br
+    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'mcy'} } Multicity (15 bonus mins)
+    %br
+    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'ctg'} } Car2Go (10 bonus mins)
+    %br
+    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'all'} } All cars
 
-.bottom
-  If you would like to contact the
-  %a{ :href=>'https://github.com/gorenje/' } author
-  or view the
-  %a{ :href => 'https://github.com/gorenje/drivenow' } code,
-  both are hosted at
-  %a{ :href => "https://github.com" } GitHub.
+  .bottom
+    If you would like to contact the
+    %a{ :href=>'https://github.com/gorenje/' } author
+    or view the
+    %a{ :href => 'https://github.com/gorenje/drivenow' } code,
+    both are hosted at
+    %a{ :href => "https://github.com" } GitHub.
+
+#mainmap.hide
+  - [[:getgeoloc,"Locating you"], [:getdncity,"Identifying your city"], |
+    [:getcardata,"Finding cars"]].each do |id, txt|
+    %div.hide.center{ :id => id }
+      = "#{txt} ...."
+      %img{ :src => '/images/spinner.gif' }
+
+  #map
+  #timestamp
+  %form#autoform
+    %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+      %label{ :for => "autonotify" } Auto. Notify
+    %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+      %label{ :for => "autoupdate" } Auto. Update
+
+:javascript
+  var map, infowin, youmarker, ym_base_content, csc, glb_city,
+      carmarkers = [], fsmarkers = [], directionsDisplay;
+
+%script{:async => "", :defer => "defer", :src => "/j/notify.js"}
+%script{:async => "", :defer => "defer", :src => "/j/geolocation.js"}
+%script{:async => "", :defer => "defer", :src => "/j/code.js"}
+%script{:async => "", :defer => "defer", :src => "/j/automatic_update.js"}
+%script{:async => "", :defer => "defer", :src => "/google.js"}
+%script{:async => "", :defer => "defer", :src => "/j/selectionhandler.js"}

@@ -12,7 +12,10 @@ get '/city' do
   my_location = Geokit::LatLng.new(params["lat"].to_f, params["lng"].to_f)
   city        = klzs.map(&:all).flatten.nearest(my_location).first
 
-  { :cityid => CGI::escape(city.id), :name => city.name }.to_json
+  { :cityid          => CGI::escape(city.id),
+    :name            => city.name,
+    :ym_base_content => haml(:"_you_marker_info", :layout => false)
+  }.to_json
 end
 
 get '/nearest' do
