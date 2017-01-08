@@ -7,3 +7,14 @@ $(document).ready(function(){
     setUpMap(clToPosition()); 
   });
 });
+
+function changeCsc() {
+  if ( $('#autoupdate').prop('checked') ) {
+    $('#autoupdate').click();
+  }
+  if ( $('#autonotify').prop('checked') ) {
+    $('#autonotify').click();
+  }
+  $('#mainmap').hide();
+  $('#mainhowto').show();
+}
