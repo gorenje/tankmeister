@@ -58,6 +58,10 @@ module DriveNow
     def capacity_info
       { :free => @free, :total => AssumedCapacity }
     end
+
+    def marker_icon
+      "/images/marker_icon_loading" + (is_crowded? ? "_crowded" : "") + ".png"
+    end
   end
 
   class City < City
