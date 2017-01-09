@@ -3,7 +3,6 @@ function initMap() {
 }
 
 function updateLocation() {
-  $('#spinner').show();
   updateMarkers(clToPosition());
 }
 
@@ -147,7 +146,6 @@ function updateMarkers(position) {
   youmarker.setPosition(origin);
   map.setCenter(origin);
 
-  $('#spinner').hide();
   $('#cityloader').show();
 
   $.ajax({
