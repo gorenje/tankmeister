@@ -14,9 +14,9 @@ function stopListeningForLocationChange() {
 }
 
 function updateCurrentLocation(pos) {
-  $(document).trigger('updatedlocation');
   current_location = new google.maps.LatLng(pos.coords.latitude,
                                             pos.coords.longitude);
+  $(document).trigger('updatedlocation');
 }
 
 function clToPosition() {
