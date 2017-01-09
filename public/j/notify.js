@@ -20,7 +20,7 @@ function notifyMessage(msg,opts) {
 }
 
 function notifyCloseCars(car) {
-  if ( car.distance < 800 ) { // distance is measured in meters
+  if ( car.distance < 456 ) { // distance is measured in meters
     var options = {
       body: "Car " + car.name + " is in the vicinity",
       icon: '/images/appicon_96x96.png'

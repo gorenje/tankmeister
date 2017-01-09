@@ -2,9 +2,9 @@ get '/city' do
   content_type :json
 
   klzs = case (params[:csc] || 'dnw')
-         when 'mcy' then [Multicity::City]
-         when 'dnw' then [DriveNow::City]
-         when 'ctg' then [Car2Go::City]
+         when 'mcy'  then [Multicity::City]
+         when /^dnw/ then [DriveNow::City]
+         when 'ctg'  then [Car2Go::City]
          when 'all', 'any' then [DriveNow::City, Car2Go::City, Multicity::City]
          else [DriveNow::City]
          end
@@ -31,8 +31,8 @@ get '/nearest' do
                "lng" => my_location.lng
              }
              [Multicity::City.new(paras)]
-           when 'dnw' then [DriveNow::City.new("id" => params[:cid])]
-           when 'ctg' then [Car2Go::City.new("locationName" => params[:cid])]
+           when /^dnw/ then [DriveNow::City.new("id" => params[:cid])]
+           when 'ctg'  then [Car2Go::City.new("locationName" => params[:cid])]
            when 'all', 'any'
              [DriveNow::City.all.nearest(my_location).first,
               Car2Go::City.all.nearest(my_location).first,
