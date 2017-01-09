@@ -12,14 +12,20 @@
     location. We do not store your location or send it to the car sharing
     company, we only use it to determine the closest cars to you.
     %p
-    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'dnw'} } DriveNow (30 bonus mins)
-    %br
-    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'mcy'} } Multicity (15 bonus mins)
-    %br
-    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'ctg'} } Car2Go (10 bonus mins)
-    %br
-    %a.sltcsc.disabled{ :href => "#", :data => { :csc => 'all'} } All cars
-
+    #cscselectors.hide
+      %a.sltcsc{ :href => "#", :data => { :csc => 'dnw'} } DriveNow (30 bonus mins)
+      %br
+      %a.sltcsc{ :href => "#", :data => { :csc => 'mcy'} } Multicity (15 bonus mins)
+      %br
+      %a.sltcsc{ :href => "#", :data => { :csc => 'ctg'} } Car2Go (10 bonus mins)
+      %br
+      %a.sltcsc{ :href => "#", :data => { :csc => 'all'} } All companies
+    #locationmsg
+      Obtaining your location, please wait...
+      %img{ :src => "/images/spinner.gif" }
+      %p
+      Please ensure location is turned on and supported by your device.
+      %a#retrybutton.hide.button{ :href=>"#" } Retry
   .bottom
     If you would like to contact the
     %a{ :href=>'https://github.com/gorenje/' } author
@@ -41,9 +47,5 @@
   var map, infowin, youmarker, ym_base_content, csc, glb_city,
       carmarkers = [], fsmarkers = [], directionsDisplay;
 
-%script{:async => "", :defer => "defer", :src => "/j/notify.js"}
-%script{:async => "", :defer => "defer", :src => "/j/geolocation.js"}
-%script{:async => "", :defer => "defer", :src => "/j/code.js"}
-%script{:async => "", :defer => "defer", :src => "/j/automatic_update.js"}
-%script{:async => "", :defer => "defer", :src => "/google.js"}
-%script{:async => "", :defer => "defer", :src => "/j/selectionhandler.js"}
+- ["notify","geolocation","code","autoupdate","nav","google"].each do |filename|
+  %script{:async => "", :defer => "defer", :src => "/j/#{filename}.js"}
