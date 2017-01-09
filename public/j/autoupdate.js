@@ -41,8 +41,10 @@ function autoUpdateCars() {
 $(document).ready(function(){
   $('#autonotify').change(function() {
      if(this.checked) {
+       $('#autonotifyform').show();
        current_timer_id = setTimeout(autoNotification, 10000);
      } else {
+       $('#autonotifyform').hide();
        if ( current_timer_id !== null ) {
          clearTimeout(current_timer_id);
          current_timer_id = null;

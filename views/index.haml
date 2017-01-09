@@ -45,6 +45,13 @@
     %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
       %label{ :for => "autoupdate" } Auto. Update
 
+  #autonotifyform.hide
+    %form#radiusvalue
+      Within:
+      - [100,200,300,400,500,1000].each do |dist|
+        %input{ :name => :radius, :type => :radio, :id => "radid#{dist}", :value => dist, :checked => (200 == dist) }
+          %label{ :for => "radid#{dist}" }= "#{dist}m"
+
 :javascript
   var map, infowin, youmarker, ym_base_content, csc, glb_city,
       carmarkers = [], fsmarkers = [], directionsDisplay;

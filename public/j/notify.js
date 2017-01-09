@@ -20,11 +20,14 @@ function notifyMessage(msg,opts) {
 }
 
 function notifyCloseCars(car) {
-  if ( car.distance < 456 ) { // distance is measured in meters
+  // distance is measured in meters
+  var lmt = parseInt($('#radiusvalue input[type=radio]:checked').attr('value'));
+  if ( car.distance < lmt ) {
     var options = {
-      body: "Car " + car.name + " is in the vicinity",
-      icon: '/images/appicon_96x96.png'
+      body: "Car " + car.name + " is in the vicinity (" +
+        car.distance.toFixed(0) + "m)",
+      icon: 'https://tankmeister.de/images/appicon_48x48.png'
     };
-    notifyMessage("Carsharing", options);
+    notifyMessage("Tankmeister", options);
   }
 }
