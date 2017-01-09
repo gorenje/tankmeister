@@ -26,7 +26,9 @@ function notifyCloseCars(car) {
     var options = {
       body: "Car " + car.name + " is in the vicinity (" +
         car.distance.toFixed(0) + "m)",
-      icon: 'https://tankmeister.de/images/appicon_48x48.png'
+      icon: 'images/appicon_48x48.png',
+      tag: car.name,
+      renotify: false
     };
     notifyMessage("Tankmeister", options);
   }
