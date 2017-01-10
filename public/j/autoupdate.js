@@ -35,7 +35,7 @@ function autoUpdateCars() {
     updateMarkers(clToPosition());
   } catch (x) {
   }
-  current_auto_update_timer_id = setTimeout(autoUpdateCars, 10000);
+  current_auto_update_timer_id = setTimeout(autoUpdateCars, 30000);
 }
 
 $(document).ready(function(){
@@ -54,7 +54,7 @@ $(document).ready(function(){
 
   $('#autoupdate').change(function() {
      if(this.checked) {
-       current_auto_update_timer_id = setTimeout(autoUpdateCars, 10000);
+       current_auto_update_timer_id = setTimeout(autoUpdateCars, 30000);
      } else {
        if ( current_auto_update_timer_id !== null ) {
          clearTimeout(current_auto_update_timer_id);
