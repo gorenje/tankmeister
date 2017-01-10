@@ -21,8 +21,7 @@ function notifyMessage(msg,opts) {
 
 function notifyCloseCars(car) {
   // distance is measured in meters
-  var lmt = parseInt($('#radiusvalue input[type=radio]:checked').attr('value'));
-  if ( car.distance < lmt ) {
+  if ( car.distance < parseInt($('#radiusvalue select').val()) ) {
     var options = {
       body: "Car " + car.name + " is in the vicinity (" +
         car.distance.toFixed(0) + "m)",
