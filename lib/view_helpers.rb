@@ -1,21 +1,6 @@
 module ViewHelpers
-  def name_for_csc(csc)
-    case csc
-    when "mcy" then "Multicity"
-    when "dnw" then "DriveNow"
-    when "ctg" then "Car2Go"
-    when "all" then "All Cars"
-    when "any" then "Closest"
-    else "DriveNow"
-    end
-  end
-
-  def title
-    "#{name_for_csc(params[:csc])} Cars"
-  end
-
   def you_marker_car_sharing_company
-    "Showing #{name_for_csc(params[:csc])}"
+    "Showing #{CscProviders.name(params[:csc])}"
   end
 
   def map_car_details_to_result_hash(data, my_location, params)

@@ -133,3 +133,4 @@ module Multicity
     end
   end
 end
+CscProviders.register("mcy", "Multicity", Multicity::City)

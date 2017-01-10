@@ -78,6 +78,7 @@ module Car2Go
     end
 
     def initialize(hsh)
+      hsh["locationName"] = hsh["id"] if hsh["id"]
       super(hsh)
       loc = @data["mapSection"]["center"] rescue {}
       @location = Geokit::LatLng.new(loc["latitude"], loc["longitude"])
@@ -114,3 +115,4 @@ module Car2Go
     end
   end
 end
+CscProviders.register("ctg", "Car2Go", Car2Go::City)
