@@ -3,8 +3,7 @@ Tankmeister
 
 Tiny webapp that takes your location and shows you the three closest
 cars that need refuelling (so you can earn bonus minutes). This works for
-[DriveNow](https://tankmeister.de/cars?csc=dnw) and
-[Car2Go](https://tankmeister.de/cars?csc=ctg).
+[DriveNow](https://de.drive-now.com/), [Car2Go](https://www.car2go.com/DE/en/hamburg/) and [Multicity](https://www.multicity-carsharing.de/).
 
 Also shown are the nearest tank stations (or electro charging stations)
 where the car can be refilled.
@@ -15,8 +14,9 @@ link directly to the car.
 
 Car2Go has far better [deeplinks](https://github.com/car2go/openAPI/wiki/Deeplinks-to-car2go-app), making
 reservation far simpler. Unfortunately you only get 10 bonus minutes,
-so it's actually hardly further the effort (at least in Berlin).
-Website is running on [heroku](https://dnbm.herokuapp.com).
+so it's actually hardly worth the effort (at least in Berlin).
+
+[Find your car!](https://tankmeister.de)
 
 Deployment
 ---
@@ -27,7 +27,7 @@ is the same for everyone.
 For the google api key, you'll need to enable the maps api and the
 directions api.
 
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/gorenje/drivenow)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/gorenje/tankmeister)
 
 Google API Token
 ---
@@ -44,7 +44,7 @@ Otherwise app won't work!
 Supported Locations
 ---
 
-All cities for both DriveNow and Car2Go are supported. The exact city is
+All cities for DriveNow, Car2Go and Multicity are supported. The exact city is
 determined by your location, so this will work even if you're in the
 middle of nowhere!
 
