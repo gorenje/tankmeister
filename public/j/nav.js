@@ -9,20 +9,20 @@ $(document).ready(function(){
   $('.sltcsc').click(function(event) {
     csc = $(this).data('csc');
     event.preventDefault();
-    $('#mainhowto').hide();
-    $('#mainmap').show();
+    $('#mainhowto').slideDown().fadeOut();
+    $('#mainmap').slideUp().fadeIn();
     setUpMap(clToPosition()); 
   });
 
   $(document).on('updatedlocation.showselectors', function(){
-    $('#cscselectors').show();
-    $('#locationmsg').hide();
+    $('#cscselectors').slideUp().fadeIn();
+    $('#locationmsg').slideDown().fadeOut();
     $(document).off('.showselectors');
   });
 });
 
 function showRetryButton() {
-  $('#retrybutton').show();
+  $('#retrybutton').fadeIn();
 }
 
 function changeCsc(event) {
@@ -33,6 +33,6 @@ function changeCsc(event) {
   if ( $('#autonotify').prop('checked') ) {
     $('#autonotify').click();
   }
-  $('#mainmap').hide();
-  $('#mainhowto').show();
+  $('#mainmap').slideDown().fadeOut();
+  $('#mainhowto').slideUp().fadeIn();
 }
