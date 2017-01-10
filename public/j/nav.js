@@ -9,30 +9,29 @@ $(document).ready(function(){
   $('.sltcsc').click(function(event) {
     csc = $(this).data('csc');
     event.preventDefault();
-    $('#mainhowto').slideDown().fadeOut();
-    $('#mainmap').slideUp().fadeIn();
-    setUpMap(clToPosition()); 
+    $('#mainhowto').slideDown().
+      fadeOut({ complete: function(){
+                  $('#mainmap').slideUp().fadeIn(); 
+                  setUpMap(clToPosition()); 
+                }});
   });
 
   $(document).on('updatedlocation.showselectors', function(){
-    $('#cscselectors').slideUp().fadeIn();
-    $('#locationmsg').slideDown().fadeOut();
     $(document).off('.showselectors');
+    $('#locationmsg').slideDown().
+      fadeOut({complete: function(){$('#cscselectors').slideUp().fadeIn();}});
   });
 });
 
 function showRetryButton() {
-  $('#retrybutton').fadeIn();
+  $('#pleasewait').
+    fadeOut({complete: function(){$('#retrybutton').fadeIn();}});
 }
 
 function changeCsc(event) {
   event.preventDefault();
-  if ( $('#autoupdate').prop('checked') ) {
-    $('#autoupdate').click();
-  }
-  if ( $('#autonotify').prop('checked') ) {
-    $('#autonotify').click();
-  }
-  $('#mainmap').slideDown().fadeOut();
-  $('#mainhowto').slideUp().fadeIn();
+  if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
+  if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
+  $('#mainmap').slideDown().
+    fadeOut({ complete: function(){ $('#mainhowto').slideUp().fadeIn();}});
 }
