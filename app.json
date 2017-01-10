@@ -6,10 +6,12 @@
     "fuelling",
     "car2go",
     "tanking",
-    "bonus minutes"
+    "bonus minutes",
+    "multicity"
   ],
   "website": "https://tankmeister.de",
-  "repository": "https://github.com/gorenje/drivenow",
+  "repository": "https://github.com/gorenje/tankmeister",
+  "logo": "https://tankmeister.de/images/appicon_512x512.png",
   "env": {
     "RACK_ENV": {
       "description": "Rack environment",
