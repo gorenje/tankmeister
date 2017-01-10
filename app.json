@@ -34,11 +34,11 @@
       "required": true
     },
     "ACME_KEY[ONE]": {
-      "description": "Let's encrypt key",
+      "description": "Let's encrypt key (this is the longer one)",
       "required": false
     },
     "ACME_TOKEN[ONE]": {
-      "description": "Let's encrypt token",
+      "description": "Let's encrypt token (this is the shorter one)",
       "required": false
     }
   }

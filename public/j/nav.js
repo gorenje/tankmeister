@@ -1,3 +1,16 @@
+function showRetryButton() {
+  $('#pleasewait').slideUp().
+    fadeOut({complete: function(){$('#retrybutton').fadeIn();}});
+}
+
+function changeCsc(event) {
+  event.preventDefault();
+  if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
+  if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
+  $('#mainmap').slideUp().
+    fadeOut({ complete: function(){ $('#mainhowto').slideDown().fadeIn();}});
+}
+
 $(document).ready(function(){
   setTimeout(showRetryButton, 15000);
 
@@ -9,29 +22,16 @@ $(document).ready(function(){
   $('.sltcsc').click(function(event) {
     csc = $(this).data('csc');
     event.preventDefault();
-    $('#mainhowto').slideDown().
+    $('#mainhowto').slideUp().
       fadeOut({ complete: function(){
-                  $('#mainmap').slideUp().fadeIn(); 
+                  $('#mainmap').slideDown().fadeIn(); 
                   setUpMap(clToPosition()); 
                 }});
   });
 
   $(document).on('updatedlocation.showselectors', function(){
     $(document).off('.showselectors');
-    $('#locationmsg').slideDown().
-      fadeOut({complete: function(){$('#cscselectors').slideUp().fadeIn();}});
+    $('#locationmsg').slideUp().
+      fadeOut({complete: function(){$('#cscselectors').slideDown().fadeIn();}});
   });
 });
-
-function showRetryButton() {
-  $('#pleasewait').
-    fadeOut({complete: function(){$('#retrybutton').fadeIn();}});
-}
-
-function changeCsc(event) {
-  event.preventDefault();
-  if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
-  if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
-  $('#mainmap').slideDown().
-    fadeOut({ complete: function(){ $('#mainhowto').slideUp().fadeIn();}});
-}
