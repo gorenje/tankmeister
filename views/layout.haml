@@ -1,14 +1,18 @@
 !!!
 %html
   %head
-    %meta{:name=>"mobile-web-app-capable", :content=>"yes"}
-    %meta{:name=>"apple-mobile-web-app-capable", :content=>"yes"}
+    %meta{:name => "mobile-web-app-capable", :content => "yes"}
+    %meta{:name => "apple-mobile-web-app-capable", :content => "yes"}
+    %meta{:name => "apple-mobile-web-app-title", :content => "Tankmeister" }
+    %meta{:name => "apple-mobile-web-app-status-bar-style", :content => "blue" }
     %meta{:charset => "utf-8"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    %title= title
+    %title Tankmeister
     %link{:charset => "utf-8", :href => "/c/main.css", :rel => "stylesheet"}/
     %link{:rel => "manifest", :href => "/manifest.webapp" }
     %script{ :src => "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" }
     %link{ :rel=>"shortcut icon", :sizes=>"96x96", :href=>"/images/appicon_96x96.png" }
+    %link{ :rel => "apple-touch-icon", :href => "/images/appicon_512x512.png" }
+    %link{ :rel => "apple-touch-startup-image", :href => "/images/appicon_512x512.png" }
   %body
     = yield
