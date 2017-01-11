@@ -162,6 +162,8 @@ function updateMarkers(position) {
       method: 'get',
       dataType: 'json'
     }).done(function(data){
+       var bounds = new google.maps.LatLngBounds(origin, origin);
+
        $.each(data.fs, function(idx, fs) {
          fsmarkers[idx].setPosition(fs.json_location);
          fsmarkers[idx].setIcon(fs.marker_icon);
@@ -169,12 +171,14 @@ function updateMarkers(position) {
          fsmarkers[idx]._details = fs.details;
        });
        $.each(data.cars, function(idx, car) {
+         bounds.extend(car.json_location);
          carmarkers[idx].setPosition(car.json_location);
          carmarkers[idx].setIcon(car.marker_icon);
          carmarkers[idx].setTitle(car.name);
          carmarkers[idx]._details = car.details;
        });
 
+       map.fitBounds(bounds);
        $('#carloader').hide();
        infowin.close();
        $('#timestamp').html("Last update: " + data.tstamp);
