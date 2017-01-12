@@ -99,7 +99,11 @@ function setUpMarkers(origin, city) {
       });
     });
 
+    var bounds = new google.maps.LatLngBounds(origin, origin);
+
     $.each(data.cars, function(idx, car) {
+      bounds.extend(car.json_location);
+
       carmarkers[idx] = new google.maps.Marker({
         position: car.json_location,
         map: map,
@@ -138,6 +142,7 @@ function setUpMarkers(origin, city) {
       });
     });
 
+    map.fitBounds(bounds);
     infoWinListener.remove();
     $('#carloader').hide();
     infowin.close();
