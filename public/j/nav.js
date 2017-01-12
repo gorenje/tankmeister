@@ -5,7 +5,7 @@ function showRetryButton() {
 
 function changeCsc(event) {
   event.preventDefault();
-  $('#timestamp').html("");
+  $('#timestamp').hide().html("");
   if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
   if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
   $('#mainmap').slideUp().
