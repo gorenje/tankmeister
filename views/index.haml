@@ -24,9 +24,20 @@
             %p Search for a car nearby and find the most convenient one for you that will let you collect bonus minutes!
   %main
     %section.selector
-      .grid
+      #locationmsg.map__location
+        .grid.grid--large
+          %h4#pleasewait.map__title
+            %img{ :src => "/images/spinner.gif" }
+            Obtaining your location,
+            please wait...
+          %a#retrybutton.hide.btn.btn--small{ :href=>"#" }
+            Unable to obtain location, try again.
+          %p
+          Please ensure location is turned on and supported by your device.
+
+      .grid#cscselectors.hide
         %h2.selector__title Choose your provider and start saving!
-        #cscselectors.selector__list.grid.grid--large.grid--size-4
+        .selector__list.grid.grid--large.grid--size-4
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
               DriveNow
@@ -36,12 +47,12 @@
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "ctg"}
               Car2Go
               %span.selector__note
-                (15 bonus mins)
+                (10 bonus mins)
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "mcy"}
               Multicity
               %span.selector__note
-                (30 bonus mins)
+                (15 bonus mins)
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "all"}
               All Companies
@@ -49,7 +60,7 @@
                 (List all providers)
         %p.selector__texts *Ensure your location is turned on and allow this site to access your location. We do not store your location or send it to the car sharing company, we only use it to determine the closest cars to you.
 
-    %section#mainmap.map
+    %section#mainmap
       .map__settings
         #timestamp.hide
           "-"
@@ -64,16 +75,6 @@
             %select#radiusselector
               - [100,200,300,400,500,1000].each do |dist|
                 %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
-      #locationmsg.map__location
-        .grid.grid--large
-          %h4#pleasewait.map__title
-            %img{ :src => "/images/spinner.gif" }
-            Obtaining your location,
-            please wait...
-          %a#retrybutton.hide.btn.btn--small{ :href=>"#" }
-            Unable to obtain location, try again.
-          %p
-          Please ensure location is turned on and supported by your device.
       #map
 
     %section.providers
@@ -115,8 +116,10 @@
           %li
             %a.footer__nav-item{:href => "/imprint/"} IMPRINT
         %p.footer__texts
-          If you would like to contact the author or view the
-          %a{ :href => "https://github.com/gorenje/drivenow", :target => "_blank" } code
+          If you would like to contact the
+          %a{ :href => "https://github.com/gorenje", :target => "_blank" } author
+          or view the
+          %a{ :href => "https://github.com/gorenje/tankmeister", :target => "_blank" } code
           , both are hosted at
           %a{ :href => "https://github.com", :target => "_blank" } GitHub.
 
