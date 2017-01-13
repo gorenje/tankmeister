@@ -39,11 +39,23 @@ function autoUpdateCars() {
 }
 
 $(document).ready(function(){
+  $(document).on('updatedlocation', function(){
+     if (circle) { circle.setCenter(current_location); }
+  });
+
+  $('#radiusvalue').on('change', function(){
+     if (circle) { circle.setRadius(parseInt($('#radiusvalue select').val())); }
+  });
+
   $('#autonotify').change(function() {
      if(this.checked) {
+       circle.setMap(map);
+       circle.setRadius(parseInt($('#radiusvalue select').val()));
+
        $('#autonotifyform').fadeIn();
        current_timer_id = setTimeout(autoNotification, 10000);
      } else {
+       circle.setMap(null);
        $('#autonotifyform').fadeOut();
        if ( current_timer_id !== null ) {
          clearTimeout(current_timer_id);
