@@ -1,0 +1,44 @@
+@mixin grid() {
+  .grid {
+    img {
+      width: initial; //100%;
+    }
+    @include media() {
+      text-align: center;
+      width: 100%;
+      padding: 0 $spacer-20;
+      .grid__column {
+        margin: $spacer-10 auto;
+      }
+    }
+    @include media(small) {
+      text-align: center;
+      margin: 0 auto;
+      padding: 0;
+      max-width: $grid-size-small;
+      &--small {
+        width: auto;
+        max-width: $grid-size-small;
+      }
+      &--medium {
+        width: auto;
+        max-width: $grid-size-medium;
+      }
+      &--large {
+        width: auto;
+        max-width: $grid-size-large;
+      }
+      &[class*='grid--size-'] {
+        @include display-flex();
+        @include flex-flow();
+        @include justify-content(flex-start);
+      }
+      @for $i from 1 through $grid-total-columns {
+        &--size-#{$i} > .grid__column {
+          width: percentage(1 / $i);
+        }
+      }
+      .grid__column {}
+    }
+  }
+}

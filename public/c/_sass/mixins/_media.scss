@@ -1,0 +1,73 @@
+
+@mixin media ($rules: 'default', $orientation: 'mobile-first') {
+
+  // Mobile First
+  @if $orientation == mobile-first {
+    @if $rules == default {
+      @media only screen and (max-width: $media-default) { @content; }
+    }
+    @else if $rules == small {
+      @media only screen and (min-width: $media-small) { @content; }
+    }
+    @else if $rules == medium {
+      @media only screen and (min-width: $media-medium) { @content; }
+    }
+    @else if $rules == large {
+      @media only screen and (min-width: $media-large) { @content; }
+    }
+    @else {
+      @media only screen and #{$rules}  { @content; }
+    }
+  }
+
+  // Desktop First
+  @else if $orientation == desktop-first {
+    @if $rules == default {
+      @media only screen and (max-width: $media-default) { @content; }
+    }
+    @else if $rules == small {
+      @media only screen and (max-width: $media-small) { @content; }
+    }
+    @else if $rules == medium {
+      @media only screen and (max-width: $media-medium) { @content; }
+    }
+    @if $rules == large {
+      @media only screen and (max-width: $media-large) { @content; }
+    }
+    @else {
+      @media only screen and #{$rules}  { @content; }
+    }
+  }
+
+}
+
+
+@mixin media-device($device, $orientation: 'portrait') {
+  @each $current-device, $values in $media-devices {
+    @if ($device == $current-device) {
+
+      $width: null;
+      $height: null;
+
+      @if ($orientation == 'portrait') {
+        $width: map-get($values, 'w');
+        $height: map-get($values, 'h');
+      }
+      @else if ($orientation == 'landscape') {
+        $width: map-get($values, 'h');
+        $height: map-get($values, 'w');
+      }
+      @else {
+        @error '"#{$orientation}" is not a valid value for media queries';
+      }
+
+      $pixel-ratio: map-get($values, 'pr');
+
+      @media only screen
+      and (device-width: #{$width})
+      and (device-height: #{$height})
+      and (-webkit-device-pixel-ratio: #{$pixel-ratio})
+      and (orientation: #{$orientation})  { @content; }
+    }
+  }
+}

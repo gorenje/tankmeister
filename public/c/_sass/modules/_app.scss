@@ -1,0 +1,223 @@
+// --------------------------
+// General
+@include grid();
+@include links-buttons();
+
+// --------------------------
+// Application
+
+.header {
+  background: url($url-images + 'bg_main.jpg') no-repeat center top;
+  background-size: cover;
+
+  &__nav {
+    padding: $spacer-20 0;
+  }
+
+  .brand {
+    margin: 0 auto $spacer-20;
+    display: block;
+    width: 215px;
+    height: 45px;
+    fill: $color2;
+  }
+
+  .location {
+    @include align-absolute-middle(inherit, false, 100%, center, center);
+    &__field {
+      display: inline-block;
+      padding: 10px;
+      font-size: $font-size-18;
+      font-weight: 300;
+      border: 1px solid $color2;
+      border-radius: $spacer-5;
+      width: 300px;
+    }
+    &__button {
+      fill: $color2;
+      width: $spacer-20;
+      height: 26px;
+      margin-left: $spacer-10;
+    }
+  }
+
+  @include media(small) {
+    &__nav {
+      padding: $spacer-20 0 0;
+      height: 80px;
+    }
+    .brand {
+      margin: 0;
+    }
+    .location {
+      @include align-absolute-middle(inherit, false, 100%, flex-end, center);
+      &__button {
+        margin-right: $spacer-20;
+      }
+    }
+  }
+}
+
+// Feature
+.feature {
+  @include align-absolute-middle(inherit);
+  &__title {
+    font-size: $font-size-30;
+    font-weight: 400;
+    strong {
+      display: block;
+      font-weight: 900;
+    }
+  }
+  &__texts {
+    text-align: left;
+  }
+
+  @include media() {
+    display: none;
+  }
+}
+
+// Selector
+.selector {
+  background-color: $color-white;
+  padding: $spacer-40 0;
+  &__list {
+    max-width: 300px;
+    margin: $spacer-30 auto;
+    &-item {
+      background-color: $color4;
+      overflow: hidden;
+      padding: $spacer-15;
+      border-radius: $spacer-10;
+      margin: 0 $spacer-5;
+      font-weight: 900;
+      color: $color-white;
+      display: block;
+      cursor: pointer;
+      box-shadow: 0 5px 0 rgba($color2, .5);
+      @include transition(background-color $transitions);
+      &:hover {
+        background-color: lighten($color4, 5%);
+      }
+    }
+  }
+  &__note {
+    display: block;
+    font-size: $font-size-14;
+    font-weight: 300;
+  }
+  &__texts {
+    font-size: $font-size-12;
+    @include text-line-height($font-size-16);
+  }
+
+  @include media(small) {
+    &__list {
+      max-width: initial;
+    }
+  }
+}
+
+// Map
+.map {
+  background-color: $color3;
+  &__location {
+    padding: $spacer-20 0;
+  }
+  &__settings {
+    text-align: left;
+    padding: $spacer-20;
+    font-size: $font-size-14;
+    font-weight: 400;
+    #autonotifyform {
+      margin-top: $spacer-10;
+    }
+  }
+}
+
+// Providers
+.providers {
+  padding: $spacer-40 0;
+  background: url($url-images + 'bg_main.jpg') no-repeat center top;
+  background-size: cover;
+  &__list {
+    li {
+      display: inline-block;
+      margin: $spacer-20 0;
+    }
+  }
+
+  @include media(small) {
+    padding: $spacer-40 0 $spacer-80;
+    &__list {
+      @include align-absolute-middle(inherit);
+      li {
+        display: inline-block;
+        margin: 0 $spacer-20;
+      }
+    }
+  }
+}
+
+// Webapp
+.webapp {
+  background-color: $color-white;
+  &__device {
+    text-align: right;
+    margin-top: -($spacer-60);
+    img {
+      margin-bottom: -4px;
+    }
+  }
+  &__title {
+    font-size: $font-size-28;
+  }
+  &__texts {
+    padding-left: $spacer-10;
+    text-align: left;
+    @include align-absolute-middle(inherit);
+  }
+
+  @include media() {
+    display: none;
+  }
+}
+
+// Footer
+.footer {
+  padding: $spacer-40 0;
+  background-color: $color3;
+  &__icon {
+    fill: $color2;
+    width: 160px;
+    height: 21px;
+  }
+  &__nav {
+    margin-bottom: 8px;
+    li {
+      margin: 0 $spacer-10;
+      display: inline-block;
+      text-decoration: underline;
+    }
+  }
+  &__texts {
+    margin: 0;
+    font-size: $font-size-12;
+  }
+
+  @include media(small) {
+    &__nav {
+      text-align: right;
+      li {
+        margin-left: $spacer-20;
+      }
+    }
+    .grid__column {
+      text-align: left;
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}

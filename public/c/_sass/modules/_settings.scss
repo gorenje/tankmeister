@@ -1,0 +1,88 @@
+// Prefixes
+$prefixes: webkit moz ms o spec;
+$prefixes-wo-ie: webkit moz o spec;
+
+// File Paths
+$url-images: '../images/';
+
+// General
+$transitions: 0.3s ease-in-out;
+$animations: 3s ease-in-out forwards;
+$animation-motion-offset: 35px;
+$global-z-index: 0 !global;
+
+// Fonts
+$font-family: 'Roboto', Arial, sans-serif;
+$text-indent: -9999px;
+$font-size-11: 11px;
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-18: 18px;
+$font-size-20: 20px;
+$font-size-24: 24px;
+$font-size-28: 28px;
+$font-size-30: 30px;
+$font-size-36: 36px;
+$font-size-40: 40px;
+$font-size-50: 50px;
+
+// Spacers: for controlling margins and paddings
+$spacer-5: 5px;
+$spacer-10: 10px;
+$spacer-15: 15px;
+$spacer-20: 20px;
+$spacer-25: 25px;
+$spacer-30: 30px;
+$spacer-35: 35px;
+$spacer-40: 40px;
+$spacer-45: 45px;
+$spacer-50: 50px;
+$spacer-60: 60px;
+$spacer-80: 80px;
+
+// Colors
+$color-white: #fff;
+$color-black: #000;
+$color-link: #0080BD;
+$color-link-hover: lighten($color-link, 8%);
+$color1: #383838;
+$color2: #044057;
+$color3: #eaeaea;
+$color4: #002939;
+$color5: #15b1d4;
+
+// Buttons
+$btn-border-radius: 100px; //$spacer-30;
+$btn-color: $color-white;
+$btn-background-color: $color-link;
+$btn-background-color-hover: lighten($btn-background-color, 8%);
+$btn-border-color: $btn-background-color;
+$btn-border-color-hover: $btn-background-color-hover;
+
+// Media Queries
+$media-large: 1024px;
+$media-medium: 970px;
+$media-small: 640px;
+$media-default: 639px;
+$media-devices: (
+  iphone6Plus: (w: 414px, h: 736px , pr: 3),
+  iphone6: (w: 375px, h: 667px , pr: 2),
+  iphone5: (w: 320px, h: 568px , pr: 2),
+  iphone4: (w: 320px, h: 480px , pr: 2),
+  ipadPro: (w: 1024px, h: 1366px , pr: 2),
+  ipad: (w: 768px, h: 1024px , pr: 2),
+  ipadMini: (w: 768px, h: 1024px , pr: 1),
+  s2: (w: 320px, h: 533px , pr: 1.5),
+  s3: (w: 360px, h: 640px , pr: 2),
+  s4: (w: 360px, h: 640px , pr: 3),
+  s5: (w: 360px, h: 640px , pr: 3),
+  s6: (w: 360px, h: 640px , pr: 4),
+  s7: (w: 360px, h: 640px , pr: 4)
+);
+
+// Grid
+$grid-size-small: 640px;
+$grid-size-medium: 980px;
+$grid-size-large: 1156px;
+$grid-total-columns: 10;

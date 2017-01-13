@@ -1,0 +1,30 @@
+@mixin switch ($width: $spacer-20, $height: $spacer-20, $padding: 3px, $border-radius: $spacer-40) {
+  & {
+    box-sizing: border-box;
+    width: $width + $padding;
+    padding: $padding;
+    cursor: pointer;
+    border-radius: $border-radius;
+    border: 1px solid $color12;
+    background-color: $color12;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    width: $height / 2;
+    height: $height / 2;
+    border-radius: 50%;
+    background-color: rgba($color-black, .2);
+    transition: background-color $transitions, transform $transitions;
+    border: 2px solid rgba($color-black, .2);
+  }
+
+  &.active {
+    &:before {
+      transform: translateX($width - $height - ($padding + 1px) + ($height / 2));
+      border-color: darken($color3, 10%);
+      background-color: $color3;
+    }
+  }
+}

@@ -1,64 +1,124 @@
-%main#mainhowto
-  %header
-    Collect Bonus Minutes by fuelling cars.
-    %p
-    Every car sharing company gives drivers who fuel their cars bonus minutes.
-    To make it easier to find the cars that need fuelling, this site will
-    show you the closest three cars that need fuelling. In addition, the
-    closest petrol stations (to the cars) are also shown - not all car sharing
-    companies use the same petrol stations.
-    %p
-    Ensure your location is turned on and allow this site to access your
-    location. We do not store your location or send it to the car sharing
-    company, we only use it to determine the closest cars to you.
-    %p
-    #cscselectors.hide
-      %a.sltcsc{ :href => "#", :data => { :csc => 'dnw'} } DriveNow (30 bonus mins)
-      %br
-      %a.sltcsc{ :href => "#", :data => { :csc => 'mcy'} } Multicity (15 bonus mins)
-      %br
-      %a.sltcsc{ :href => "#", :data => { :csc => 'ctg'} } Car2Go (10 bonus mins)
-      %br
-      %a.sltcsc{ :href => "#", :data => { :csc => 'all'} } All companies
-      %br
-      %a.sltcsc{ :href => "#", :data => { :csc => 'dnw_available'} } DriveNow (available)
-    #locationmsg
-      %span#pleasewait
-        Obtaining your location,
-        please wait...
-        %img{ :src => "/images/spinner.gif" }
-      %a#retrybutton.hide.button{ :href=>"#" }
-        Unable to obtain location, try again.
-      %p
-      Please ensure location is turned on and supported by your device.
-  %footer
-    If you would like to contact the
-    %a{ :href=>'https://github.com/gorenje/' } author
-    or view the
-    %a{ :href => 'https://github.com/gorenje/drivenow' } code,
-    both are hosted at
-    %a{ :href => "https://github.com" } GitHub.
+%section#mainhowto
+  %header.header
+    .grid.grid--large
+      .header__nav.grid.grid--size-2.grid--large
+        .grid__column
+          %svg.brand
+            %use{"xlink:href" => "#isologo"}
+        .grid__column
+          .location
+            %input#location.location__field{:name => "location", :placeholder => "Enter your location (e.g Berlin)", :type => "text", :value => ""}/
+            %svg#location-button.location__button
+              %use{"xlink:href" => "#icon-location"}
+      .feature.grid.grid--size-2.grid--large
+        .grid__column
+          %img{:alt => "", :src => "/images/feature_deco.png"}/
+        .grid__column.feature__texts
+          %div
+            %h1.feature__title
+              Collect Bonus Minutes
+              %strong by fuelling cars
+            %p
+              Every car sharing company gives drivers who fuel their cars bonus minutes. This site will show you the closest three cars that need fuelling. In addition, the closest petrol stations (to the cars) are also shown - not all car sharing companies
+              use the same petrol stations.
+            %p Search for a car nearby and find the most convenient one for you that will let you collect bonus minutes!
+  %main
+    %section.selector
+      .grid
+        %h2.selector__title Choose your provider and start saving!
+        #cscselectors.selector__list.grid.grid--large.grid--size-4
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
+              DriveNow
+              %span.selector__note
+                (30 bonus mins)
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "ctg"}
+              Car2Go
+              %span.selector__note
+                (15 bonus mins)
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "mcy"}
+              Multicity
+              %span.selector__note
+                (30 bonus mins)
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "all"}
+              All Companies
+              %span.selector__note
+                (List all providers)
+        %p.selector__texts *Ensure your location is turned on and allow this site to access your location. We do not store your location or send it to the car sharing company, we only use it to determine the closest cars to you.
 
+    %section#mainmap.map
+      .map__settings
+        #timestamp.hide
+          "-"
+        %form#autoform.hide
+          %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+            %label{ :for => "autonotify" } Auto notifications
+          %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+            %label{ :for => "autoupdate" } Keep map updated
+        #autonotifyform.hide
+          %form#radiusvalue
+            %label{ :for => "radiusselector" } Within:
+            %select#radiusselector
+              - [100,200,300,400,500,1000].each do |dist|
+                %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+      #locationmsg.map__location
+        .grid.grid--large
+          %h4#pleasewait.map__title
+            %img{ :src => "/images/spinner.gif" }
+            Obtaining your location,
+            please wait...
+          %a#retrybutton.hide.btn.btn--small{ :href=>"#" }
+            Unable to obtain location, try again.
+          %p
+          Please ensure location is turned on and supported by your device.
+      #map
 
+    %section.providers
+      .grid.grid--medium
+        %h2.providers__title We support these providers
+        %ul.providers__list
+          %li
+            %a.footer__list-item{:href => "https://www.car2go.com/", :target => "_blank" }
+              %img{:alt => "CAR2GO", :src => "/images/provider_car2go.png"}/
+          %li
+            %a.footer__list-item{:href => "https://www.drive-now.com", :target => "_blank" }
+              %img{:alt => "DRIVE NOW", :src => "/images/provider_drivenow.png"}/
+          %li
+            %a.footer__list-item{:href => "https://www.multicity-carsharing.de/", :target => "_blank" }
+              %img{:alt => "MULTICITY", :src => "/images/provider_multicity.png"}/
 
+    %section.webapp
+      .grid.grid--size-2.grid--medium
+        .grid__column.webapp__device
+          %img{:alt => "", :src => "/images/device.png"}/
+        .grid__column.webapp__texts
+          %div
+            %h2.webapp__title Take TankMeister everywhere!
+            %p
+              TankMeister is also WebApp and works on any mobile device. So next time you are with your phone or tablet just visit
+              %strong tankmeister.de
+              and get full access to all our features.
 
-
-
-#mainmap.hide
-  #timestamp.hide
-    "-"
-  %form#autoform
-    %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-      %label{ :for => "autonotify" } Auto. Notify
-    %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-      %label{ :for => "autoupdate" } Auto. Update
-  #autonotifyform.hide
-    %form#radiusvalue
-      %label{ :for => "radiusselector" } Within:
-      %select#radiusselector
-        - [100,200,300,400,500,1000].each do |dist|
-          %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
-  #map
+  %footer.footer
+    .grid.grid--size-2.grid--large
+      .grid__column
+        %svg.footer__icon
+          %use{"xlink:href" => "#logo"}
+        %p.footer__texts All rights reserved © tankMeister.de 2016
+      .grid__column
+        %ul.footer__nav
+          %li
+            %a.footer__nav-item{:href => "https://github.com/gorenje/drivenow"} GITHUB CODE
+          %li
+            %a.footer__nav-item{:href => "/imprint/"} IMPRINT
+        %p.footer__texts
+          If you would like to contact the author or view the
+          %a{ :href => "https://github.com/gorenje/drivenow", :target => "_blank" } code
+          , both are hosted at
+          %a{ :href => "https://github.com", :target => "_blank" } GitHub.
 
 :javascript
   var map, infowin, youmarker, ym_base_content, csc, glb_city, circle,
@@ -66,3 +126,11 @@
 
 - ["notify","geolocation","code","autoupdate","nav","google","init"].each do |filename|
   %script{:async => "", :defer => "defer", :src => "/j/#{filename}.js"}
+
+%svg{:style => "display: none;", :version => "1.1", "xml:space" => "preserve", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
+  %symbol#logo{:viewbox => "0 0 200 26.3"}
+    %path{:d => "M9.9,21.9c0.6,0,1,0,1.4-0.1v4.1c-1,0.3-2.1,0.5-3.2,0.5c-2,0-3.4-0.5-4.3-1.4c-0.9-0.9-1.4-2.3-1.4-4.2v-9.1H0\r\n    \tv-4h2.3V3.1H8v4.6h3v4H8V20c0,0.7,0.1,1.2,0.4,1.4C8.7,21.7,9.1,21.9,9.9,21.9z M30.3,21.9c0,1.7,0.3,3,0.8,3.9V26h-5.7\r\n    \tc-0.2-0.4-0.4-0.9-0.5-1.6c-1,1.3-2.5,2-4.4,2c-1.7,0-3.2-0.5-4.4-1.6c-1.2-1-1.8-2.4-1.8-3.9c0-2,0.7-3.5,2.2-4.5\r\n    \tc1.5-1,3.6-1.5,6.4-1.5h1.8v-1c0-1.7-0.7-2.5-2.2-2.5c-1.4,0-2,0.7-2,2h-5.7c0-1.8,0.8-3.2,2.3-4.3c1.5-1.1,3.4-1.7,5.8-1.7\r\n    \ts4.2,0.6,5.5,1.7c1.4,1.1,2,2.7,2.1,4.7V21.9z M24.5,17.9h-1.7c-2,0-3,0.9-3,2.7c0,0.5,0.2,0.9,0.5,1.3c0.3,0.3,0.8,0.5,1.3,0.5\r\n    \tc0.7,0,1.3-0.2,1.8-0.5c0.5-0.3,0.8-0.6,1-1V17.9z M45.8,7.4c-2.2,0-4,0.8-5.2,2.5l-0.2-2.1H35V26h5.7V13.1c0.5-0.9,1.4-1.3,2.5-1.3\r\n    \tc1,0,1.7,0.2,2,0.7c0.4,0.4,0.6,1.1,0.6,2V26h5.7V14.2c0-2.3-0.5-4-1.5-5.1C49.1,7.9,47.7,7.4,45.8,7.4z M73.9,7.7H67L62.7,13\r\n    \tl-0.6,0.8V0h-5.7v26h5.7v-5.2l1.6-1.6l4,6.8h6.5l-6.8-10.8L73.9,7.7z M97.7,7.4c-1.3,0-2.5,0.3-3.6,0.9c-1.1,0.6-2,1.5-2.6,2.6\r\n    \tc-0.8-2.4-2.6-3.6-5.5-3.6c-1.2,0-2.4,0.3-3.4,0.8c-1,0.6-1.9,1.4-2.5,2.5l-0.1-3H78V26h2V13.5c0.4-1.4,1.1-2.5,2-3.2\r\n    \tc0.9-0.7,2-1.1,3.3-1.1c1.5,0,2.6,0.4,3.4,1.2c0.7,0.8,1.1,1.9,1.1,3.5V26h2V13.9c0.1-1.3,0.7-2.4,1.7-3.4c1-0.9,2.2-1.4,3.7-1.4\r\n    \tc1.6,0,2.7,0.4,3.4,1.2c0.7,0.8,1,2,1.1,3.6V26h2V13.8C103.6,9.5,101.6,7.4,97.7,7.4z M122.6,9.6c1.3,1.5,2,3.6,2,6.2V17h-13.1v0.4\r\n    \tc0,2.1,0.6,3.8,1.8,5.2c1.2,1.4,2.7,2.1,4.5,2.1c1.1,0,2-0.2,2.9-0.6c0.8-0.4,1.6-1,2.3-1.9l1.3,1c-1.5,2.2-3.6,3.2-6.5,3.2\r\n    \tc-1.6,0-3-0.4-4.2-1.2c-1.3-0.8-2.2-1.8-2.9-3.2c-0.7-1.4-1-2.9-1-4.6v-0.7c0-1.8,0.3-3.3,1-4.8c0.7-1.4,1.6-2.5,2.9-3.3\r\n    \tc1.2-0.8,2.5-1.2,4-1.2C119.5,7.4,121.3,8.1,122.6,9.6z M122.5,15c-0.1-1.8-0.6-3.2-1.5-4.3c-0.9-1.1-2.2-1.7-3.7-1.7\r\n    \tc-1.5,0-2.8,0.6-3.8,1.7c-1,1.1-1.7,2.6-1.9,4.5h11V15z M131.5,1c-0.4,0-0.8,0.1-1,0.4c-0.2,0.3-0.4,0.6-0.4,1c0,0.4,0.1,0.7,0.4,1\r\n    \tc0.2,0.3,0.6,0.4,1,0.4c0.4,0,0.8-0.1,1-0.4c0.3-0.3,0.4-0.6,0.4-1c0-0.4-0.1-0.7-0.4-1C132.3,1.2,131.9,1,131.5,1z M130.5,26h2V7.7\r\n    \th-2V26z M150.1,17.1c-0.9-0.5-2.2-0.9-4-1.3s-3-0.9-3.7-1.4c-0.7-0.5-1-1.2-1-2.1c0-0.9,0.4-1.7,1.2-2.3c0.8-0.6,1.9-0.9,3.2-0.9\r\n    \tc1.4,0,2.5,0.4,3.4,1.1c0.9,0.7,1.3,1.6,1.3,2.7h2c0-1.6-0.6-2.9-1.9-4c-1.2-1-2.9-1.5-4.9-1.5c-1.9,0-3.4,0.5-4.6,1.4\r\n    \tc-1.2,0.9-1.8,2.1-1.8,3.6c0,0.9,0.2,1.7,0.7,2.3c0.4,0.6,1.1,1.2,2,1.6c0.9,0.4,2.2,0.8,3.8,1.2c1.6,0.3,2.8,0.8,3.6,1.4\r\n    \tc0.8,0.6,1.2,1.4,1.2,2.4c0,0.9-0.4,1.7-1.3,2.4c-0.9,0.6-2,0.9-3.4,0.9c-1.5,0-2.7-0.3-3.6-1c-0.9-0.7-1.4-1.6-1.5-2.8h-2\r\n    \tc0,1.6,0.7,2.9,2,3.9c1.3,1,3.1,1.5,5.2,1.5c2,0,3.6-0.5,4.9-1.4c1.2-0.9,1.9-2.2,1.9-3.7c0-0.9-0.2-1.8-0.6-2.4\r\n    \tC151.6,18.2,151,17.6,150.1,17.1z M164.5,24.6c-0.9,0-1.5-0.2-1.8-0.7c-0.4-0.5-0.6-1.3-0.6-2.3V9.4h3.8V7.7h-3.8V3h-2v4.7h-3.4v1.7\r\n    \th3.4v12.2c0,1.6,0.3,2.8,0.9,3.6c0.6,0.8,1.6,1.2,3,1.2c0.9,0,1.6-0.1,2.2-0.3l-0.1-1.6C165.4,24.5,164.9,24.6,164.5,24.6z\r\n    \t M183.9,9.6c1.3,1.5,2,3.6,2,6.2V17h-13.1v0.4c0,2.1,0.6,3.8,1.8,5.2c1.2,1.4,2.7,2.1,4.5,2.1c1.1,0,2-0.2,2.9-0.6\r\n    \tc0.8-0.4,1.6-1,2.3-1.9l1.3,1c-1.5,2.2-3.6,3.2-6.5,3.2c-1.6,0-3-0.4-4.2-1.2c-1.3-0.8-2.2-1.8-2.9-3.2c-0.7-1.4-1-2.9-1-4.6v-0.7\r\n    \tc0-1.8,0.3-3.3,1-4.8c0.7-1.4,1.6-2.5,2.9-3.3c1.2-0.8,2.5-1.2,4-1.2C180.8,7.4,182.6,8.1,183.9,9.6z M183.8,15\r\n    \tc-0.1-1.8-0.6-3.2-1.5-4.3c-0.9-1.1-2.2-1.7-3.7-1.7c-1.5,0-2.8,0.6-3.8,1.7c-1,1.1-1.7,2.6-1.9,4.5h11V15z M198.7,7.4\r\n    \tc-2.4,0-4.1,1.1-5.2,3.2l0-2.9h-2V26h2V13.4c0.4-1.3,1-2.4,1.9-3.1c0.9-0.7,1.9-1.1,3.2-1.1c0.5,0,0.9,0,1.4,0.1l0.1-1.8\r\n    \tC199.7,7.4,199.2,7.4,198.7,7.4z"}
+  %symbol#isologo{:viewbox => "0 0 255.9 63.2"}
+    %path{:d => "M105.9,33.1c0.9,1.1,1.4,2.9,1.5,5.1V50h-5.7V38.5c0-0.9-0.2-1.6-0.6-2c-0.4-0.4-1-0.7-2-0.7\r\n    \tc-1.1,0-1.9,0.4-2.5,1.3V50h-5.7V31.7h5.3l0.2,2.1c1.3-1.7,3-2.5,5.2-2.5C103.6,31.4,105,31.9,105.9,33.1z M86.1,45.9\r\n    \tc0,1.7,0.3,3,0.8,3.9V50h-5.7c-0.2-0.4-0.4-0.9-0.5-1.6c-1,1.3-2.5,2-4.4,2c-1.7,0-3.2-0.5-4.4-1.6c-1.2-1-1.8-2.4-1.8-3.9\r\n    \tc0-2,0.7-3.5,2.2-4.5c1.5-1,3.6-1.5,6.4-1.5h1.8v-1c0-1.7-0.7-2.5-2.2-2.5c-1.4,0-2,0.7-2,2h-5.7c0-1.8,0.8-3.2,2.3-4.3\r\n    \tc1.5-1.1,3.4-1.7,5.8-1.7s4.2,0.6,5.5,1.7c1.4,1.1,2,2.7,2.1,4.7V45.9z M80.4,41.9h-1.7c-2,0-3,0.9-3,2.7c0,0.5,0.2,0.9,0.5,1.3\r\n    \tc0.3,0.3,0.8,0.5,1.3,0.5c0.7,0,1.3-0.2,1.8-0.5c0.5-0.3,0.8-0.6,1-1V41.9z M64.3,45.5c-0.2-0.3-0.4-0.8-0.4-1.4v-8.4h3v-4h-3v-4.6\r\n    \th-5.7v4.6h-2.3v4h2.3v9.1c0,1.9,0.5,3.3,1.4,4.2c0.9,0.9,2.4,1.4,4.3,1.4c1.1,0,2.2-0.2,3.2-0.5v-4.1c-0.4,0.1-0.9,0.1-1.4,0.1\r\n    \tC65,45.9,64.5,45.8,64.3,45.5z M254.5,31.4c-2.4,0-4.1,1.1-5.2,3.2l0-2.9h-2V50h2V37.4c0.4-1.3,1-2.4,1.9-3.1\r\n    \tc0.9-0.7,1.9-1.1,3.2-1.1c0.5,0,0.9,0,1.4,0.1l0.1-1.8C255.5,31.4,255.1,31.4,254.5,31.4z M129.7,31.7h-6.8l-4.3,5.3l-0.6,0.8V24\r\n    \th-5.7v26h5.7v-5.2l1.6-1.6l4,6.8h6.5l-6.8-10.8L129.7,31.7z M178.5,33.6c1.3,1.5,2,3.6,2,6.2V41h-13.1v0.4c0,2.1,0.6,3.8,1.8,5.2\r\n    \tc1.2,1.4,2.7,2.1,4.5,2.1c1.1,0,2-0.2,2.9-0.6c0.8-0.4,1.6-1,2.3-1.9l1.3,1c-1.5,2.2-3.6,3.2-6.5,3.2c-1.6,0-3-0.4-4.2-1.2\r\n    \tc-1.3-0.8-2.2-1.8-2.9-3.2c-0.7-1.4-1-2.9-1-4.6v-0.7c0-1.8,0.3-3.3,1-4.8c0.7-1.4,1.6-2.5,2.9-3.3c1.2-0.8,2.5-1.2,4-1.2\r\n    \tC175.4,31.4,177.2,32.1,178.5,33.6z M178.4,39.1c-0.1-1.8-0.6-3.2-1.5-4.3c-0.9-1.1-2.2-1.7-3.7-1.7c-1.5,0-2.8,0.6-3.8,1.7\r\n    \tc-1,1.1-1.7,2.6-1.9,4.5h11V39.1z M186.3,50h2V31.7h-2V50z M187.4,25.1c-0.4,0-0.8,0.1-1,0.4c-0.2,0.3-0.4,0.6-0.4,1\r\n    \tc0,0.4,0.1,0.7,0.4,1c0.2,0.3,0.6,0.4,1,0.4c0.4,0,0.8-0.1,1-0.4c0.3-0.3,0.4-0.6,0.4-1c0-0.4-0.1-0.7-0.4-1\r\n    \tC188.1,25.2,187.8,25.1,187.4,25.1z M206,41.1c-0.9-0.5-2.2-0.9-4-1.3s-3-0.9-3.7-1.4c-0.7-0.5-1-1.2-1-2.1c0-0.9,0.4-1.7,1.2-2.3\r\n    \tc0.8-0.6,1.9-0.9,3.2-0.9c1.4,0,2.5,0.4,3.4,1.1c0.9,0.7,1.3,1.6,1.3,2.7h2c0-1.6-0.6-2.9-1.9-4c-1.2-1-2.9-1.5-4.9-1.5\r\n    \tc-1.9,0-3.4,0.5-4.6,1.4c-1.2,0.9-1.8,2.1-1.8,3.6c0,0.9,0.2,1.7,0.7,2.3c0.4,0.6,1.1,1.2,2,1.6c0.9,0.4,2.2,0.8,3.8,1.2\r\n    \tc1.6,0.3,2.8,0.8,3.6,1.4c0.8,0.6,1.2,1.4,1.2,2.4c0,0.9-0.4,1.7-1.3,2.4c-0.9,0.6-2,0.9-3.4,0.9c-1.5,0-2.7-0.3-3.6-1\r\n    \tc-0.9-0.7-1.4-1.6-1.5-2.8h-2c0,1.6,0.7,2.9,2,3.9c1.3,1,3.1,1.5,5.2,1.5c2,0,3.6-0.5,4.9-1.4c1.2-0.9,1.9-2.2,1.9-3.7\r\n    \tc0-0.9-0.2-1.8-0.6-2.4C207.5,42.2,206.8,41.6,206,41.1z M153.6,31.4c-1.3,0-2.5,0.3-3.6,0.9c-1.1,0.6-2,1.5-2.6,2.6\r\n    \tc-0.8-2.4-2.6-3.6-5.5-3.6c-1.2,0-2.4,0.3-3.4,0.8c-1,0.6-1.9,1.4-2.5,2.5l-0.1-3h-1.9V50h2V37.5c0.4-1.4,1.1-2.5,2-3.2\r\n    \tc0.9-0.7,2-1.1,3.3-1.1c1.5,0,2.6,0.4,3.4,1.2c0.7,0.8,1.1,1.9,1.1,3.5V50h2V37.9c0.1-1.3,0.7-2.4,1.7-3.4c1-0.9,2.2-1.4,3.7-1.4\r\n    \tc1.6,0,2.7,0.4,3.4,1.2c0.7,0.8,1,2,1.1,3.6V50h2V37.8C159.5,33.5,157.5,31.4,153.6,31.4z M239.7,33.6c1.3,1.5,2,3.6,2,6.2V41h-13.1\r\n    \tv0.4c0,2.1,0.6,3.8,1.8,5.2c1.2,1.4,2.7,2.1,4.5,2.1c1.1,0,2-0.2,2.9-0.6c0.8-0.4,1.6-1,2.3-1.9l1.3,1c-1.5,2.2-3.6,3.2-6.5,3.2\r\n    \tc-1.6,0-3-0.4-4.2-1.2c-1.3-0.8-2.2-1.8-2.9-3.2c-0.7-1.4-1-2.9-1-4.6v-0.7c0-1.8,0.3-3.3,1-4.8c0.7-1.4,1.6-2.5,2.9-3.3\r\n    \tc1.2-0.8,2.5-1.2,4-1.2C236.7,31.4,238.4,32.1,239.7,33.6z M239.7,39.1c-0.1-1.8-0.6-3.2-1.5-4.3c-0.9-1.1-2.2-1.7-3.7-1.7\r\n    \tc-1.5,0-2.8,0.6-3.8,1.7c-1,1.1-1.7,2.6-1.9,4.5h11V39.1z M220.4,48.6c-0.9,0-1.5-0.2-1.8-0.7c-0.4-0.5-0.6-1.3-0.6-2.3V33.4h3.8\r\n    \tv-1.7H218V27h-2v4.7h-3.4v1.7h3.4v12.2c0,1.6,0.3,2.8,0.9,3.6c0.6,0.8,1.6,1.2,3,1.2c0.9,0,1.6-0.1,2.2-0.3l-0.1-1.6\r\n    \tC221.3,48.5,220.7,48.6,220.4,48.6z M47.2,50.8c1.2,2,2.2,4.1,3.1,6.2c-1.3,0.1-2.7,0.2-4.1,0.3c-0.6-1.4-1.3-2.9-2-4.2l-7.2-13.1\r\n    \tl0,18.4c-14,1.9-29.4,3.2-36.9,4.9V25.4c0-3.3,2.7-6,6-6h24.8c3.3,0,6,2.7,6,6v8L47.2,50.8z M30.8,30.3c0-2.1-1.7-3.7-3.7-3.7H9.8\r\n    \tc-2.1,0-3.7,1.7-3.7,3.7V41c0,2.1,1.7,3.7,3.7,3.7H27c2.1,0,3.7-1.7,3.7-3.7V30.3z M7.4,7.5c0.2,0,0.3,0,0.4,0l1.9,6.9v2.6h16.6\r\n    \tv-2.5l2-7c0.1,0,0.3,0,0.4,0c1.3,0,2.4-1.1,2.4-2.4s-1.1-2.4-2.4-2.4s-2.4,1.1-2.4,2.4c0,0.4,0.1,0.8,0.3,1.1\r\n    \tc-4.7,2.1-6.9,0.3-7.8-1.5c1-0.3,1.6-1.2,1.6-2.3c0-1.3-1.1-2.4-2.4-2.4s-2.4,1.1-2.4,2.4c0,1.1,0.7,2,1.6,2.3\r\n    \tC15.7,7.4,12,6.8,9.6,6c0.1-0.3,0.2-0.6,0.2-0.9c0-1.3-1.1-2.4-2.4-2.4C6.1,2.7,5,3.7,5,5.1S6.1,7.5,7.4,7.5z M12.6,33.1\r\n    \tc-1.9,0-3.4,1.5-3.4,3.4c0,0.4,0.3,0.7,0.7,0.7c0.4,0,0.7-0.3,0.7-0.7c0-1.1,0.9-2,2-2c1.1,0,2,0.9,2,2c0,0.4,0.3,0.7,0.7,0.7\r\n    \tc0.4,0,0.7-0.3,0.7-0.7C16,34.6,14.5,33.1,12.6,33.1z M24.8,33.1c-1.9,0-3.4,1.5-3.4,3.4c0,0.4,0.3,0.7,0.7,0.7\r\n    \tc0.4,0,0.7-0.3,0.7-0.7c0-1.1,0.9-2,2-2s2,0.9,2,2c0,0.4,0.3,0.7,0.7,0.7c0.4,0,0.7-0.3,0.7-0.7C28.1,34.6,26.6,33.1,24.8,33.1z"}
+  %symbol#icon-location{:viewbox => "0 0 92.3 120"}
+    %path{:d => "M46.5,0c-0.1,0-0.2,0-0.3,0c-0.1,0-0.2,0-0.3,0C20.6,0.4,0,21.3,0,46.6c0,28.8,28.7,57.9,43.2,70.9c0,0,0,0,0,0\r\n\tc1,0.9,2,1.8,2.9,2.5c13.1-11.2,46.1-42.5,46.1-73.4C92.3,21.3,71.7,0.4,46.5,0z M46.6,66.1c-13.3,0-24.1-10.8-24.1-24.1\r\n\tc0-13.3,10.8-24.1,24.1-24.1c13.3,0,24.1,10.8,24.1,24.1C70.7,55.2,59.9,66.1,46.6,66.1z"}

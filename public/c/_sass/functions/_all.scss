@@ -1,0 +1,23 @@
+@function line-height($font-size) {
+  @return $font-size * 1.6;
+}
+
+@function is-number-unitless($value) {
+  @if (type-of($value) == number) {
+    @if (unitless($value)) {
+      @return true;
+    }
+  }
+  @return false;
+}
+
+@function cross-multiply($a, $b, $c: 100) {
+  @return ($a * $b) / $c;
+}
+
+@function strip-unit($number) {
+  @if (type-of($number) == 'number' and not unitless($number)) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
