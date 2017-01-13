@@ -1,4 +1,4 @@
-function notifyMessage(msg,opts) {
+function notifyMessage(msg,opts,car) {
   if (!("Notification" in window)) {
     return;
   }
@@ -6,6 +6,9 @@ function notifyMessage(msg,opts) {
   else if (Notification.permission === "granted") {
     // If it's okay let's create a notification
     var notification = new Notification(msg,opts);
+    notification.onclick = function(){
+      window.open(car.reserve_link);
+    };
     setTimeout(notification.close.bind(notification), 60000); 
   }
 
@@ -29,6 +32,6 @@ function notifyCloseCars(car) {
       tag: car.name,
       renotify: false
     };
-    notifyMessage("Tankmeister", options);
+    notifyMessage("Tankmeister", options, car);
   }
 }
