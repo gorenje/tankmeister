@@ -41,7 +41,8 @@ class Car
       "marker_icon"   => marker_icon,
       "name"          => name,
       "json_location" => json_location,
-      "distance"      => @last_distance
+      "distance"      => @last_distance,
+      "reserve_link"  => reserve_url
     }
   end
 end

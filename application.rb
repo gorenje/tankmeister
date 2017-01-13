@@ -30,6 +30,7 @@ set :dump_errors, true
 
 if settings.environment == :development
   require 'pry'
+  require 'sinatra/reloader'
 end
 
 Dir[File.join(File.dirname(__FILE__),'config', 'initializers','*.rb')].
