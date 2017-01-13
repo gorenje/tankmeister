@@ -38,28 +38,3 @@ function autoUpdateCars() {
   current_auto_update_timer_id = setTimeout(autoUpdateCars, 30000);
 }
 
-$(document).ready(function(){
-  $('#autonotify').change(function() {
-     if(this.checked) {
-       $('#autonotifyform').fadeIn();
-       current_timer_id = setTimeout(autoNotification, 10000);
-     } else {
-       $('#autonotifyform').fadeOut();
-       if ( current_timer_id !== null ) {
-         clearTimeout(current_timer_id);
-         current_timer_id = null;
-       }
-     }
-  });
-
-  $('#autoupdate').change(function() {
-     if(this.checked) {
-       current_auto_update_timer_id = setTimeout(autoUpdateCars, 30000);
-     } else {
-       if ( current_auto_update_timer_id !== null ) {
-         clearTimeout(current_auto_update_timer_id);
-         current_auto_update_timer_id = null;
-       }
-     }
-  });
-});

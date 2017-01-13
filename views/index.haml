@@ -61,8 +61,8 @@
   #map
 
 :javascript
-  var map, infowin, youmarker, ym_base_content, csc, glb_city,
+  var map, infowin, youmarker, ym_base_content, csc, glb_city, circle,
       carmarkers = [], fsmarkers = [], directionsDisplay;
 
-- ["notify","geolocation","code","autoupdate","nav","google"].each do |filename|
+- ["notify","geolocation","code","autoupdate","nav","google","init"].each do |filename|
   %script{:async => "", :defer => "defer", :src => "/j/#{filename}.js"}
