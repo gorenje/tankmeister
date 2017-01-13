@@ -1,0 +1,26 @@
+@mixin z-index ($value: default) {
+  $output: 0;
+  $list: (
+    default: 1,
+    null: 0,
+    first: 9999,
+    last: -10000
+  );
+
+  @if (map-has-key($list, $value)) {
+    $output: map-get($list, $value);
+  } @else if (is-number-unitless($value)) {
+    $output: $value;
+  } @else {
+    $output: 0;
+  }
+
+  z-index: #{$output};
+}
+
+@mixin z-index-global ($increment: 1) {
+  z-index: #{$global-z-index};
+  @if (is-number-unitless($increment)) {
+    $global-z-index: $global-z-index + $increment !global;
+  }
+}

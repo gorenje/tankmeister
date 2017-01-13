@@ -1,0 +1,20 @@
+@mixin text-truncate () {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-hide ($hasDisplay: false) {
+  overflow: hidden;
+  text-indent: -9000px;
+  @if ($hasDisplay) {
+    display: block;
+  }
+}
+
+@mixin text-line-height ($font-size: 'normal', $calculate: true) {
+  @if ((is-string($font-size) == false) and ($calculate == true)) {
+    $font-size: line-height($font-size);
+  }
+  line-height: $font-size;
+}

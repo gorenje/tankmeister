@@ -1,0 +1,4 @@
+@mixin justify-content($value) {
+  @include prefixer(justify-content, $value, $prefixes-wo-ie);
+  -ms-flex-pack: $value;
+}

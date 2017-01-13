@@ -1,0 +1,83 @@
+@mixin links-buttons() {
+  // --------------------------
+  // Shared
+  a,
+  .btn,
+  .btn-ghost {
+    cursor: pointer;
+    color: $color-link;
+    @include transition(border-color $transitions, background-color $transitions, color $transitions);
+    &:hover {
+      color: $color-link-hover;
+    }
+  }
+
+  // --------------------------
+  // Buttons Shared
+  %button-base {
+    text-shadow: none;
+    display: inline-block;
+    border-radius: $btn-border-radius;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    padding: $spacer-5 $spacer-20;
+    font-size: $font-size-24;
+    min-width: 200px;
+    vertical-align: middle;
+  }
+  %button-small {
+    padding: $spacer-5 $spacer-15;
+    font-size: $font-size-14;
+  }
+
+  // --------------------------
+  // Buttons
+  .btn {
+    @extend %button-base;
+    background-color: $btn-background-color;
+    color: $btn-color;
+    &:hover {
+      color: $btn-color;
+      background-color: $btn-background-color-hover;
+    }
+
+    &.btn--small {
+      @extend %button-small;
+    }
+
+    &.btn--white {
+      background-color: $color-white;
+      color: $color1;
+    }
+  }
+
+  // --------------------------
+  // Ghost Buttons
+  .btn-ghost {
+    @extend %button-base;
+    background-color: transparent;
+    border: 2px solid $btn-border-color;
+    color: $btn-border-color;
+    &:hover {
+      border-color: $btn-border-color-hover;
+      background-color: $btn-background-color-hover;
+      color: $btn-color;
+    }
+
+    &.btn-ghost--white {
+      border-color: $color-white;
+      color: $color-white;
+      &:hover {
+        border-color: $color-white;
+        background-color: $color-white;
+        color: $color1;
+      }
+    }
+
+    &.btn-ghost--small {
+      @extend %button-small;
+    }
+  }
+
+}

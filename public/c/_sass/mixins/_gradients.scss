@@ -1,0 +1,52 @@
+@mixin gradient-simple ($colorFrom: $color-white, $colorTo: $color-black, $start: 0%, $end: 100%, $background-color: true, $prepend-data: '') {
+
+  @if ($prepend-data != '') {
+    background: #{$prepend-data}, -moz-linear-gradient(top, $colorFrom $start, $colorTo $end);
+    background: #{$prepend-data}, -webkit-linear-gradient(top, $colorFrom $start, $colorTo $end);
+    background: #{$prepend-data}, linear-gradient(to bottom, $colorFrom $start, $colorTo $end);
+  } @else {
+    background: -moz-linear-gradient(top, $colorFrom $start, $colorTo $end);
+    background: -webkit-linear-gradient(top, $colorFrom $start, $colorTo $end);
+    background: linear-gradient(to bottom, $colorFrom $start, $colorTo $end);
+  }
+
+  @if ($background-color) {
+    background-color: $colorFrom;
+  }
+}
+
+@mixin gradient-radial ($colorFrom: $color-white, $colorTo: $color-black, $start: 0%, $end: 100%, $position: center, $background-color: true, $shape: circle) {
+  background: -moz-radial-gradient($position, $shape cover, $colorFrom $start, $colorTo $end);
+  background: -webkit-radial-gradient($position, $shape cover, $colorFrom $start, $colorTo $end);
+  background: -o-radial-gradient($position, $shape cover, $colorFrom $start, $colorTo $end);
+  background: -ms-radial-gradient($position, $shape cover, $colorFrom $start, $colorTo $end);
+  background: radial-gradient($position, $shape cover, $colorFrom $start, $colorTo $end);
+  @if ($background-color) {
+    background-color: $colorFrom;
+  }
+}
+
+
+// TODO: implement this function correctly
+// @mixin gradient-multiple ($values, $background-color: true, $prepend-data: '') {
+//   @if (length($values) > 0) {
+//     @if ($prepend-data != '') {
+//       background: #{$prepend-data}, -moz-linear-gradient(top, #{$values});
+//       background: #{$prepend-data}, -webkit-linear-gradient(top, #{$values});
+//       background: #{$prepend-data}, linear-gradient(to bottom, #{$values});
+//     } @else {
+//       background: -moz-linear-gradient(top, #{$values});
+//       background: -webkit-linear-gradient(top, #{$values});
+//       background: linear-gradient(to bottom, #{$values});
+//     }
+//
+//     @if ($background-color) {
+//       $bg: map-get($values, 0);
+//       background-color: $bg;
+//     }
+//   }
+
+// Returns something like this:
+// background: linear-gradient(to bottom,  #bfbfbf 0%, #bfbfbf 50%, #207cca 50%, #7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+// }
