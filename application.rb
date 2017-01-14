@@ -28,7 +28,7 @@ set :raise_errors, true
 set :show_exceptions, false
 set :dump_errors, true
 
-if settings.environment == :development
+if settings.environment == "development"
   require 'pry'
   require 'sinatra/reloader'
 end
