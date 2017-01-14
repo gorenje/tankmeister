@@ -24,46 +24,6 @@
             %p Search for a car nearby and find the most convenient one for you that will let you collect bonus minutes!
   %main
     %section.selector
-      .grid
-        %h2.selector__title Choose your provider and start saving!
-        #cscselectors.selector__list.grid.grid--large.grid--size-4
-          .grid__column
-            .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
-              DriveNow
-              %span.selector__note
-                (30 bonus mins)
-          .grid__column
-            .sltcsc.selector__list-item{:href => "#", "data-csc" => "ctg"}
-              Car2Go
-              %span.selector__note
-                (15 bonus mins)
-          .grid__column
-            .sltcsc.selector__list-item{:href => "#", "data-csc" => "mcy"}
-              Multicity
-              %span.selector__note
-                (30 bonus mins)
-          .grid__column
-            .sltcsc.selector__list-item{:href => "#", "data-csc" => "all"}
-              All Companies
-              %span.selector__note
-                (List all providers)
-        %p.selector__texts *Ensure your location is turned on and allow this site to access your location. We do not store your location or send it to the car sharing company, we only use it to determine the closest cars to you.
-
-    %section#mainmap.map
-      .map__settings
-        #timestamp.hide
-          "-"
-        %form#autoform.hide
-          %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-            %label{ :for => "autonotify" } Auto notifications
-          %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-            %label{ :for => "autoupdate" } Keep map updated
-        #autonotifyform.hide
-          %form#radiusvalue
-            %label{ :for => "radiusselector" } Within:
-            %select#radiusselector
-              - [100,200,300,400,500,1000].each do |dist|
-                %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
       #locationmsg.map__location
         .grid.grid--large
           %h4#pleasewait.map__title
@@ -74,7 +34,32 @@
             Unable to obtain location, try again.
           %p
           Please ensure location is turned on and supported by your device.
-      #map
+
+      .grid#cscselectors.hide
+        %h2.selector__title Choose your provider and start saving!
+        .selector__list.grid.grid--large.grid--size-4
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
+              DriveNow
+              %span.selector__note
+                (30 bonus mins)
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "ctg"}
+              Car2Go
+              %span.selector__note
+                (10 bonus mins)
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "mcy"}
+              Multicity
+              %span.selector__note
+                (15 bonus mins)
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "all"}
+              All Companies
+              %span.selector__note
+                (List all providers)
+        %p.selector__texts *Ensure your location is turned on and allow this site to access your location. We do not store your location or send it to the car sharing company, we only use it to determine the closest cars to you.
+
 
     %section.providers
       .grid.grid--medium
@@ -113,12 +98,31 @@
           %li
             %a.footer__nav-item{:href => "https://github.com/gorenje/drivenow"} GITHUB CODE
           %li
-            %a.footer__nav-item{:href => "/imprint/"} IMPRINT
+            %a.footer__nav-item{:href => "https://github.com/gorenje"} IMPRINT
         %p.footer__texts
-          If you would like to contact the author or view the
-          %a{ :href => "https://github.com/gorenje/drivenow", :target => "_blank" } code
+          If you would like to contact the
+          %a{ :href => "https://github.com/gorenje", :target => "_blank" } author
+          or view the
+          %a{ :href => "https://github.com/gorenje/tankmeister", :target => "_blank" } code
           , both are hosted at
           %a{ :href => "https://github.com", :target => "_blank" } GitHub.
+
+%section#mainmap.map.hide
+  .map__settings
+    #timestamp.hide
+      "-"
+    %form#autoform
+      %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+        %label{ :for => "autonotify" } Auto notifications
+      %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+        %label{ :for => "autoupdate" } Keep map updated
+    #autonotifyform.hide
+      %form#radiusvalue
+        %label{ :for => "radiusselector" } Within:
+        %select#radiusselector
+          - [100,200,300,400,500,1000].each do |dist|
+            %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+  #map
 
 :javascript
   var map, infowin, youmarker, ym_base_content, csc, glb_city, circle,
