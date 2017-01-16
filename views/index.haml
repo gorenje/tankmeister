@@ -36,27 +36,28 @@
           Please ensure location is turned on and supported by your device.
       .grid#cscselectors.hide
         %h2.selector__title Choose your provider and start saving!
-        .selector__list.grid.grid--large.grid--size-4
+        .selector__list.grid.grid--large.grid--size-5
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
               DriveNow
               %span.selector__note
-                (30 bonus mins)
+                (30 mins)
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "ctg"}
               Car2Go
               %span.selector__note
-                (10 bonus mins)
+                (10 mins)
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "mcy"}
               Multicity
               %span.selector__note
-                (15 bonus mins)
+                (15 mins)
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "all"}
-              All Companies
-              %span.selector__note
-                (List all providers)
+              All Providers
+          .grid__column
+            .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw_available"}
+              DriveNow Radar
         %p.selector__texts *Ensure your location is turned on and allow this site to access your location. We do not store your location or send it to the car sharing company, we only use it to determine the closest cars to you.
 
 
