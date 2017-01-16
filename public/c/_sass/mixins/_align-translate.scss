@@ -1,0 +1,21 @@
+@mixin align-translate($width, $height, $orientation: 'vertical', $left: 0, $top: 0) {
+  & {
+    position: absolute;
+    width: $width;
+    height: $height;
+
+    @if ($orientation == 'vertical') {
+      left: $left;
+      top: 50%;
+      @include transform(translateY(-50%));
+    } @else if($orientation == 'horizontal') {
+      top: $top;
+      left: 50%;
+      @include transform(translateX(-50%));
+    } @else if($orientation == 'both') {
+      top: 50%;
+      left: 50%;
+      @include transform(translateX(-50%) translateY(-50%));
+    }
+  }
+}

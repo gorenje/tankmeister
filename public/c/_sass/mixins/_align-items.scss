@@ -1,0 +1,4 @@
+@mixin align-items($value) {
+  @include prefixer(align-items, $value, $prefixes-wo-ie);
+  -ms-flex-align: $value;
+}
