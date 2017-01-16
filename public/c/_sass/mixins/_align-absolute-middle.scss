@@ -1,0 +1,22 @@
+@mixin align-absolute-middle ($height: 100%, $wrapper: false, $wrapper-width: 100%, $justification: center, $alignment: center) {
+  @include display-flex();
+  @include align-items($alignment);
+  @include box-align($alignment);
+  @include justify-content($justification);
+
+  @if ($height != '') {
+    height: $height;
+  }
+
+  @if ($wrapper) {
+    & > div:first-child {
+      margin: 0 auto;
+      @include media() {
+        width: 100%;
+      }
+      @include media(small) {
+        width: $wrapper-width;
+      }
+    }
+  }
+}

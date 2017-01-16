@@ -1,0 +1,37 @@
+@mixin svg-background($width, $height, $color, $orientation: after, $gap: 30) {
+  $width: strip-unit($width);
+  $height: strip-unit($height);
+  $width-half: $width / 2;
+  $padding-top: (($height / $width) * 100 + 1) + '%';
+
+  //TODO: The Polygon node values could come from outside the mixin
+  $points-list: (
+    (0,0),
+    ($width-half - $gap,0),
+    ($width-half,$gap),
+    ($width-half + $gap,0),
+    ($width,0),
+    ($width,$height),
+    (0,$height)
+  );
+
+  $points: '';
+  @each $item in $points-list {
+    @if (index($points-list, $item) <= length($points-list)) {
+      $points: $points + nth($item, 1) + ',' + nth($item, 2) + ' ';
+    }
+  }
+
+  &::#{$orientation} {
+    content: '';
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 0;
+    padding: #{$padding-top} 0 0 0;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="#{$width}" height="#{$height}"><polygon points="#{$points}" style="fill:#{$color};stroke:#{$color};stroke-width:0"></polygon></svg>');
+  }
+}
