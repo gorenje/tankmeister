@@ -41,6 +41,10 @@ module DriveNow
     def fuel_in_percent
       @data["fuelLevelInPercent"]
     end
+
+    def license_plate
+      @data["licensePlate"]
+    end
   end
 
   class ElectroFS < ElectroFS

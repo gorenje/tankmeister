@@ -54,3 +54,13 @@ get '/nearest' do
     "tstamp" => tz.utc_to_local(DateTime.now).strftime("%H:%M:%S %d/%m/%Y")
   }.to_json
 end
+
+get '/standingtime' do
+  content_type :json
+  # params[:lp] contains the license plate
+  { :time => {
+      :seconds => "...",
+      :minutes => "..."
+    }
+  }.to_json
+end

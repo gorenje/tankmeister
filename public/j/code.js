@@ -134,6 +134,14 @@ function setUpMarkers(origin, city) {
           travelMode: 'WALKING'
         };
 
+        $.ajax({
+           url:  "/standingtime?lp=" + car.license_plate,
+           method: 'get',
+           dataType: 'json'
+        }).done(function(data){
+           $('#stdtime').html(data.time.minutes);
+        });
+
         directionsService.route(request, function(result, status) {
           if (status == 'OK') {
             var rt = result.routes[directionsDisplay.getRouteIndex()];
