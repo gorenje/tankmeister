@@ -57,10 +57,17 @@ end
 
 get '/standingtime' do
   content_type :json
-  # params[:lp] contains the license plate
+  secs, mins = begin
+                 t = JSON(Curlobj.body("http://#{ENV['CARSTATS_HOST']}/"+
+                                       "standingtime?lp=" +
+                                       CGI::escape(params[:lp])))["time"]
+                 [t.to_i, (t/60.0).ceil]
+               rescue Exception => e
+                 ["...","..."]
+               end
   { :time => {
-      :seconds => "...",
-      :minutes => "..."
+      :seconds => secs,
+      :minutes => mins
     }
   }.to_json
 end
