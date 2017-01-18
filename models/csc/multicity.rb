@@ -40,6 +40,10 @@ module Multicity
     def fuel_in_percent
       @vehicle["fillLevel"]
     end
+
+    def license_plate
+      @vehicle["license"]
+    end
   end
 
   class PetrolFS < PetrolFS

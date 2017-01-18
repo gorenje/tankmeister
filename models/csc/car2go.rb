@@ -49,6 +49,10 @@ module Car2Go
     def fuel_type
       is_electro? ? "Electro" : "Super - E10"
     end
+
+    def license_plate
+      @data["name"]
+    end
   end
 
   class PetrolFS < PetrolFS

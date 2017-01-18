@@ -42,7 +42,8 @@ class Car
       "name"          => name,
       "json_location" => json_location,
       "distance"      => @last_distance,
-      "reserve_link"  => reserve_url
+      "reserve_link"  => reserve_url,
+      "license_plate" => license_plate
     }
   end
 end
