@@ -62,3 +62,7 @@ a.button {
 p.cardetails, p.fsdetails {
   font-size: $font-size-14;
 }
+
+a#retrybutton {
+  display: none;
+}
