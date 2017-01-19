@@ -9,7 +9,7 @@ class Car
     { "lat" => location.lat, "lng" => location.lng }
   end
 
-  def distance(loc)
+  def distance_to(loc)
     @last_distance = location.distance_to(loc)
   end
 

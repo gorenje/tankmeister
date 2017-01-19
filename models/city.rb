@@ -6,7 +6,7 @@ class City
     @data = hsh
   end
 
-  def distance(loc)
+  def distance_to(loc)
     location.distance_to(loc)
   end
 end
