@@ -12,13 +12,11 @@
   = "#{fuel_in_percent}% -"
   %span.bold= fuel_type
   %br
-  Walking time:
+  Walking:
   %span#wktime.bold ...
   mins
-  %br
-  Distance:
-  %span#wkdist.bold ...
-  kms
+  = surround "(", " kms)" do
+    %span#wkdist.bold ...
   %br
   Available since:
   %span#stdtime.bold ...
