@@ -42,6 +42,7 @@ GEM
     rake (10.5.0)
     ruby_parser (3.8.3)
       sexp_processor (~> 4.1)
+    sass (3.4.23)
     sexp_processor (4.7.0)
     sinatra (1.4.7)
       rack (~> 1.5)
@@ -75,6 +76,7 @@ DEPENDENCIES
   json
   pry
   rake (= 10.5.0)
+  sass
   sinatra
   sinatra-contrib
   timezone
