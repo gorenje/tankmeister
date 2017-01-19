@@ -2,3 +2,4 @@
 .DS_Store
 public/c/.sass-cache/*
 public/c/main.css.map
+.sass-cache/
