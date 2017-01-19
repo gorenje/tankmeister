@@ -42,12 +42,7 @@ get '/nearest' do
     result
   end
 
-  tz = begin
-         Timezone.lookup(params["lat"], params["lng"])
-       rescue Timezone::Error::Google => e
-         # this is a daily limit issue.
-         Timezone['UTC']
-       end
+  tz = TzCache.lookup(params["lat"], params["lng"])
 
   { "cars"   => resp[0].map(&:to_hash),
     "fs"     => resp[1].map(&:to_hash),
