@@ -123,6 +123,7 @@ function setUpMarkers(origin, city) {
       });
 
       carmarkers[idx]._details = car.details;
+      carmarkers[idx]._lp = car.license_plate;
 
       carmarkers[idx].addListener('click', function(){
         infowin.setContent(carmarkers[idx]._details);
@@ -135,7 +136,7 @@ function setUpMarkers(origin, city) {
         };
 
         $.ajax({
-           url:  "/standingtime?lp=" + car.license_plate,
+           url:  "/standingtime?lp=" + carmarkers[idx]._lp,
            method: 'get',
            dataType: 'json'
         }).done(function(data){
@@ -207,6 +208,7 @@ function updateMarkers(position) {
          carmarkers[idx].setIcon(car.marker_icon);
          carmarkers[idx].setTitle(car.name);
          carmarkers[idx]._details = car.details;
+         carmarkers[idx]._lp = car.license_plate;
        });
 
        map.fitBounds(bounds);
