@@ -58,7 +58,7 @@ end
 get '/standingtime' do
   content_type :json
   secs, mins = begin
-                 t = JSON(Curlobj.body("http://#{ENV['CARSTATS_HOST']}/"+
+                 t = JSON(Curlobj.body("https://#{ENV['CARSTATS_HOST']}/"+
                                        "standingtime?lp=" +
                                        CGI::escape(params[:lp])))["time"]
                  [t.to_i, (t/60.0).ceil]
