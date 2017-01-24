@@ -141,6 +141,14 @@ function setUpMarkers(origin, city) {
            dataType: 'json'
         }).done(function(data){
            $('#stdtime').html(data.time.minutes);
+           $.ajax({
+              url: "/color?lp=" + carmarkers[idx]._lp + "&st=" +
+                      data.time.seconds,
+              method: 'get',
+              dataType: 'json'
+           }).done(function(data){
+              $('#stdtime').css('color', data.color);
+           });
         });
 
         directionsService.route(request, function(result, status) {
