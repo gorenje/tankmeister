@@ -123,6 +123,12 @@
           - [100,200,300,400,500,1000].each do |dist|
             %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
   #map
+  %footer.footer
+    .grid.grid--size-2.grid--large
+      .grid__column
+        %svg.footer__icon
+          %use{"xlink:href" => "#logo"}
+        %p.footer__texts All rights reserved © tankMeister.de 2016
 
 :javascript
   var map, infowin, youmarker, ym_base_content, csc, glb_city, circle,
