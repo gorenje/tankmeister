@@ -53,9 +53,10 @@ end
 get '/standingtime' do
   content_type :json
   secs, mins = begin
-                 t = JSON(Curlobj.body("https://#{ENV['CARSTATS_HOST']}/"+
-                                       "standingtime?lp=" +
-                                       CGI::escape(params[:lp])))["time"]
+                 datastr = Curlobj.body("https://#{ENV['CARSTATS_HOST']}/" +
+                                        "standingtime?lp=" +
+                                        CGI::escape(params[:lp]))
+                 t = JSON(datastr)["time"]
                  [t.to_i, (t/60.0).ceil]
                rescue Exception => e
                  ["...","..."]
@@ -65,4 +66,19 @@ get '/standingtime' do
       :minutes => mins
     }
   }.to_json
+end
+
+get '/color' do
+  content_type :json
+  clr = begin
+          datastr = Curlobj.body("https://#{ENV['CARSTATS_HOST']}/"+
+                                 "avgstime?lp="+CGI::escape(params[:lp]))
+          t = JSON(datastr)["time"]
+          st = params[:st].to_i
+          st >= t ? "red" : (st < (t*0.50) ? "green" : "orange")
+        rescue Exception => e
+          "black"
+        end
+
+  { :color => clr }.to_json
 end
