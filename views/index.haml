@@ -5,7 +5,7 @@
         .grid__column
           %svg.brand
             %use{"xlink:href" => "#isologo"}
-        .grid__column
+        .grid__column.hide
           .location
             %input#location.location__field{:name => "location", :placeholder => "Enter your location (e.g Berlin)", :type => "text", :value => ""}/
             %svg#location-button.location__button
