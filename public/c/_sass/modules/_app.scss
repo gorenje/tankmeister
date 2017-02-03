@@ -82,6 +82,9 @@
 .selector {
   background-color: $color-white;
   padding: $spacer-40 0;
+  &__wrapper {
+    max-width: 800px;
+  }
   &__list {
     max-width: 300px;
     margin: $spacer-30 auto;
@@ -115,6 +118,10 @@
   @include media(small) {
     &__list {
       max-width: initial;
+    }
+    &__texts {
+      max-width: 600px;
+      margin: 0 auto;
     }
   }
 }
