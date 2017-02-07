@@ -1,43 +1,35 @@
 
-@mixin media ($rules: 'default', $orientation: 'mobile-first') {
+@mixin media ($size: 'default', $orientation: '', $mode: 'mobile-first', $pixel-ratio: '') {
 
-  // Mobile First
-  @if $orientation == mobile-first {
-    @if $rules == default {
-      @media only screen and (max-width: $media-default) { @content; }
-    }
-    @else if $rules == small {
-      @media only screen and (min-width: $media-small) { @content; }
-    }
-    @else if $rules == medium {
-      @media only screen and (min-width: $media-medium) { @content; }
-    }
-    @else if $rules == large {
-      @media only screen and (min-width: $media-large) { @content; }
-    }
-    @else {
-      @media only screen and #{$rules}  { @content; }
+  $has-size: false;
+  $main-rule: 'min-width';
+  $rules: '';
+
+  @if ($mode == desktop-first or $size == default) {
+    $main-rule: 'max-width';
+  }
+
+  @each $current-size, $curent-size-value in $media-sizes {
+    @if ($size == $current-size) {
+      $has-size: true;
+      $rules: '(#{$main-rule}: #{$curent-size-value})';
     }
   }
 
-  // Desktop First
-  @else if $orientation == desktop-first {
-    @if $rules == default {
-      @media only screen and (max-width: $media-default) { @content; }
+  @if ($has-size == false) {
+    $rules: $size;
+  } @else {
+
+    @if ($orientation == portrait or $orientation == landscape) {
+      $rules: $rules + ' and (orientation: #{$orientation})';
     }
-    @else if $rules == small {
-      @media only screen and (max-width: $media-small) { @content; }
-    }
-    @else if $rules == medium {
-      @media only screen and (max-width: $media-medium) { @content; }
-    }
-    @if $rules == large {
-      @media only screen and (max-width: $media-large) { @content; }
-    }
-    @else {
-      @media only screen and #{$rules}  { @content; }
+
+    @if ($pixel-ratio != '') {
+      $rules: $rules + ' and (-webkit-device-pixel-ratio: #{$pixel-ratio})';
     }
   }
+
+  @media only screen and #{$rules} { @content; }
 
 }
 
