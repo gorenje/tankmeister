@@ -2,7 +2,7 @@ var watch_position_id = null;
 var current_location = null;
 
 function listenForLocationChange() {
-  watch_position_id = 
+  watch_position_id =
     navigator.geolocation.watchPosition(updateCurrentLocation);
 }
 
