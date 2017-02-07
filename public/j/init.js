@@ -8,6 +8,16 @@ $(document).ready(function(){
   $(document).on('updatedlocation', function(){
      if (circle) { circle.setCenter(current_location); }
      if (youmarker) { youmarker.setPosition(current_location); }
+
+     var location = clToPosition();
+     $.ajax({
+       url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + location.coords.latitude + ',' + location.coords.longitude + '&sensor=false',
+       method: 'get',
+       dataType: 'json'
+     }).done(function(data) {
+        $('#locationsign').text((!current_location) ? 'Please, enable your location settings' : 'You are located in ' + data.results[6].formatted_address)
+     });
+
   });
 
   $('#retrybutton').click(function(event){
@@ -54,8 +64,8 @@ $(document).ready(function(){
     event.preventDefault();
     $('#mainhowto').slideUp().
       fadeOut({ complete: function(){
-                  $('#mainmap').slideDown().fadeIn(); 
-                  setUpMap(clToPosition()); 
+                  $('#mainmap').slideDown().fadeIn();
+                  setUpMap(clToPosition());
                 }});
   });
 });
