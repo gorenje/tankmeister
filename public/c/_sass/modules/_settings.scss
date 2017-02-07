@@ -61,10 +61,13 @@ $btn-border-color: $btn-background-color;
 $btn-border-color-hover: $btn-background-color-hover;
 
 // Media Queries
-$media-large: 1024px;
-$media-medium: 970px;
-$media-small: 640px;
-$media-default: 639px;
+$media-sizes: (
+  default: 639px,
+  small: 640px,
+  medium: 970px,
+  large: 1024px
+);
+
 $media-devices: (
   iphone6Plus: (w: 414px, h: 736px , pr: 3),
   iphone6: (w: 375px, h: 667px , pr: 2),
