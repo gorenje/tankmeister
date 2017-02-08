@@ -25,6 +25,7 @@
     font-size: $font-size-24;
     min-width: 200px;
     vertical-align: middle;
+    outline: none;
   }
   %button-small {
     padding: $spacer-5 $spacer-15;
@@ -33,8 +34,10 @@
 
   // --------------------------
   // Buttons
+
   .btn {
     @extend %button-base;
+    border: 0;
     background-color: $btn-background-color;
     color: $btn-color;
     &:hover {
