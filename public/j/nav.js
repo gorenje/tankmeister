@@ -3,6 +3,11 @@ function showRetryButton() {
     fadeOut({complete: function(){$('#retrybutton').fadeIn();}});
 }
 
+function showPleaseWait() {
+  $('#retrybutton').slideUp().
+    fadeOut({complete: function(){$('#pleasewait').fadeIn();}});
+}
+
 function changeCsc(event) {
   event.preventDefault();
   $('#timestamp').hide().html("");
