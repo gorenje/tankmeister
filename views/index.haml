@@ -1,17 +1,12 @@
 %section#mainhowto
   %header.header
     .grid.grid--large
-      .header__nav.grid.grid--size-2.grid--large
+      .header__nav.grid.grid--large
         .grid__column
           %svg.brand
             %use{"xlink:href" => "#isologo"}
-        .grid__column.hide
-          .location
-            %input#location.location__field{:name => "location", :placeholder => "Enter your location (e.g Berlin)", :type => "text", :value => ""}/
-            %svg#location-button.location__button
-              %use{"xlink:href" => "#icon-location"}
       .feature.grid.grid--size-2.grid--large
-        .grid__column
+        .grid__column.feature__deco
           %img{:alt => "", :src => "/images/feature_deco.png"}/
         .grid__column.feature__texts
           %div
@@ -24,6 +19,11 @@
             %p Search for a car nearby and find the most convenient one for you that will let you collect bonus minutes!
   %main
     %section.selector
+      .location
+        %svg#location-button.location__icon
+          %use{"xlink:href" => "#icon-location"}
+        #locationsign.location__sign
+          Retreiving your location...
       #locationmsg.map__location
         .grid.grid--large
           %h4#pleasewait.map__title
@@ -68,14 +68,14 @@
       .grid.grid--medium
         %h2.providers__title We support these providers
         %ul.providers__list
-          %li
-            %a.footer__list-item{:href => "https://www.car2go.com/", :target => "_blank" }
+          %li.providers__list-item
+            %a{:href => "https://www.car2go.com/", :target => "_blank" }
               %img{:alt => "CAR2GO", :src => "/images/provider_car2go.png"}/
-          %li
-            %a.footer__list-item{:href => "https://www.drive-now.com", :target => "_blank" }
+          %li.providers__list-item
+            %a{:href => "https://www.drive-now.com", :target => "_blank" }
               %img{:alt => "DRIVE NOW", :src => "/images/provider_drivenow.png"}/
-          %li
-            %a.footer__list-item{:href => "https://www.multicity-carsharing.de/", :target => "_blank" }
+          %li.providers__list-item
+            %a{:href => "https://www.multicity-carsharing.de/", :target => "_blank" }
               %img{:alt => "MULTICITY", :src => "/images/provider_multicity.png"}/
 
     %section.webapp
@@ -114,17 +114,29 @@
   .map__settings
     #timestamp.hide
       "-"
-    %form#autoform
-      %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-        %label{ :for => "autonotify" } Auto notifications
-      %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-        %label{ :for => "autoupdate" } Keep map updated
-    #autonotifyform.hide
-      %form#radiusvalue
-        %label{ :for => "radiusselector" } Within:
-        %select#radiusselector
-          - [100,200,300,400,500,1000].each do |dist|
-            %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+    %form#autoform.grid.grid--large.grid--size-2
+      .grid__column.map__settings-brand
+        %svg.brand
+          %use{"xlink:href" => "#isologo"}
+      .grid__column.map__settings-menu
+        %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+          %label{ :for => "autonotify" } Auto notifications
+        %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+          %label{ :for => "autoupdate" } Keep map updated
+        .providers__selector
+          %label{ :for => "providers_refresh" } Change provider:
+          %select#providers
+            %option{:value => "dnw"} DriveNow
+            %option{:value => "ctg"} Car2Go
+            %option{:value => "mcy"} Multicity
+            %option{:value => "all"} All providers
+        #autonotifyform.hide
+          %form#radiusvalue
+            %label{ :for => "radiusselector" } Within:
+            %select#radiusselector
+              - [100,200,300,400,500,1000].each do |dist|
+                %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+
   #map
   %footer.footer
     .grid.grid--size-2.grid--large
