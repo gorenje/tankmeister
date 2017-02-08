@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  setTimeout(showRetryButton, 15000);
+  setTimeout(showRetryButton, 5000);
 
   $('#radiusvalue').on('change', function(){
      if (circle) { circle.setRadius(parseInt($('#radiusvalue select').val())); }
@@ -12,7 +12,10 @@ $(document).ready(function(){
 
   $('#retrybutton').click(function(event){
     event.preventDefault();
-    location.reload(true);
+    showPleaseWait();
+    stopListeningForLocationChange();
+    listenForLocationChange();
+    setTimeout(showRetryButton, 5000);
   });
 
   $(document).on('updatedlocation.showselectors', function(){
