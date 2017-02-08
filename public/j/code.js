@@ -7,17 +7,17 @@ function updateLocation() {
 }
 
 function determineCssWalkingTime(time_in_minutes){
-  if (csc == 'dnw' || csc == "dnw_available" || csc == "mcy") {
+  if (csc.match(/^dnw/) || csc.match(/^mcy/) ) {
     if ( time_in_minutes < 13 ) { return "wt_easy"; }
     if ( time_in_minutes >= 13 && time_in_minutes < 17) { return "wt_doable"; }
   }
 
-  if ( csc == "ctg" ) {
+  if ( csc.match(/^ctg/) ) {
     if ( time_in_minutes < 27 ) { return "wt_easy"; }
     if ( time_in_minutes >= 27 && time_in_minutes < 32) { return "wt_doable"; }
   }
 
-  if ( csc == "all" ) { return ""; }
+  if ( csc == "all" || csc == "any" ) { return ""; }
   return "wt_toolong";
 }
 
