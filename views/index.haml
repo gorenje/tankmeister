@@ -124,18 +124,18 @@
         %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
           %label{ :for => "autoupdate" } Keep map updated
         .providers__selector
-          %label{ :for => "providers_refresh" } Change provider:
-          %select#providers
+          %label{ :for => "provider_refresh" } Change provider:
+          %select#provider_refresh
             %option{:value => "dnw"} DriveNow
             %option{:value => "ctg"} Car2Go
             %option{:value => "mcy"} Multicity
             %option{:value => "all"} All providers
+            %option{:value => "dnw_available"} DriveNow (Radar)
         #autonotifyform.hide
-          %form#radiusvalue
-            %label{ :for => "radiusselector" } Within:
-            %select#radiusselector
-              - [100,200,300,400,500,1000].each do |dist|
-                %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+          %label{ :for => "radiusselector" } Within:
+          %select#radiusselector
+            - [100,200,300,400,500,1000].each do |dist|
+              %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
 
   #map
   %footer.footer
