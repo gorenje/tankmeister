@@ -4,14 +4,14 @@ Current Location:
 %p
 
 %center.center
-  %button{ :onclick => "updateLocation()" }
+  %button.btn{ :onclick => "updateLocation()" }
     Update
 #cityloader.hide
   City data being loaded ...
-  %img{ :src => "/images/spinner.gif" }
+  %img.loader{ :src => "/images/loader.svg" }
 #carloader.hide
   Car data being loaded ...
-  %img{ :src => "/images/spinner.gif" }
+  %img.loader{ :src => "/images/loader.svg" }
 
 = you_marker_car_sharing_company
-%a{ :href => "#", :onclick => "changeCsc(event)" } Change
+%a.btn{ :href => "#", :onclick => "changeCsc(event)" } Change
