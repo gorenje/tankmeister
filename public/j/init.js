@@ -1,40 +1,47 @@
 $(document).ready(function(){
-  setTimeout(showRetryButton, 15000);
+  setTimeout(showRetryButton, 5000);
 
-  $('#radiusvalue').on('change', function(){
-     if (circle) { circle.setRadius(parseInt($('#radiusvalue select').val())); }
+  $('#radiusselector').on('change', function(){
+     if (circle) { circle.setRadius(parseInt($('#radiusselector').val())); }
   });
 
   $(document).on('updatedlocation', function(){
      if (circle) { circle.setCenter(current_location); }
      if (youmarker) { youmarker.setPosition(current_location); }
-
-     var location = clToPosition();
-     $.ajax({
-       url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + location.coords.latitude + ',' + location.coords.longitude + '&sensor=false',
-       method: 'get',
-       dataType: 'json'
-     }).done(function(data) {
-        $('#locationsign').text((!current_location) ? 'Please, enable your location settings' : 'You are located in ' + data.results[6].formatted_address)
-     });
-
   });
 
   $('#retrybutton').click(function(event){
     event.preventDefault();
-    location.reload(true);
+    showPleaseWait();
+    stopListeningForLocationChange();
+    listenForLocationChange();
+    setTimeout(showRetryButton, 5000);
   });
 
   $(document).on('updatedlocation.showselectors', function(){
     $(document).off('.showselectors');
     $('#locationmsg').slideUp().
       fadeOut({complete: function(){$('#cscselectors').slideDown().fadeIn();}});
+
+     var location = clToPosition();
+     $.ajax({
+       url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
+                location.coords.latitude + ',' + location.coords.longitude +
+                '&sensor=false',
+       method: 'get',
+       dataType: 'json'
+     }).done(function(data) {
+        $('#locationsign').text('You are located in ' +
+                                data.results[6].formatted_address);
+     }).fail(function(){
+        $('#locationsign').text('Please, enable your location settings');
+     });
   });
 
   $('#autonotify').change(function() {
      if(this.checked) {
        circle.setMap(map);
-       circle.setRadius(parseInt($('#radiusvalue select').val()));
+       circle.setRadius(parseInt($('#radiusselector').val()));
 
        $('#autonotifyform').fadeIn();
        current_timer_id = setTimeout(autoNotification, 10000);
@@ -62,10 +69,19 @@ $(document).ready(function(){
   $('.sltcsc').click(function(event) {
     csc = $(this).data('csc');
     event.preventDefault();
+    $('#provider_refresh').val(csc);
     $('#mainhowto').slideUp().
       fadeOut({ complete: function(){
                   $('#mainmap').slideDown().fadeIn();
                   setUpMap(clToPosition());
                 }});
+  });
+
+  $('#provider_refresh').change(function(){
+    csc = $('#provider_refresh').val();
+    $('#timestamp').hide().html("");
+    if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
+    if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
+    setUpMap(clToPosition());
   });
 });
