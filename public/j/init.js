@@ -25,7 +25,7 @@ $(document).ready(function(){
 
      var location = clToPosition();
      $.ajax({
-       url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' +
+       url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
                 location.coords.latitude + ',' + location.coords.longitude +
                 '&sensor=false',
        method: 'get',
