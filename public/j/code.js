@@ -6,6 +6,21 @@ function updateLocation() {
   updateMarkers(clToPosition());
 }
 
+function determineCssWalkingTime(time_in_minutes){
+  if (csc == 'dnw' || csc == "dnw_available" || csc == "mcy") {
+    if ( time_in_minutes < 13 ) { return "wt_easy"; }
+    if ( time_in_minutes >= 13 && time_in_minutes < 17) { return "wt_doable"; }
+  }
+
+  if ( csc == "ctg" ) {
+    if ( time_in_minutes < 27 ) { return "wt_easy"; }
+    if ( time_in_minutes >= 27 && time_in_minutes < 32) { return "wt_doable"; }
+  }
+
+  if ( csc == "all" ) { return ""; }
+  return "wt_toolong";
+}
+
 function setUpMap(position) {
   var lat = position.coords.latitude,
       lng = position.coords.longitude;
@@ -162,7 +177,10 @@ function setUpMarkers(origin, city) {
               totaltime += leg.duration.value;
             });
             $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
-            $('#wktime').html(Math.ceil(totaltime/60));
+            $('#wktime').
+              html(Math.ceil(totaltime/60)).
+              removeClass('wt_toolong wt_easy wt_doable').
+              addClass(determineCssWalkingTime(Math.ceil(totaltime/60)));
             $('#wkdist').html((totaldistance/1000).toFixed(1));
           }
         });

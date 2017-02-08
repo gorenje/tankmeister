@@ -31,8 +31,21 @@ class Car
       render(binding)
   end
 
+  def fuel_type_css_class
+    "ft_" + fuel_type.gsub(/[[:space:]-]/,'').downcase
+  end
+
   def fuel_type
-    is_electro? ? "Electro" : (@data["fuelType"] == "P" ? "Super" : "Diesel")
+    if is_electro?
+      "Electro"
+    else
+      case @data["fuelType"]
+      when "P"    then "Super"
+      when "PE10" then "Super - E10"
+      else
+        "Diesel"
+      end
+    end
   end
 
   def to_hash
