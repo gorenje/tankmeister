@@ -30,9 +30,13 @@ a {
   text-decoration: none;
 }
 p {
-  font-size: $font-size-18;
   font-weight: 300;
-  @include text-line-height($font-size-28);
+  font-size: $font-size-14;
+  @include text-line-height($font-size-24);
+  @include media(small) {
+    font-size: $font-size-18;
+    @include text-line-height($font-size-28);
+  }
 }
 h2 {
   font-size: $font-size-18;

@@ -6,6 +6,12 @@
 // --------------------------
 // Application
 
+// Brand
+.brand {
+  fill: $color2;
+}
+
+// Header
 .header {
   background: url($url-images + 'bg_main.jpg') no-repeat center top;
   background-size: cover;
@@ -15,30 +21,10 @@
   }
 
   .brand {
-    margin: 0 auto $spacer-20;
+    margin: 0 auto;
     display: block;
-    width: 215px;
-    height: 45px;
-    fill: $color2;
-  }
-
-  .location {
-    @include align-absolute-middle(inherit, false, 100%, center, center);
-    &__field {
-      display: inline-block;
-      padding: 10px;
-      font-size: $font-size-18;
-      font-weight: 300;
-      border: 1px solid $color2;
-      border-radius: $spacer-5;
-      width: 300px;
-    }
-    &__button {
-      fill: $color2;
-      width: $spacer-20;
-      height: 26px;
-      margin-left: $spacer-10;
-    }
+    width: 225px;
+    height: 55px;
   }
 
   @include media(small) {
@@ -48,12 +34,8 @@
     }
     .brand {
       margin: 0;
-    }
-    .location {
-      @include align-absolute-middle(inherit, false, 100%, flex-end, center);
-      &__button {
-        margin-right: $spacer-20;
-      }
+      width: 215px;
+      height: 45px;
     }
   }
 }
@@ -62,8 +44,9 @@
 .feature {
   @include align-absolute-middle(inherit);
   &__title {
-    font-size: $font-size-30;
+    font-size: $font-size-24;
     font-weight: 400;
+    margin: 0;
     strong {
       display: block;
       font-weight: 900;
@@ -72,16 +55,59 @@
   &__texts {
     text-align: left;
   }
+  &__deco {
+    display: none;
+  }
+
+  @include media(small) {
+    &__deco {
+      display: block;
+    }
+    &__title {
+      font-size: $font-size-30;
+      font-weight: 400;
+    }
+  }
+}
+
+// Location
+.location {
+  font-weight: 300;
+  @include align-absolute-middle(inherit, false, 100%, center, center);
+  &__icon {
+    fill: $color2;
+    width: $spacer-30;
+    height: 36px;
+    margin-right: $spacer-20;
+  }
+  &__sign {
+    text-align: left;
+  }
 
   @include media() {
-    display: none;
+    margin-top: -$spacer-20;
+    margin-bottom: $spacer-30;
+    padding: $spacer-20;
+    background-color: $color3;
+  }
+
+  @include media(small) {
+    position: absolute;
+    right: 0;
+    top: 0;
+    @include transform(translate(-$spacer-40, $spacer-40));
+    &__icon {
+      order: 2;
+      margin-left: $spacer-20;
+      margin-right: 0;
+    }
   }
 }
 
 // Selector
 .selector {
   background-color: $color-white;
-  padding: $spacer-40 0;
+  padding: $spacer-20 0;
   &__wrapper {
     max-width: 800px;
   }
@@ -110,14 +136,21 @@
     font-size: $font-size-14;
     font-weight: 300;
   }
+  &__title {
+    font-size: $font-size-24;
+  }
   &__texts {
     font-size: $font-size-12;
     @include text-line-height($font-size-16);
   }
 
   @include media(small) {
+    padding: $spacer-40 0;
     &__list {
       max-width: initial;
+    }
+    &__title {
+      font-size: $font-size-18;
     }
     &__texts {
       max-width: 600px;
@@ -129,16 +162,52 @@
 // Map
 .map {
   background-color: $color3;
+
   &__location {
     padding: $spacer-20 0;
   }
+
   &__settings {
-    text-align: left;
-    padding: $spacer-20;
     font-size: $font-size-14;
     font-weight: 400;
     #autonotifyform {
       margin-top: $spacer-10;
+    }
+  }
+  .brand {
+    width: 140px;
+    height: 40px;
+  }
+
+  .providers__selector {
+    display: inline-block;
+    margin-left: $spacer-10;
+  }
+
+  @include media() {
+    &__settings {
+      padding: $spacer-10 $spacer-20 $spacer-20;
+      .grid {
+        padding: 0;
+      }
+      &-menu {
+        text-align: left;
+      }
+    }
+  }
+
+  @include media(small) {
+    &__settings {
+      padding: $spacer-20;
+      &-brand {
+        text-align: left;
+      }
+      &-menu {
+        text-align: right;
+      }
+      .grid {
+        @include align-items(center);
+      }
     }
   }
 }
@@ -148,18 +217,15 @@
   padding: $spacer-40 0;
   background: url($url-images + 'bg_main.jpg') no-repeat center top;
   background-size: cover;
-  &__list {
-    li {
-      display: inline-block;
-      margin: $spacer-20 0;
-    }
+  &__list-item {
+    margin: $spacer-20 0;
   }
 
   @include media(small) {
     padding: $spacer-40 0 $spacer-80;
     &__list {
       @include align-absolute-middle(inherit);
-      li {
+      &-item {
         display: inline-block;
         margin: 0 $spacer-20;
       }
