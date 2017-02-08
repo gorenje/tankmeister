@@ -294,3 +294,27 @@
     }
   }
 }
+
+// Tooltips
+.tooltip {
+  font-size: $font-size-14;
+  font-weight: 300;
+  margin: $spacer-10 auto;
+  &__title {
+    font-size: $font-size-16;
+    font-weight: 900;
+    margin: $spacer-10 auto;
+  }
+  &__loader {
+    margin-top: $spacer-10;
+    img {
+      display: block;
+      margin: $spacer-5 auto;
+    }
+  }
+  &__content {
+    &-item:not(:last-child) {
+      margin-bottom: $spacer-15;
+    }
+  }
+}

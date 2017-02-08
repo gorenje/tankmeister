@@ -1,17 +1,16 @@
-Current Location:
-%br
-%span#cityname
-%p
+.tooltip
+  %h3.tooltip__title
+    Current Location:
+  %span#cityname
+  %p
 
-%center.center
-  %button.btn{ :onclick => "updateLocation()" }
-    Update
-#cityloader.hide
-  City data being loaded ...
-  %img.loader{ :src => "/images/loader.svg" }
-#carloader.hide
-  Car data being loaded ...
-  %img.loader{ :src => "/images/loader.svg" }
-
-= you_marker_car_sharing_company
-%a.btn{ :href => "#", :onclick => "changeCsc(event)" } Change
+  .tooltip__content
+    %button.btn.btn--small{ :onclick => "updateLocation()" }
+      Update
+    .tooltip__loader
+      #cityloader.hide
+        %img.loader{ :src => "/images/loader.svg" }
+        City data being loaded ...
+      #carloader.hide
+        %img.loader{ :src => "/images/loader.svg" }
+        Car data being loaded ...

@@ -1,12 +1,15 @@
-%p.fsdetails
-  = organisation
-  %br
-  = address_line
-  %br
-  = name
-  - if cpi = capacity_info
-    %br
-    Capacity:
-    %span.bold= cpi[:free]
-    spot(s) free of
-    %span.bold= cpi[:total]
+.tooltip.fsdetails
+  %h3.tooltip__title
+    = organisation
+  .tooltip__content
+    .tooltip__content-item
+      = address_line
+      
+    .tooltip__content-item
+      = name
+      - if cpi = capacity_info
+        %br
+        Capacity:
+        %span.bold= cpi[:free]
+        spot(s) free of
+        %span.bold= cpi[:total]

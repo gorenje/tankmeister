@@ -1,25 +1,30 @@
-%p.cardetails
+.tooltip.cardetails
   %img{ :src => image_url }
-  %br
-  = name
-  %br
-  - if address_line
-    = address_line
-  - else
-    %span#addrline ...
-  %br
-  Fuel level:
-  = "#{fuel_in_percent}% -"
-  %span.bold= fuel_type
-  %br
-  Walking:
-  %span#wktime.bold ...
-  mins
-  = surround "(", " kms)" do
-    %span#wkdist.bold ...
-  %br
-  Available since:
-  %span#stdtime.bold ...
-  mins
-  %p
-  %a.button.btn{ :href=> reserve_url } Reserve
+  %h3.tooltip__title
+    = name
+
+  .tooltip__content
+    .tooltip__content-item
+      - if address_line
+        = address_line
+      - else
+        %span#addrline ...
+
+    .tooltip__content-item
+      %strong Fuel level:
+      = "#{fuel_in_percent}% - #{fuel_type}"
+
+    .tooltip__content-item
+      %strong Walking:
+      %span#wktime ...
+      minutes
+      = surround "(", " kms)" do
+        %span#wkdist ...
+
+    .tooltip__content-item
+      %strong Available since:
+      %span#stdtime ...
+      minutes
+
+    .tooltip__content-item
+      %a.button.btn{ :href=> reserve_url } Reserve
