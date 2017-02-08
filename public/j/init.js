@@ -5,11 +5,6 @@ $(document).ready(function(){
      if (circle) { circle.setRadius(parseInt($('#radiusselector').val())); }
   });
 
-  $(document).on('updatedlocation', function(){
-     if (circle) { circle.setCenter(current_location); }
-     if (youmarker) { youmarker.setPosition(current_location); }
-  });
-
   $('#retrybutton').click(function(event){
     event.preventDefault();
     showPleaseWait();
@@ -18,8 +13,13 @@ $(document).ready(function(){
     setTimeout(showRetryButton, 5000);
   });
 
-  $(document).on('updatedlocation.showselectors', function(){
-    $(document).off('.showselectors');
+  $(document).on('updatedlocation', function(){
+     if (circle) { circle.setCenter(current_location); }
+     if (youmarker) { youmarker.setPosition(current_location); }
+  });
+
+  $(document).on('updatedlocation.firstcall', function(){
+    $(document).off('.firstcall');
     $('#locationmsg').slideUp().
       fadeOut({complete: function(){$('#cscselectors').slideDown().fadeIn();}});
 
