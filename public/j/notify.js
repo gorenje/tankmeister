@@ -24,7 +24,7 @@ function notifyMessage(msg,opts,car) {
 
 function notifyCloseCars(car) {
   // distance is measured in meters
-  if ( car.distance < parseInt($('#radiusvalue select').val()) ) {
+  if ( car.distance < parseInt($('#radiusselector').val()) ) {
     var options = {
       body: "Car " + car.name + " is in the vicinity (" +
         car.distance.toFixed(0) + "m)",
