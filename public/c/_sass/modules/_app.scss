@@ -382,10 +382,10 @@
   }
 }
 
-.close {
+.settings__header-close {
 	position: relative;
 	width: $spacer-30;
-	height: 25px;
+	height: $spacer-25;
 	cursor: pointer;
 	@include transform(rotate(0deg));
 	@include transition(.5s $transitions);
@@ -411,7 +411,6 @@
 			top: $spacer-20;
 		}
 	}
-
   @at-root {
     .active & span {
   		&:nth-child(1) {
