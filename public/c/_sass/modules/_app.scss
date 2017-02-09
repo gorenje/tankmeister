@@ -40,6 +40,7 @@
   }
 }
 
+
 // Feature
 .feature {
   @include align-absolute-middle(inherit);
@@ -161,52 +162,114 @@
 
 // Map
 .map {
-  background-color: $color3;
-
+  background: url($url-images + 'bg_main.jpg') no-repeat center top $color2;
+  background-size: contain;
   &__location {
     padding: $spacer-20 0;
   }
+}
 
-  &__settings {
+// Settings
+.settings {
+  padding: $spacer-10 $spacer-20;
+  font-weight: 400;
+
+  select {
     font-size: $font-size-14;
-    font-weight: 400;
-    #autonotifyform {
-      margin-top: $spacer-10;
+    padding: $spacer-10;
+    margin-top: $spacer-10;
+    display: block;
+    background-color: $color-white;
+  }
+
+  &__header {
+    position: relative;
+    text-align: left;
+    margin: 0;
+    &-brand {
+      svg {
+        width: 140px;
+        height: 40px;
+        fill: $color2;
+      }
+    }
+    &-menu {
+      position: absolute;
+      right: 0;
+      top: $spacer-10;
+      svg {
+        fill: $color2;
+        width: $spacer-20;
+        height: $spacer-20;
+      }
     }
   }
-  .brand {
-    width: 140px;
-    height: 40px;
-  }
 
-  .providers__selector {
-    display: inline-block;
-    margin-left: $spacer-10;
+  &__content {
+    max-height: 0;
+    overflow: hidden;
+    @include transition(max-height $transitions);
+    &.active {
+      max-height: 500px;
+      padding-bottom: $spacer-10;
+    }
   }
 
   @include media() {
-    &__settings {
-      padding: $spacer-10 $spacer-20 $spacer-20;
-      .grid {
-        padding: 0;
-      }
-      &-menu {
-        text-align: left;
+    font-size: $font-size-14;
+    &__provider {
+      text-align: left;
+      margin: $spacer-15 0;
+      select {
+        width: 100%;
       }
     }
-  }
 
+    &__menu {
+      text-align: left;
+      @include display-flex();
+      @include flex-flow();
+      @include justify-content(flex-start);
+      &-item {
+        padding: 5px;
+        width: 50%;
+        font-size: $font-size-12;
+      }
+    }
+
+    #autonotifyform {
+      margin-top: $spacer-10;
+    }
+
+  }
   @include media(small) {
-    &__settings {
-      padding: $spacer-20;
-      &-brand {
-        text-align: left;
+    text-align: left;
+    font-size: $font-size-16;
+    &__content {
+      &.active {
+        padding-top: $spacer-10;
+        @include clearfix();
       }
-      &-menu {
-        text-align: right;
+    }
+    &__provider,
+    &__menu {
+      float: left;
+    }
+    &__provider {
+      margin-right: 20px;
+    }
+    &__menu {
+      &-item:first-child {
+        margin-bottom: $spacer-10;
       }
-      .grid {
-        @include align-items(center);
+    }
+
+    #autonotifyform {
+      display: inline-block;
+      margin-left: $spacer-20;
+      select {
+        display: inline-block;
+        margin: 0;
       }
     }
   }
@@ -316,5 +379,54 @@
     &-item:not(:last-child) {
       margin-bottom: $spacer-15;
     }
+  }
+}
+
+.settings__header-close {
+	position: relative;
+	width: $spacer-30;
+	height: $spacer-25;
+	cursor: pointer;
+	@include transform(rotate(0deg));
+	@include transition(.5s $transitions);
+	span {
+		display: block;
+		position: absolute;
+		height: $spacer-5;
+		width: 100%;
+		border-radius: $spacer-10;
+    background-color: $color2;
+		opacity: 1;
+		left: 0;
+		@include transform(rotate(0deg));
+		@include transition (all $transitions);
+		@include transform-origin(left center);
+		&:nth-child(1) {
+			top: 0;
+		}
+		&:nth-child(2) {
+			top: $spacer-10;
+		}
+		&:nth-child(3) {
+			top: $spacer-20;
+		}
+	}
+  @at-root {
+    .active & span {
+  		&:nth-child(1) {
+  			top: -3px;
+  			left: $spacer-5;
+  			@include transform(rotate(45deg));
+  		}
+  		&:nth-child(2) {
+  			width: 0;
+  			opacity: 0;
+  		}
+  		&:nth-child(3) {
+  			top: 18px;
+  			left: $spacer-5;
+  			@include transform(rotate(-45deg));
+  		}
+  	}
   }
 }
