@@ -12,7 +12,9 @@
 
     .tooltip__content-item
       %strong Fuel level:
-      = "#{fuel_in_percent}% - #{fuel_type}"
+      = "#{fuel_in_percent}%"
+      = surround "(", ")" do
+        %span{ :class => fuel_type_css_class }= fuel_type
 
     .tooltip__content-item
       %strong Walking:

@@ -6,19 +6,28 @@ function updateLocation() {
   updateMarkers(clToPosition());
 }
 
+function determineCssWalkingTime(time_in_minutes){
+  if (csc.match(/^dnw/) || csc.match(/^mcy/) ) {
+    if ( time_in_minutes < 13 ) { return "wt_easy"; }
+    if ( time_in_minutes >= 13 && time_in_minutes < 17) { return "wt_doable"; }
+  }
+
+  if ( csc.match(/^ctg/) ) {
+    if ( time_in_minutes < 27 ) { return "wt_easy"; }
+    if ( time_in_minutes >= 27 && time_in_minutes < 32) { return "wt_doable"; }
+  }
+
+  if ( csc == "all" || csc == "any" ) { return ""; }
+  return "wt_toolong";
+}
+
 function setUpMap(position) {
   var lat = position.coords.latitude,
       lng = position.coords.longitude;
 
   var origin = new google.maps.LatLng(lat,lng);
 
-  // Trying to make map as large as the screen and this
-  // http://stackoverflow.com/questions/32928684/google-maps-height-100-of-div-parent#32928942
-  // didn't work, so resorted to the JS solution.
-  var map_height = $(document).height() - ($('#timestamp').height() +
-                                           $('#autonotifyform').height() +
-                                           $('#autoform').height());
-  $('#map').css("height", map_height + "px");
+  $(document).trigger('setmapheight');
 
   map = new google.maps.Map(document.getElementById('map'), {
      zoom: 14,
@@ -162,7 +171,10 @@ function setUpMarkers(origin, city) {
               totaltime += leg.duration.value;
             });
             $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
-            $('#wktime').html(Math.ceil(totaltime/60));
+            $('#wktime').
+              html(Math.ceil(totaltime/60)).
+              removeClass('wt_toolong wt_easy wt_doable').
+              addClass(determineCssWalkingTime(Math.ceil(totaltime/60)));
             $('#wkdist').html((totaldistance/1000).toFixed(1));
           }
         });
