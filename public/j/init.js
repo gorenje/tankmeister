@@ -9,6 +9,7 @@ $(document).ready(function(){
   $('#mapmenu').click(function(event) {
     event.preventDefault()
     $('#mapcontent').toggleClass('active')
+    $(this).toggleClass('active')
   })
 
   $('#radiusselector').on('change', function(){
