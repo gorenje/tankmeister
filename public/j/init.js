@@ -18,6 +18,18 @@ $(document).ready(function(){
      if (youmarker) { youmarker.setPosition(current_location); }
   });
 
+  $(document).on('setmapheight.onlyonce', function(){
+    $(document).off('.onlyonce');
+    // Trying to make map as large as the screen and this
+    // http://stackoverflow.com/questions/32928684/google-maps-height-100-of-div-parent#32928942
+    // didn't work, so resorted to the JS solution.
+    var map_height = $(document).height() - ($('#timestamp').height() +
+                                             $('#autonotifyform').height() +
+                                             $('#autoform').height());
+
+    $('#map').css("height", map_height + "px");
+  });
+
   $(document).on('updatedlocation.firstcall', function(){
     $(document).off('.firstcall');
     $('#locationmsg').slideUp().
