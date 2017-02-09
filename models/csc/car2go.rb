@@ -4,6 +4,7 @@ module Car2Go
       super(hsh)
       crds = @data["coordinates"]
       @location = Geokit::LatLng.new(crds[1],crds[0])
+      @data["fuelType"] = "PE10" # only applies if non-electro
     end
 
     def is_electro?
@@ -44,10 +45,6 @@ module Car2Go
 
     def fuel_in_percent
       @data["fuel"]
-    end
-
-    def fuel_type
-      is_electro? ? "Electro" : "Super - E10"
     end
 
     def license_plate

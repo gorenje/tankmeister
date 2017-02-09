@@ -5,6 +5,7 @@ module Multicity
       @vehicle  = @data["value"]["vehicle"]
       loc       = @data["location"]
       @location = Geokit::LatLng.new(loc["latitude"], loc["longitude"])
+      @data["fuelType"] = "P" # Multicity cars are either electric or super.
     end
 
     def is_electro?

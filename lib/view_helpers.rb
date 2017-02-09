@@ -4,7 +4,7 @@ module ViewHelpers
   end
 
   def map_car_details_to_result_hash(data, my_location, params)
-    nearest_cars = if params[:csc] == 'any' || params[:csc] == 'dnw_available'
+    nearest_cars = if params[:csc] == 'any' || params[:csc] =~ /_available/
                      data[:cars]
                    else
                      data[:cars].
