@@ -122,33 +122,28 @@
           %span
           %span
 
-    .settings__content#mapcontent
-      #timestamp.hide
-        "-"
-      %form#autoform
-        .settings__provider
+      .grid__column.map__settings-menu
+        %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+          %label{ :for => "autonotify" } Radar
+        %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+          %label{ :for => "autoupdate" } Keep map updated
+        .providers__selector
           %label{ :for => "provider_refresh" } Change provider:
           %select#provider_refresh
             %option{:value => "dnw"} DriveNow
             %option{:value => "ctg"} Car2Go
             %option{:value => "mcy"} Multicity
             %option{:value => "all"} All providers
-            %option{:value => "dnw_available"} DriveNow (Radar)
-
-        .settings__menu
-          .settings__menu-item
-            %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-            %label{ :for => "autonotify" } Auto notifications
-
-            #autonotifyform.hide
-              %label{ :for => "radiusselector" } Within:
-              %select#radiusselector
-                - [100,200,300,400,500,1000].each do |dist|
-                  %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
-
-          .settings__menu-item
-            %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-            %label{ :for => "autoupdate" } Keep map updated
+            %option{:value => "dnw_available"} DriveNow (any car)
+            %option{:value => "ctg_available"} Car2Go (any car)
+            %option{:value => "mcy_available"} Multicity (any car)
+            %option{:value => "any"} All providers (any car)
+        #autonotifyform.hide
+          %label{ :for => "radiusselector" } Within:
+          %select#radiusselector
+            - [100,200,300,400,500,1000].each do |dist|
+              %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+    #timestamp.hide
 
   #map
   %footer.footer
