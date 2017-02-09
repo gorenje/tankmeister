@@ -161,53 +161,74 @@
 
 // Map
 .map {
-  background-color: $color3;
-
+  background: url($url-images + 'bg_main.jpg') no-repeat center top;
+  background-size: cover;
   &__location {
     padding: $spacer-20 0;
   }
+}
 
-  &__settings {
-    font-size: $font-size-14;
-    font-weight: 400;
-    #autonotifyform {
-      margin-top: $spacer-10;
+// Settings
+.settings {
+  padding: $spacer-10 $spacer-20;
+  font-size: $font-size-14;
+  font-weight: 400;
+  #autonotifyform {
+    margin-top: $spacer-10;
+  }
+
+  &__header {
+    position: relative;
+    text-align: left;
+    margin: 0;
+    &-brand {
+      svg {
+        width: 140px;
+        height: 40px;
+        fill: $color2;
+      }
+    }
+    &-menu {
+      position: absolute;
+      right: 0;
+      top: $spacer-10;
+      svg {
+        fill: $color2;
+        width: $spacer-20;
+        height: $spacer-20;
+      }
     }
   }
-  .brand {
-    width: 140px;
-    height: 40px;
-  }
 
-  .providers__selector {
-    display: inline-block;
-    margin-left: $spacer-10;
+  &__content {
+    display: none;
+    &.active {
+      display: block;
+    }
   }
 
   @include media() {
-    &__settings {
-      padding: $spacer-10 $spacer-20 $spacer-20;
-      .grid {
-        padding: 0;
-      }
-      &-menu {
-        text-align: left;
+    select {
+      font-size: $font-size-14;
+      padding: $spacer-10;
+      margin-top: $spacer-10;
+      display: block;
+      background-color: $color-white;
+    }
+
+    &__provider {
+      text-align: left;
+      margin: $spacer-15 0;
+      select {
+        width: 100%;
       }
     }
-  }
 
-  @include media(small) {
-    &__settings {
-      padding: $spacer-20;
-      &-brand {
-        text-align: left;
-      }
-      &-menu {
-        text-align: right;
-      }
-      .grid {
-        @include align-items(center);
-      }
+    &__menu {
+      text-align: left;
+      @include display-flex();
+      @include flex-flow();
+      @include justify-content(flex-start);
     }
   }
 }

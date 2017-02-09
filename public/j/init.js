@@ -1,6 +1,11 @@
 $(document).ready(function(){
   setTimeout(showRetryButton, 5000);
 
+  $('#mapmenu').click(function(event) {
+    event.preventDefault()
+    $('#mapcontent').toggleClass('active')
+  })
+
   $('#radiusselector').on('change', function(){
      if (circle) { circle.setRadius(parseInt($('#radiusselector').val())); }
   });
