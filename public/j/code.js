@@ -1,5 +1,12 @@
 function initMap() {
   listenForLocationChange();
+
+  if ( getURLParameter("lt") && getURLParameter("ln") ) {
+    current_location = new google.maps.LatLng(getURLParameter("lt"),
+                                              getURLParameter("ln"));
+    $(document).trigger('updatedlocation');
+    $('.sltcsc')[0].click();
+  }
 }
 
 function updateLocation() {
