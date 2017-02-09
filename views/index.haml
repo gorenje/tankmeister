@@ -112,8 +112,6 @@
 
 %section#mainmap.map.hide
   .map__settings
-    #timestamp.hide
-      "-"
     %form#autoform.grid.grid--large.grid--size-2
       .grid__column.map__settings-brand
         %svg.brand
@@ -139,6 +137,7 @@
           %select#radiusselector
             - [100,200,300,400,500,1000].each do |dist|
               %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
+    #timestamp.hide
 
   #map
   %footer.footer
