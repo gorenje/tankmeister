@@ -14,9 +14,12 @@
               Collect Bonus Minutes
               %strong by fuelling cars
             %p
-              Every car sharing company gives drivers who fuel their cars bonus minutes. This site will show you the closest three cars that need fuelling. In addition, the closest petrol stations (to the cars) are also shown - not all car sharing companies
-              use the same petrol stations.
-            %p Search for a car nearby and find the most convenient one for you that will let you collect bonus minutes!
+              Every car sharing company gives drivers who fuel their cars
+              bonus minutes. This site will show you the closest three cars
+              that need refuelling.
+            %p
+              Search for a car nearby and find the most convenient one for
+              you that will let you collect bonus minutes!
   %main
     %section.selector
       .location
@@ -36,7 +39,7 @@
           Please ensure location is turned on and supported by your device.
       #cscselectors.grid.selector__wrapper.hide
         %h2.selector__title Choose your provider and start saving!
-        .selector__list.grid.grid--size-5
+        .selector__list.grid.grid--size-4
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
               DriveNow
@@ -57,12 +60,11 @@
               All Providers
               %span.selector__note
                 (Multiple mins)
-          .grid__column
-            .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw_available"}
-              DriveNow
-              %span.selector__note
-                Radar
-        %p.selector__texts *Ensure your location is turned on and allow this site to access your location. We do not store your location or send it to the car sharing company, we only use it to determine the closest cars to you.
+        %p.selector__texts
+          *Ensure your location is turned on and allow this site to
+          access your location. We do not store your location or send it
+          to the car sharing company, we only use it to determine the
+          closest cars to you.
 
     %section.providers
       .grid.grid--medium
