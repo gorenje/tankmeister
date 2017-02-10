@@ -28,7 +28,7 @@ $(document).ready(function(){
 
   $('#imprintlink').click(function(event){
     event.preventDefault();
-    $('section .imprint').toggle('slow');
+    $('.imprint').toggleClass('active');
   });
 
   $(document).on('updatedlocation', function(){
