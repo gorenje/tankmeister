@@ -133,12 +133,15 @@
             %option{:value => "ctg"} Car2Go
             %option{:value => "mcy"} Multicity
             %option{:value => "all"} All providers
-            %option{:value => "dnw_available"} DriveNow (Radar)
+            %option{:value => "dnw_available"} DriveNow (any car)
+            %option{:value => "ctg_available"} Car2Go (any car)
+            %option{:value => "mcy_available"} Multicity (any car)
+            %option{:value => "any"} All providers (any car)
 
         .settings__menu
           .settings__menu-item
             %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-            %label{ :for => "autonotify" } Auto notifications
+            %label{ :for => "autonotify" } Radar
 
             #autonotifyform.hide
               %label{ :for => "radiusselector" } Within:

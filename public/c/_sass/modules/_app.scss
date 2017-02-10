@@ -40,7 +40,6 @@
   }
 }
 
-
 // Feature
 .feature {
   @include align-absolute-middle(inherit);
@@ -163,7 +162,7 @@
 // Map
 .map {
   background: url($url-images + 'bg_main.jpg') no-repeat center top $color2;
-  background-size: contain;
+  background-size: cover;
   &__location {
     padding: $spacer-20 0;
   }
@@ -231,7 +230,7 @@
       @include flex-flow();
       @include justify-content(flex-start);
       &-item {
-        padding: 5px;
+        padding: $spacer-5;
         width: 50%;
         font-size: $font-size-12;
       }
