@@ -74,7 +74,23 @@ function setUpCarmarkerClickListener(carmarker) {
         $('#wkdist').html((totaldistance/1000).toFixed(1));
       }
     });
- });
+  });
+  return carmarker;
+}
+
+function newCarMarker(opts) {
+  opts['zIndex'] = google.maps.Marker.MAX_ZINDEX;
+  return setUpCarmarkerClickListener(new google.maps.Marker(opts));
+}
+
+function newFsMarker(opts) {
+  opts['zIndex'] = google.maps.Marker.MAX_ZINDEX - 2;
+  var mrk = new google.maps.Marker(opts);
+  mrk.addListener("click", function(){
+    infowin.setContent(mrk._details);
+    infowin.open(map, mrk);
+  });
+  return mrk;
 }
 
 function setUpMap(position) {
@@ -158,19 +174,14 @@ function setUpMarkers(origin, city) {
     dataType: 'json'
   }).done(function(data){
     $.each(data.fs, function(idx, fs) {
-      fsmarkers[idx] = new google.maps.Marker({
+      fsmarkers[idx] = newFsMarker({
         position: fs.json_location,
         map: map,
         icon: fs.marker_icon,
-        title: fs.name,
-        zIndex: google.maps.Marker.MAX_ZINDEX - 2
+        title: fs.name
       });
 
       fsmarkers[idx]._details = fs.details;
-      fsmarkers[idx].addListener("click", function(){
-        infowin.setContent(fsmarkers[idx]._details);
-        infowin.open(map, fsmarkers[idx]);
-      });
     });
 
     var bounds = new google.maps.LatLngBounds(origin, origin);
@@ -178,17 +189,15 @@ function setUpMarkers(origin, city) {
     $.each(data.cars, function(idx, car) {
       bounds.extend(car.json_location);
 
-      carmarkers[idx] = new google.maps.Marker({
+      carmarkers[idx] = newCarMarker({
         position: car.json_location,
         map: map,
         title: car.name,
-        icon: car.marker_icon,
-        zIndex: google.maps.Marker.MAX_ZINDEX
+        icon: car.marker_icon
       });
 
       carmarkers[idx]._details = car.details;
       carmarkers[idx]._lp = car.license_plate;
-      setUpCarmarkerClickListener(carmarkers[idx]);
     });
 
     map.fitBounds(bounds);
@@ -199,6 +208,9 @@ function setUpMarkers(origin, city) {
 }
 
 function updateMarkers(position) {
+  $('#timestamp').
+    html("Loading....<img class='loader_sml' src='/images/loader.svg'/>").
+    show();
   directionsDisplay.setDirections({routes: []});
 
   var lat = position.coords.latitude,
@@ -213,6 +225,8 @@ function updateMarkers(position) {
     url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
     method: 'get',
     dataType: 'json'
+  }).fail(function(){
+    $('#timestamp').html("Network error, try again.");
   }).done(function(city){
     glb_city = city;
     $('#cityloader').hide();
@@ -223,18 +237,14 @@ function updateMarkers(position) {
                "&csc=" + csc,
       method: 'get',
       dataType: 'json'
+    }).fail(function(){
+       $('#timestamp').html("Network error, try again.");
     }).done(function(data){
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
        $.each(data.fs, function(idx, fs) {
          if ( typeof fsmarkers[idx] === 'undefined' ) {
-           fsmarkers[idx] = new google.maps.Marker({
-             zIndex: google.maps.Marker.MAX_ZINDEX - 2
-           });
-           fsmarkers[idx].addListener("click", function(){
-             infowin.setContent(fsmarkers[idx]._details);
-             infowin.open(map, fsmarkers[idx]);
-           });
+           fsmarkers[idx] = newFsMarker({});
          }
          fsmarkers[idx].setPosition(fs.json_location);
          fsmarkers[idx].setIcon(fs.marker_icon);
@@ -245,10 +255,7 @@ function updateMarkers(position) {
        $.each(data.cars, function(idx, car) {
          bounds.extend(car.json_location);
          if ( typeof carmarkers[idx] === 'undefined' ) {
-           carmarkers[idx] = new google.maps.Marker({
-             zIndex: google.maps.Marker.MAX_ZINDEX
-           });
-           setUpCarmarkerClickListener(carmarkers[idx]);
+           carmarkers[idx] = newCarMarker({});
          }
          carmarkers[idx].setPosition(car.json_location);
          carmarkers[idx].setIcon(car.marker_icon);
@@ -262,6 +269,6 @@ function updateMarkers(position) {
        $('#carloader').hide();
        infowin.close();
        $('#timestamp').html("Last update: " + data.tstamp).show();
-     });
+    });
   });
 }

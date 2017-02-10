@@ -105,13 +105,11 @@ $(document).ready(function(){
   });
 
   $('#provider_refresh').change(function(){
-    $('#timestamp').html("Loading....").show();
     csc = $('#provider_refresh').val();
     $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
     $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
     if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
     if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
     updateMarkers(clToPosition());
-    $('#timestamp').hide().html("");
   });
 });
