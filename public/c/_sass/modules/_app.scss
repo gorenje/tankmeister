@@ -381,6 +381,25 @@
   }
 }
 
+// Imprint
+.imprint {
+  background-color: $color3;
+  max-height: 0;
+  overflow: hidden;
+  @include transition(max-height $transitions);
+  &.active {
+    max-height: 500px;
+    padding-bottom: $spacer-10;
+  }
+  &__title {
+    letter-spacing: 0;
+    font-size: $font-size-14;
+  }
+  &__texts {
+    font-size: $font-size-12;
+  }
+}
+
 .settings__header-close {
 	position: relative;
 	width: $spacer-30;
