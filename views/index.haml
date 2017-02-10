@@ -86,9 +86,9 @@
           %img{:alt => "", :src => "/images/device.png"}/
         .grid__column.webapp__texts
           %div
-            %h2.webapp__title Take TankMeister everywhere!
+            %h2.webapp__title Take Tankmeister everywhere!
             %p
-              TankMeister is also WebApp and works on any mobile device. So next time you are with your phone or tablet just visit
+              Tankmeister is also WebApp and works on any mobile device. So next time you are with your phone or tablet just visit
               %strong tankmeister.de
               and get full access to all our features.
 
@@ -97,13 +97,23 @@
       .grid__column
         %svg.footer__icon
           %use{"xlink:href" => "#logo"}
-        %p.footer__texts All rights reserved © tankMeister.de 2016
+        %p.footer__texts All rights reserved © Tankmeister.de 2016
       .grid__column
         %ul.footer__nav
           %li
-            %a.footer__nav-item{:href => "https://github.com/gorenje/tankmeister"} Codebase
+            %a.footer__nav-item{:href => "https://github.com/gorenje/tankmeister", :target => "_blank"} Codebase
           %li
             %a#imprintlink.footer__nav-item{:href => "#"} Imprint
+        %p.footer__texts
+          Tankmeister was developed by
+          %a{:href => "https://github.com/gorenje", :title => "Gerrit Riessen", :target => "_blank"}
+            @gorenje
+          and
+          %a{:href => "https://github.com/revueltai", :title => "Ignacio Revuelta", :target => "_blank"}
+            @revueltai.
+          Find more in our
+          %a{:href => "https://github.com/gorenje/tankmeister", :target => "_blank"}
+            Github repo.
 
   %section.imprint
     %h2.imprint__title

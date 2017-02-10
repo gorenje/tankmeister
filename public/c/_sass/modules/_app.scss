@@ -381,14 +381,13 @@
   }
 }
 
-// imprint
+// Imprint
 .imprint {
-  background-color: $color6;
+  background-color: $color3;
   max-height: 0;
   overflow: hidden;
   @include transition(max-height $transitions);
   &.active {
-    padding: $spacer-20;
     max-height: 500px;
     padding-bottom: $spacer-10;
   }
