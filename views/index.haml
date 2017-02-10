@@ -111,7 +111,7 @@
           %a{ :href => "https://github.com", :target => "_blank" } GitHub.
 
 %section#mainmap.map.hide
-  .map__settings
+  .settings
     .settings__header
       %a.settings__header-brand{:href => "/"}
         %svg
@@ -126,7 +126,7 @@
         .settings__menu
           .settings__menu-item
             %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-              %label{ :for => "autonotify" } Radar
+            %label{ :for => "autonotify" } Radar
             #autonotifyform.hide
               %label{ :for => "radiusselector" } Within:
               %select#radiusselector
@@ -134,9 +134,11 @@
                   %option{ :value => dist, :selected => (200 == dist) }= "#{dist}m"
           .settings__menu-item
             %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-              %label{ :for => "autoupdate" } Keep map updated
-          .settings__menu-item
-            %label{ :for => "provider_refresh" } Change provider:
+            %label{ :for => "autoupdate" } Keep map updated
+            #timestamp.hide
+              "fubar"
+          .settings__provider
+            %label{ :for => "provider_refresh" } Provider:
             %select#provider_refresh
               %option{:value => "dnw"} DriveNow
               %option{:value => "ctg"} Car2Go
@@ -146,7 +148,6 @@
               %option{:value => "ctg_available"} Car2Go (any car)
               %option{:value => "mcy_available"} Multicity (any car)
               %option{:value => "any"} All providers (any car)
-    #timestamp.hide
 
   #map
 
