@@ -26,6 +26,11 @@ $(document).ready(function(){
     setTimeout(showRetryButton, 5000);
   });
 
+  $('#imprintlink').click(function(event){
+    event.preventDefault();
+    $('section .imprint').toggle('slow');
+  });
+
   $(document).on('updatedlocation', function(){
      if (circle) { circle.setCenter(current_location); }
      if (youmarker) { youmarker.setPosition(current_location); }

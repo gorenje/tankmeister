@@ -90,6 +90,16 @@
               %strong tankmeister.de
               and get full access to all our features.
 
+    %section.imprint.hide
+      %h2 Imprint / Impressum
+      %strong
+        Tankmeister.de /
+        Gerrit Riessen /
+        Templiner Strasse 11 /
+        10119 Berlin, Germany /
+        Email: tankmeister <@at@> adtek <@dot@> io
+
+
   %footer.footer
     .grid.grid--size-2.grid--large
       .grid__column
@@ -99,9 +109,9 @@
       .grid__column
         %ul.footer__nav
           %li
-            %a.footer__nav-item{:href => "https://github.com/gorenje/drivenow"} GITHUB CODE
+            %a.footer__nav-item{:href => "https://github.com/gorenje/drivenow"} Codebase
           %li
-            %a.footer__nav-item{:href => "https://github.com/gorenje"} IMPRINT
+            %a#imprintlink.footer__nav-item{:href => "#"} Imprint
         %p.footer__texts
           If you would like to contact the
           %a{ :href => "https://github.com/gorenje", :target => "_blank" } author
@@ -153,13 +163,6 @@
             %label{ :for => "autoupdate" } Auto Update
 
   #map
-
-  %footer.footer
-    .grid.grid--size-2.grid--large
-      .grid__column
-        %svg.footer__icon
-          %use{"xlink:href" => "#logo"}
-        %p.footer__texts All rights reserved © tankMeister.de 2016
 
 
 :javascript
