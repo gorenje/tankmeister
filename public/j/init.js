@@ -1,16 +1,18 @@
 function getURLParameter(name) {
-  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
+                                        '([^&;]+?)(&|#|;|$)').
+           exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) ||
+    null;
 }
-
 
 $(document).ready(function(){
   setTimeout(showRetryButton, 5000);
 
   $('#mapmenu').click(function(event) {
-    event.preventDefault()
-    $('#mapcontent').toggleClass('active')
-    $(this).toggleClass('active')
-  })
+    event.preventDefault();
+    $('#mapcontent').toggleClass('active');
+    $(this).toggleClass('active');
+  });
 
   $('#radiusselector').on('change', function(){
      if (circle) { circle.setRadius(parseInt($('#radiusselector').val())); }
@@ -34,10 +36,7 @@ $(document).ready(function(){
     // Trying to make map as large as the screen and this
     // http://stackoverflow.com/questions/32928684/google-maps-height-100-of-div-parent#32928942
     // didn't work, so resorted to the JS solution.
-    var map_height = $(document).height() - ($('#timestamp').height() +
-                                             $('#autonotifyform').height() +
-                                             $('#autoform').height());
-
+    var map_height = $(document).height() - $('#mainmap .settings').height();
     $('#map').css("height", map_height + "px");
   });
 
