@@ -28,6 +28,55 @@ function determineCssWalkingTime(time_in_minutes){
   return "wt_toolong";
 }
 
+function setUpCarmarkerClickListener(carmarker) {
+  carmarker.addListener('click', function(){
+    infowin.setContent(carmarker._details);
+    infowin.open(map, carmarker);
+
+    var request = {
+      origin: youmarker.getPosition(),
+      destination: carmarker.getPosition(),
+      travelMode: 'WALKING'
+    };
+
+    $.ajax({
+       url:  "/standingtime?lp=" + carmarker._lp,
+       method: 'get',
+       dataType: 'json'
+    }).done(function(data){
+       $('#stdtime').html(data.time.minutes);
+       $.ajax({
+          url: "/color?lp=" + carmarker._lp + "&st=" +
+                  data.time.seconds,
+          method: 'get',
+          dataType: 'json'
+       }).done(function(data){
+          $('#stdtime').css('color', data.color);
+       });
+    });
+
+    var directionsService = new google.maps.DirectionsService();
+    directionsService.route(request, function(result, status) {
+      if (status == 'OK') {
+        var rt = result.routes[directionsDisplay.getRouteIndex()];
+        directionsDisplay.setDirections(result);
+
+        var totaltime = 0, totaldistance = 0;
+        $.each(rt.legs, function(idx, leg){
+          totaldistance += leg.distance.value;
+          totaltime += leg.duration.value;
+        });
+        $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
+        $('#wktime').
+          html(Math.ceil(totaltime/60)).
+          removeClass('wt_toolong wt_easy wt_doable').
+          addClass(determineCssWalkingTime(Math.ceil(totaltime/60)));
+        $('#wkdist').html((totaldistance/1000).toFixed(1));
+      }
+    });
+ });
+}
+
 function setUpMap(position) {
   var lat = position.coords.latitude,
       lng = position.coords.longitude;
@@ -101,7 +150,6 @@ function setUpMarkers(origin, city) {
     routeIndex: 0,
     map: map
   });
-  var directionsService = new google.maps.DirectionsService();
 
   $.ajax({
     url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() +
@@ -140,52 +188,7 @@ function setUpMarkers(origin, city) {
 
       carmarkers[idx]._details = car.details;
       carmarkers[idx]._lp = car.license_plate;
-
-      carmarkers[idx].addListener('click', function(){
-        infowin.setContent(carmarkers[idx]._details);
-        infowin.open(map, carmarkers[idx]);
-
-        var request = {
-          origin: youmarker.getPosition(),
-          destination: carmarkers[idx].getPosition(),
-          travelMode: 'WALKING'
-        };
-
-        $.ajax({
-           url:  "/standingtime?lp=" + carmarkers[idx]._lp,
-           method: 'get',
-           dataType: 'json'
-        }).done(function(data){
-           $('#stdtime').html(data.time.minutes);
-           $.ajax({
-              url: "/color?lp=" + carmarkers[idx]._lp + "&st=" +
-                      data.time.seconds,
-              method: 'get',
-              dataType: 'json'
-           }).done(function(data){
-              $('#stdtime').css('color', data.color);
-           });
-        });
-
-        directionsService.route(request, function(result, status) {
-          if (status == 'OK') {
-            var rt = result.routes[directionsDisplay.getRouteIndex()];
-            directionsDisplay.setDirections(result);
-
-            var totaltime = 0, totaldistance = 0;
-            $.each(rt.legs, function(idx, leg){
-              totaldistance += leg.distance.value;
-              totaltime += leg.duration.value;
-            });
-            $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
-            $('#wktime').
-              html(Math.ceil(totaltime/60)).
-              removeClass('wt_toolong wt_easy wt_doable').
-              addClass(determineCssWalkingTime(Math.ceil(totaltime/60)));
-            $('#wkdist').html((totaldistance/1000).toFixed(1));
-          }
-        });
-      });
+      setUpCarmarkerClickListener(carmarkers[idx]);
     });
 
     map.fitBounds(bounds);
@@ -224,18 +227,35 @@ function updateMarkers(position) {
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
        $.each(data.fs, function(idx, fs) {
+         if ( typeof fsmarkers[idx] === 'undefined' ) {
+           fsmarkers[idx] = new google.maps.Marker({
+             zIndex: google.maps.Marker.MAX_ZINDEX - 2
+           });
+           fsmarkers[idx].addListener("click", function(){
+             infowin.setContent(fsmarkers[idx]._details);
+             infowin.open(map, fsmarkers[idx]);
+           });
+         }
          fsmarkers[idx].setPosition(fs.json_location);
          fsmarkers[idx].setIcon(fs.marker_icon);
          fsmarkers[idx].setTitle(fs.name);
          fsmarkers[idx]._details = fs.details;
+         fsmarkers[idx].setMap(map);
        });
        $.each(data.cars, function(idx, car) {
          bounds.extend(car.json_location);
+         if ( typeof carmarkers[idx] === 'undefined' ) {
+           carmarkers[idx] = new google.maps.Marker({
+             zIndex: google.maps.Marker.MAX_ZINDEX
+           });
+           setUpCarmarkerClickListener(carmarkers[idx]);
+         }
          carmarkers[idx].setPosition(car.json_location);
          carmarkers[idx].setIcon(car.marker_icon);
          carmarkers[idx].setTitle(car.name);
          carmarkers[idx]._details = car.details;
          carmarkers[idx]._lp = car.license_plate;
+         carmarkers[idx].setMap(map);
        });
 
        map.fitBounds(bounds);
