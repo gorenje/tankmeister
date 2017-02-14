@@ -46,8 +46,7 @@ function setUpCarmarkerClickListener(carmarker) {
     }).done(function(data){
        $('#stdtime').html(data.time.minutes);
        $.ajax({
-          url: "/color?lp=" + carmarker._lp + "&st=" +
-                  data.time.seconds,
+          url: "/color?lp=" + carmarker._lp + "&st=" + data.time.seconds,
           method: 'get',
           dataType: 'json'
        }).done(function(data){
@@ -80,11 +79,13 @@ function setUpCarmarkerClickListener(carmarker) {
 
 function newCarMarker(opts) {
   opts['zIndex'] = google.maps.Marker.MAX_ZINDEX;
+  console.log('newcar', opts)
   return setUpCarmarkerClickListener(new google.maps.Marker(opts));
 }
 
 function newFsMarker(opts) {
   opts['zIndex'] = google.maps.Marker.MAX_ZINDEX - 2;
+  console.log('newfs', opts)
   var mrk = new google.maps.Marker(opts);
   mrk.addListener("click", function(){
     infowin.setContent(mrk._details);
@@ -140,11 +141,13 @@ function setUpMarkers(origin, city) {
     position: origin,
     map: map,
     title: "You",
-    icon: '/images/marker_icon_me.svg',
-    size: new google.maps.Size(30, 38),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(0, 0),
-    zIndex: google.maps.Marker.MAX_ZINDEX - 1
+    zIndex: google.maps.Marker.MAX_ZINDEX - 1,
+    icon: {
+      url: '/images/marker_icon_me.svg',
+      size: new google.maps.Size(30, 38),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(0, 0)
+    }
   });
 
   glb_city = city;
@@ -171,8 +174,7 @@ function setUpMarkers(origin, city) {
   });
 
   $.ajax({
-    url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() +
-           "&cid=" + city.cityid + "&csc=" + csc,
+    url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() + "&cid=" + city.cityid + "&csc=" + csc,
     method: 'get',
     dataType: 'json'
   }).done(function(data){
@@ -180,11 +182,13 @@ function setUpMarkers(origin, city) {
       fsmarkers[idx] = newFsMarker({
         position: fs.json_location,
         map: map,
-        icon: fs.marker_icon,
-        size: new google.maps.Size(30, 38),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 0),
-        title: fs.name
+        title: fs.name,
+        icon: {
+          url: fs.marker_icon,
+          size: new google.maps.Size(30, 38),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 0)
+        }
       });
 
       fsmarkers[idx]._details = fs.details;
@@ -199,7 +203,13 @@ function setUpMarkers(origin, city) {
         position: car.json_location,
         map: map,
         title: car.name,
-        icon: car.marker_icon
+        icon: {
+          url: car.marker_icon,
+          size: new google.maps.Size(30, 38),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 0)
+        }
+
       });
 
       carmarkers[idx]._details = car.details;
@@ -253,10 +263,15 @@ function updateMarkers(position) {
            fsmarkers[idx] = newFsMarker({});
          }
          fsmarkers[idx].setPosition(fs.json_location);
-         fsmarkers[idx].setIcon(fs.marker_icon);
          fsmarkers[idx].setTitle(fs.name);
          fsmarkers[idx]._details = fs.details;
          fsmarkers[idx].setMap(map);
+         fsmarkers[idx].setIcon({
+          url: fs.marker_icon,
+          size: new google.maps.Size(30, 38),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 0)
+         });
        });
        $.each(data.cars, function(idx, car) {
          bounds.extend(car.json_location);
@@ -264,11 +279,16 @@ function updateMarkers(position) {
            carmarkers[idx] = newCarMarker({});
          }
          carmarkers[idx].setPosition(car.json_location);
-         carmarkers[idx].setIcon(car.marker_icon);
          carmarkers[idx].setTitle(car.name);
          carmarkers[idx]._details = car.details;
          carmarkers[idx]._lp = car.license_plate;
          carmarkers[idx].setMap(map);
+         carmarkers[idx].setIcon({
+          url: car.marker_icon,
+          size: new google.maps.Size(30, 38),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 0)
+         });
        });
 
        map.fitBounds(bounds);
