@@ -28,6 +28,71 @@ function determineCssWalkingTime(time_in_minutes){
   return "wt_toolong";
 }
 
+function setUpCarmarkerClickListener(carmarker) {
+  carmarker.addListener('click', function(){
+    infowin.setContent(carmarker._details);
+    infowin.open(map, carmarker);
+
+    var request = {
+      origin: youmarker.getPosition(),
+      destination: carmarker.getPosition(),
+      travelMode: 'WALKING'
+    };
+
+    $.ajax({
+       url:  "/standingtime?lp=" + carmarker._lp,
+       method: 'get',
+       dataType: 'json'
+    }).done(function(data){
+       $('#stdtime').html(data.time.minutes);
+       $.ajax({
+          url: "/color?lp=" + carmarker._lp + "&st=" +
+                  data.time.seconds,
+          method: 'get',
+          dataType: 'json'
+       }).done(function(data){
+          $('#stdtime').css('color', data.color);
+       });
+    });
+
+    var directionsService = new google.maps.DirectionsService();
+    directionsService.route(request, function(result, status) {
+      if (status == 'OK') {
+        var rt = result.routes[directionsDisplay.getRouteIndex()];
+        directionsDisplay.setDirections(result);
+
+        var totaltime = 0, totaldistance = 0;
+        $.each(rt.legs, function(idx, leg){
+          totaldistance += leg.distance.value;
+          totaltime += leg.duration.value;
+        });
+        $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
+        $('#wktime').
+          html(Math.ceil(totaltime/60)).
+          removeClass('wt_toolong wt_easy wt_doable').
+          addClass(determineCssWalkingTime(Math.ceil(totaltime/60)));
+        $('#wkdist').html((totaldistance/1000).toFixed(1));
+      }
+    });
+  });
+  return carmarker;
+}
+
+function newCarMarker(opts) {
+  opts['zIndex'] = google.maps.Marker.MAX_ZINDEX;
+  return setUpCarmarkerClickListener(new google.maps.Marker(opts));
+}
+
+function newFsMarker(opts) {
+  opts['zIndex'] = google.maps.Marker.MAX_ZINDEX - 2;
+  var mrk = new google.maps.Marker(opts);
+  mrk.addListener("click", function(){
+    infowin.setContent(mrk._details);
+    infowin.open(map, mrk);
+  });
+  return mrk;
+}
+
 function setUpMap(position) {
   var lat = position.coords.latitude,
       lng = position.coords.longitude;
@@ -101,7 +166,6 @@ function setUpMarkers(origin, city) {
     routeIndex: 0,
     map: map
   });
-  var directionsService = new google.maps.DirectionsService();
 
   $.ajax({
     url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() +
@@ -110,19 +174,14 @@ function setUpMarkers(origin, city) {
     dataType: 'json'
   }).done(function(data){
     $.each(data.fs, function(idx, fs) {
-      fsmarkers[idx] = new google.maps.Marker({
+      fsmarkers[idx] = newFsMarker({
         position: fs.json_location,
         map: map,
         icon: fs.marker_icon,
-        title: fs.name,
-        zIndex: google.maps.Marker.MAX_ZINDEX - 2
+        title: fs.name
       });
 
       fsmarkers[idx]._details = fs.details;
-      fsmarkers[idx].addListener("click", function(){
-        infowin.setContent(fsmarkers[idx]._details);
-        infowin.open(map, fsmarkers[idx]);
-      });
     });
 
     var bounds = new google.maps.LatLngBounds(origin, origin);
@@ -130,62 +189,15 @@ function setUpMarkers(origin, city) {
     $.each(data.cars, function(idx, car) {
       bounds.extend(car.json_location);
 
-      carmarkers[idx] = new google.maps.Marker({
+      carmarkers[idx] = newCarMarker({
         position: car.json_location,
         map: map,
         title: car.name,
-        icon: car.marker_icon,
-        zIndex: google.maps.Marker.MAX_ZINDEX
+        icon: car.marker_icon
       });
 
       carmarkers[idx]._details = car.details;
       carmarkers[idx]._lp = car.license_plate;
-
-      carmarkers[idx].addListener('click', function(){
-        infowin.setContent(carmarkers[idx]._details);
-        infowin.open(map, carmarkers[idx]);
-
-        var request = {
-          origin: youmarker.getPosition(),
-          destination: carmarkers[idx].getPosition(),
-          travelMode: 'WALKING'
-        };
-
-        $.ajax({
-           url:  "/standingtime?lp=" + carmarkers[idx]._lp,
-           method: 'get',
-           dataType: 'json'
-        }).done(function(data){
-           $('#stdtime').html(data.time.minutes);
-           $.ajax({
-              url: "/color?lp=" + carmarkers[idx]._lp + "&st=" +
-                      data.time.seconds,
-              method: 'get',
-              dataType: 'json'
-           }).done(function(data){
-              $('#stdtime').css('color', data.color);
-           });
-        });
-
-        directionsService.route(request, function(result, status) {
-          if (status == 'OK') {
-            var rt = result.routes[directionsDisplay.getRouteIndex()];
-            directionsDisplay.setDirections(result);
-
-            var totaltime = 0, totaldistance = 0;
-            $.each(rt.legs, function(idx, leg){
-              totaldistance += leg.distance.value;
-              totaltime += leg.duration.value;
-            });
-            $('#addrline').html(rt.legs[rt.legs.length-1].end_address);
-            $('#wktime').
-              html(Math.ceil(totaltime/60)).
-              removeClass('wt_toolong wt_easy wt_doable').
-              addClass(determineCssWalkingTime(Math.ceil(totaltime/60)));
-            $('#wkdist').html((totaldistance/1000).toFixed(1));
-          }
-        });
-      });
     });
 
     map.fitBounds(bounds);
@@ -196,6 +208,9 @@ function setUpMarkers(origin, city) {
 }
 
 function updateMarkers(position) {
+  $('#timestamp').
+    html("Loading....<img class='loader_sml' src='/images/loader.svg'/>").
+    show();
   directionsDisplay.setDirections({routes: []});
 
   var lat = position.coords.latitude,
@@ -210,6 +225,8 @@ function updateMarkers(position) {
     url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
     method: 'get',
     dataType: 'json'
+  }).fail(function(){
+    $('#timestamp').html("Network error, try again.");
   }).done(function(city){
     glb_city = city;
     $('#cityloader').hide();
@@ -220,28 +237,38 @@ function updateMarkers(position) {
                "&csc=" + csc,
       method: 'get',
       dataType: 'json'
+    }).fail(function(){
+       $('#timestamp').html("Network error, try again.");
     }).done(function(data){
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
        $.each(data.fs, function(idx, fs) {
+         if ( typeof fsmarkers[idx] === 'undefined' ) {
+           fsmarkers[idx] = newFsMarker({});
+         }
          fsmarkers[idx].setPosition(fs.json_location);
          fsmarkers[idx].setIcon(fs.marker_icon);
          fsmarkers[idx].setTitle(fs.name);
          fsmarkers[idx]._details = fs.details;
+         fsmarkers[idx].setMap(map);
        });
        $.each(data.cars, function(idx, car) {
          bounds.extend(car.json_location);
+         if ( typeof carmarkers[idx] === 'undefined' ) {
+           carmarkers[idx] = newCarMarker({});
+         }
          carmarkers[idx].setPosition(car.json_location);
          carmarkers[idx].setIcon(car.marker_icon);
          carmarkers[idx].setTitle(car.name);
          carmarkers[idx]._details = car.details;
          carmarkers[idx]._lp = car.license_plate;
+         carmarkers[idx].setMap(map);
        });
 
        map.fitBounds(bounds);
        $('#carloader').hide();
        infowin.close();
        $('#timestamp').html("Last update: " + data.tstamp).show();
-     });
+    });
   });
 }

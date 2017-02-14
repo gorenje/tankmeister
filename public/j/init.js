@@ -106,9 +106,10 @@ $(document).ready(function(){
 
   $('#provider_refresh').change(function(){
     csc = $('#provider_refresh').val();
-    $('#timestamp').hide().html("");
+    $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
+    $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
     if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
     if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
-    setUpMap(clToPosition());
+    updateMarkers(clToPosition());
   });
 });
