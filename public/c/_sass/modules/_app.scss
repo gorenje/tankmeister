@@ -181,6 +181,17 @@
     background-color: $color-white;
   }
 
+  &__loader {
+    padding: $spacer-5 0;
+    margin-bottom: $spacer-15;
+    color: rgba($color-black, .5);
+    font-size: $font-size-16;
+    img {
+      order: 1;
+      vertical-align: middle;
+    }
+  }
+
   &__header {
     position: relative;
     text-align: left;
@@ -232,7 +243,19 @@
       &-item {
         padding: $spacer-5;
         width: 50%;
-        font-size: $font-size-12;
+        font-size: $font-size-14;
+
+        input {
+          margin: 0;
+          padding: 0;
+          width: $spacer-15;
+          height: $spacer-15;
+          vertical-align: middle;
+        }
+
+        label {
+          vertical-align: middle;
+        }
       }
     }
 

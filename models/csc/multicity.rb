@@ -27,11 +27,11 @@ module Multicity
     def image_url
       "https://www.multicity-carsharing.de/wp-content/plugins/" +
         "multicity_map_v2/img/image_" + (is_electro? ? "multicity" : "c1") +
-        ".jpg"
+        ".svg"
     end
 
     def marker_icon
-      "/images/marker_mc_" + (is_electro? ? "electro" : "therm") + ".png"
+      "/images/marker_mc_" + (is_electro? ? "electro" : "therm") + ".svg"
     end
 
     def reserve_url
@@ -60,7 +60,7 @@ module Multicity
     end
 
     def marker_icon
-      "/images/marker_mc_petrolstation.png"
+      "/images/marker_mc_petrolstation.svg"
     end
   end
 
@@ -80,7 +80,7 @@ module Multicity
     end
 
     def marker_icon
-      "/images/marker_mc_ladesaeule" + (is_crowded? ? "_crowded" : "") + ".png"
+      "/images/marker_mc_ladesaeule" + (is_crowded? ? "_crowded" : "") + ".svg"
     end
 
     def capacity_info

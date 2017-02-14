@@ -30,7 +30,7 @@ module DriveNow
     end
 
     def marker_icon
-      "/images/marker_icon_car.png"
+      "/images/marker_icon_car.svg"
     end
 
     def reserve_url
@@ -64,7 +64,7 @@ module DriveNow
     end
 
     def marker_icon
-      "/images/marker_icon_loading" + (is_crowded? ? "_crowded" : "") + ".png"
+      "/images/marker_icon_loading" + (is_crowded? ? "_crowded" : "") + ".svg"
     end
   end
 
