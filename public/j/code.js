@@ -97,7 +97,7 @@ function newIcon(url) {
     size: new google.maps.Size(30, 38),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(15, 38),
-    url: url                           
+    url: url
   };
 }
 
