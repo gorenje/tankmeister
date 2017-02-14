@@ -27,7 +27,7 @@ module Multicity
     def image_url
       "https://www.multicity-carsharing.de/wp-content/plugins/" +
         "multicity_map_v2/img/image_" + (is_electro? ? "multicity" : "c1") +
-        ".svg"
+        ".jpg"
     end
 
     def marker_icon
