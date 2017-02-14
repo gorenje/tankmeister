@@ -28,7 +28,7 @@ module Car2Go
     end
 
     def marker_icon
-      "/images/marker_car2go_car.png"
+      "/images/marker_car2go_car.svg"
     end
 
     def vin
@@ -64,7 +64,7 @@ module Car2Go
     end
 
     def marker_icon
-      "/images/marker_car2go_tankstation.png"
+      "/images/marker_car2go_tankstation.svg"
     end
   end
 

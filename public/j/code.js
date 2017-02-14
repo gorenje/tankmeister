@@ -140,7 +140,10 @@ function setUpMarkers(origin, city) {
     position: origin,
     map: map,
     title: "You",
-    icon: '/images/marker_icon_me.png',
+    icon: '/images/marker_icon_me.svg',
+    size: new google.maps.Size(30, 38),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(0, 0),
     zIndex: google.maps.Marker.MAX_ZINDEX - 1
   });
 
@@ -178,6 +181,9 @@ function setUpMarkers(origin, city) {
         position: fs.json_location,
         map: map,
         icon: fs.marker_icon,
+        size: new google.maps.Size(30, 38),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 0),
         title: fs.name
       });
 
@@ -209,7 +215,7 @@ function setUpMarkers(origin, city) {
 
 function updateMarkers(position) {
   $('#timestamp').
-    html("Loading....<img class='loader_sml' src='/images/loader.svg'/>").
+    html("<img class='loader_sml' src='/images/loader.svg'/> Loading...").
     show();
   directionsDisplay.setDirections({routes: []});
 
@@ -233,7 +239,7 @@ function updateMarkers(position) {
     $('#carloader').show();
 
     $.ajax({
-      url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid + 
+      url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid +
                "&csc=" + csc,
       method: 'get',
       dataType: 'json'
