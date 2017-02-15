@@ -63,7 +63,7 @@ get '/standingtime' do
                                   [false, ""]
                                 else
                                   [true, "<img src='/cleanliness/#{c.last}"+
-                                   "/#{c.first}.svg' width='30px'/>"]
+                                   "/#{c.first+1}.svg' width='30px'/>"]
                                 end
     rescue Exception => e
       ["...","...", false, ""]
