@@ -101,6 +101,61 @@ function newIcon(url) {
   };
 }
 
+function mapStyle(){
+  return [
+    {
+      "featureType": "administrative",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "stylers": [
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    }
+  ];
+}
+
 function setUpMap(position) {
   var lat = position.coords.latitude,
       lng = position.coords.longitude;
@@ -113,6 +168,9 @@ function setUpMap(position) {
      zoom: 14,
      gestureHandling: 'greedy',
      mapTypeControl: false,
+     mapTypeId: google.maps.MapTypeId.ROADMAP,
+     styles: mapStyle(),
+     disableDefaultUI: true,
      streetViewControl: false,
      zoomControl: true,
      zoomControlOptions: {
