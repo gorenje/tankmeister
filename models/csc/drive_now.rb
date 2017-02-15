@@ -45,6 +45,16 @@ module DriveNow
     def license_plate
       @data["licensePlate"]
     end
+
+    def cleanliness
+      case @data["innerCleanliness"]
+      when "VERY_CLEAN" then "4/4"
+      when "CLEAN"      then "4/3"
+      when "REGULAR"    then "4/2"
+      else
+        "4/1"
+      end
+    end
   end
 
   class ElectroFS < ElectroFS

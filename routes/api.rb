@@ -52,30 +52,20 @@ end
 
 get '/standingtime' do
   content_type :json
-  secs, mins, cdef, chtml =
+  secs, mins =
     begin
       datastr = Curlobj.body("https://#{ENV['CARSTATS_HOST']}/" +
                              "standingtime?lp=" +
                              CGI::escape(params[:lp]))
       t = JSON(datastr)["time"]
-      c = JSON(datastr)["cln"]
-      [t.to_i, (t/60.0).ceil] + if c.last == 0
-                                  [false, ""]
-                                else
-                                  [true, "<img src='/cleanliness/#{c.last}"+
-                                   "/#{c.first+1}.svg' width='30px'/>"]
-                                end
+      [t.to_i, (t/60.0).ceil]
     rescue Exception => e
-      ["...","...", false, ""]
+      ["...","..."]
     end
 
   { :time => {
       :seconds => secs,
       :minutes => mins
-    },
-    :cleanliness => {
-      :defined => cdef,
-      :html    => chtml
     }
   }.to_json
 end

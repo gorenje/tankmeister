@@ -48,6 +48,10 @@ class Car
     end
   end
 
+  def cleanliness
+    nil
+  end
+
   def to_hash
     {
       "details"       => details,

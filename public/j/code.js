@@ -45,9 +45,6 @@ function setUpCarmarkerClickListener(carmarker) {
        dataType: 'json'
     }).done(function(data){
        $('#stdtime').html(data.time.minutes);
-       if ( data.cleanliness.defined ) {
-         $('#clnness').html(data.cleanliness.html);
-       }
        $.ajax({
           url: "/color?lp=" + carmarker._lp + "&st=" + data.time.seconds,
           method: 'get',

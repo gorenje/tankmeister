@@ -50,6 +50,10 @@ module Car2Go
     def license_plate
       @data["name"]
     end
+
+    def cleanliness
+      @data["interior"] == "GOOD" ? "2/2" : "2/1"
+    end
   end
 
   class PetrolFS < PetrolFS
