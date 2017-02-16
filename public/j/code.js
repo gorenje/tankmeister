@@ -272,6 +272,10 @@ function setUpMarkers(origin, city) {
   });
 }
 
+function tryUpdateAgain() {
+  $('#provider_refresh').trigger('change');
+}
+
 function updateMarkers(position) {
   $('#timestamp').
     html("<img class='loader_sml' src='/images/loader.svg'/> Loading...").
@@ -291,7 +295,7 @@ function updateMarkers(position) {
     method: 'get',
     dataType: 'json'
   }).fail(function(){
-    $('#timestamp').html("Network error, try again.");
+    $('#timestamp').html("Network error, <a href='#' onclick='tryUpdateAgain();'>try again.</a>");
   }).done(function(city){
     glb_city = city;
     $('#cityloader').hide();
@@ -303,7 +307,7 @@ function updateMarkers(position) {
       method: 'get',
       dataType: 'json'
     }).fail(function(){
-       $('#timestamp').html("Network error, try again.");
+       $('#timestamp').html("Network error, <a href='#' onclick='tryUpdateAgain();'>try again.</a>");
     }).done(function(data){
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
