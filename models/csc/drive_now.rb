@@ -30,7 +30,7 @@ module DriveNow
     end
 
     def marker_icon
-      "/images/marker_icon_car" + (is_electro? ? "_electro" : "") + ".svg"
+      "/images/car/drivenow/" + (is_electro? ? "electro" : "petrol") + ".svg"
     end
 
     def reserve_url

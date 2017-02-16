@@ -1,4 +1,4 @@
-get '/cleanliness/4/:value.svg' do
+get '/images/cleanliness/4/:value.svg' do
   content_type "image/svg+xml"
   @clrs = case params[:value]
           when "1" then ["ea1f24", "ffffff", "ffffff","ffffff"]
@@ -8,10 +8,10 @@ get '/cleanliness/4/:value.svg' do
           else
             ["ffffff", "ffffff", "ffffff","ffffff"]
           end
-  haml :"_cleanliness4.svg", :layout => false
+  haml :"images/_cleanliness4.svg", :layout => false
 end
 
-get '/cleanliness/2/:value.svg' do
+get '/images/cleanliness/2/:value.svg' do
   content_type "image/svg+xml"
   @clrs = case params[:value]
           when "1" then ["ea1f24", "ffffff"]
@@ -19,5 +19,11 @@ get '/cleanliness/2/:value.svg' do
           else
             ["ffffff", "ffffff"]
           end
-  haml :"_cleanliness2.svg", :layout => false
+  haml :"images/_cleanliness2.svg", :layout => false
+end
+
+get '/images/car/drivenow/:type.svg' do
+  content_type "image/svg+xml"
+  @fillclr = params[:type] == "electro" ? "86b80e" : "005c7d"
+  haml :"images/_drive_now_car.svg", :layout => false
 end
