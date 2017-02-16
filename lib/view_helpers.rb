@@ -5,7 +5,7 @@ module ViewHelpers
 
   def generate_svg(name, &block)
     content_type "image/svg+xml"
-    yield
+    yield if block_given?
     haml :"images/_#{name}.svg", :layout => false
   end
 
