@@ -11,6 +11,7 @@ function notifyCloseCars(car) {
            window.focus();
            this.close();
        },
+       serviceWorker: '/j/serviceWorker.js',
        vibrate: [200, 100, 200, 100, 200, 100, 200]
    });
   }
