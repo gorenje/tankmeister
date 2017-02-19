@@ -24,10 +24,9 @@ self.onnotificationclose = function (event) {
 
 self.onnotificationclick = function (event) {
     var link, origin, href;
-
-    runFunctionString(event.notification.data.onClick);
-
+  
     if (typeof event.notification.data.link !== 'undefined' && event.notification.data.link !== null) {
+
         origin = event.notification.data.origin;
         link = event.notification.data.link;
         href = origin.substring(0, origin.indexOf('/', 8)) + '/';
@@ -36,23 +35,12 @@ self.onnotificationclick = function (event) {
 
         // This looks to see if the current is already open and focuses if it is
         event.waitUntil(clients.matchAll({
-            type: "window"
-        }).then(function (clientList) {
-            var client, full_url;
-
-            for (var i = 0; i < clientList.length; i++) {
-                client = clientList[i];
-                full_url = href + link;
-
-                if (full_url[full_url.length - 1] !== '/' && client.url[client.url.length - 1] == '/')
-                    full_url += '/';
-
-                if ((client.url == full_url) && ('focus' in client))
-                    return client.focus();
-            }
-
-            if (clients.openWindow)
-                return clients.openWindow('/' + link);
-        }));
+                          type: "window"
+                        }).then(function (clientList) {
+                           if (clients.openWindow) {
+                              return clients.openWindow(link);
+                           }
+                        })
+        );
     }
 };
