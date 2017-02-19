@@ -1,0 +1,6 @@
+.grid__column
+  .sltcty.selector__list-item{:href => "#", "data-csc" => city.csc, "data-lat" => city.location.lat, "data-lng" => city.location.lng}
+    = city.name
+    %span.selector__note
+      = surround "(", ")" do
+        = city.provider_name

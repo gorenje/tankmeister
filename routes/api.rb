@@ -1,3 +1,4 @@
+# Nearest city to lat & long
 get '/city' do
   content_type :json
 
@@ -9,6 +10,23 @@ get '/city' do
     :name            => city.name,
     :ym_base_content => haml(:"_you_marker_info", :layout => false)
   }.to_json
+end
+
+# Nearest cities to IP
+get '/cities' do
+  content_type :json
+
+  data = begin
+           JSON(Curlobj.body("http://freegeoip.net/json/#{request.ip}"))
+         rescue
+           {"latitude" => 0, "longitude" => 0}
+         end
+
+  iploc = Geokit::LatLng.new(data["latitude"], data["longitude"])
+
+  @cities = CscProviders.cities("all").map(&:all).flatten.nearest(iploc)[0..4]
+
+  { :html => haml(:"_cities_selector", :layout => false) }.to_json
 end
 
 get '/nearest' do

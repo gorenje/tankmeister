@@ -1,0 +1,29 @@
+%h2.selector__title Or choose your city directly!
+
+.selector__list.grid{ :class => "grid--size-#{@cities.size}" }
+  - @cities.each do |city|
+    = haml(:_city_selector, :locals => {:city => city}, :layout => false)
+
+%p.selector__texts
+  *Ensure your location is turned on and allow this site to
+  access your location. We do not store your location or send it
+  to the car sharing company, we only use it to determine the
+  closest cars to you.
+
+:javascript
+  $('.sltcty').click(function(event) {
+    event.preventDefault();
+    csc = $(this).data('csc');
+    current_location = new google.maps.LatLng($(this).data('lat'),
+                                              $(this).data('lng'));
+
+    $('#mainhowto').slideUp().
+      fadeOut({ complete: function(){
+                  $('#mainmap').slideDown().fadeIn();
+                  stopListeningForLocationChange();
+                  listenForLocationChange();
+                  setUpMap(clToPosition());
+                  $('#provider_refresh').val(csc);
+                }});
+
+  });

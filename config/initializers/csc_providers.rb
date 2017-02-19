@@ -22,6 +22,10 @@ module CscProviders
     [lookup(csc).last].flatten
   end
 
+  def csc_for_city(city)
+    @store.select { |k,v| v.last == city.class }.keys.first
+  end
+
   private
 
   def all_cities
