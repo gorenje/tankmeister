@@ -17,7 +17,7 @@ get '/cities' do
   content_type :json
 
   data = begin
-           JSON(Curlobj.body("http://freegeoip.net/json/#{request.ip}"))
+           JSON(Curlobj.body("https://freegeoip.net/json/#{request.ip}"))
          rescue
            {"latitude" => 0, "longitude" => 0}
          end
