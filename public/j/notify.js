@@ -8,8 +8,10 @@ function notifyCloseCars(car) {
        timeout: 4000,
        onClick: function () {
            window.open(car.reserve_link);
+           window.focus();
            this.close();
-       }
+       },
+       vibrate: [200, 100, 200, 100, 200, 100, 200]
    });
   }
 }
