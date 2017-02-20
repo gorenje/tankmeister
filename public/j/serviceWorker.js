@@ -25,7 +25,7 @@ self.onnotificationclick = function (event) {
       new Promise(function(resolve) {
                     setTimeout(resolve, 5000);
                   }).then(function() {
-                    return clients.openWindow("https://tankmeister.de/reserve?url=" + encodeURIComponent(link));
+                    return clients.openWindow("https://tankmeister.de/reserve/" + btoa(link));
                   });
     event.waitUntil(promise);
   }
