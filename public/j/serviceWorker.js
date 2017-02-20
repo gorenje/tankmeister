@@ -16,10 +16,10 @@ self.onnotificationclick = function (event) {
     event.notification.close();
     var link = event.notification.data.link;
 
-    self.client.postMessage(JSON.stringify({
-      link: link,
-      action: 'notificationclick'
-    }));
+    // self.client.postMessage(JSON.stringify({
+    //   link: link,
+    //   action: 'notificationclick'
+    // }));
 
     var promise =
       new Promise(function(resolve) {
