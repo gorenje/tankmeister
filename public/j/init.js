@@ -119,7 +119,8 @@ $(document).ready(function(){
       if ( data.action === 'notificationclick' && 
            data.link !== 'undefined' && 
            data.link !== null ) {
-        window.open(data.link).focus();
+        window.open("https://tankmeister.de/reserve/" + btoa(data.link)).
+               focus();
       }
     });
   }
