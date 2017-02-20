@@ -16,16 +16,17 @@ self.onnotificationclick = function (event) {
     event.notification.close();
     var link = event.notification.data.link;
 
-    // self.client.postMessage(JSON.stringify({
-    //   link: link,
-    //   action: 'notificationclick'
-    // }));
+    self.client.postMessage(JSON.stringify({
+      link: link,
+      action: 'notificationclick'
+    }));
 
     var promise =
       new Promise(function(resolve) {
                     setTimeout(resolve, 5000);
                   }).then(function() {
-                    return clients.openWindow("https://tankmeister.de/reserve/" + btoa(link));
+                    return clients.
+                      openWindow("https://tankmeister.de/reserve/"+btoa(link));
                   });
     event.waitUntil(promise);
   }
