@@ -2,10 +2,10 @@ function notifyCloseCars(car) {
   // distance is measured in meters
   if ( car.distance < parseInt($('#radiusselector').val()) ) {
     Push.create(car.name, {
-       body: "Car " + car.name + " is in the vicinity (" +
+       body: "Car " + car.name + " is nearby (" +
                        car.distance.toFixed(0) + "m)",
        icon: 'images/appicon_96x96.png',
-       timeout: 4000,
+       timeout: 5000,
        link: car.reserve_link,
        onClick: function () {
          window.focus();

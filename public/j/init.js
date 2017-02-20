@@ -112,4 +112,15 @@ $(document).ready(function(){
     if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
     updateMarkers(clToPosition());
   });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      var data = JSON.parse(event.data);
+      if ( data.action === 'notificationclick' && 
+           data.link !== 'undefined' && 
+           data.link !== null ) {
+        window.open(data.link).focus();
+      }
+    });
+  }
 });
