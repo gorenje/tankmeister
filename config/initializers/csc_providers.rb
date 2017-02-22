@@ -9,8 +9,7 @@ module CscProviders
     csclu = csc.to_s.split(/_/).first
 
     @store[csclu] || {
-      "all" => ["All Cars", all_cities],
-      "any" => ["Closest", all_cities]
+      "all" => ["All Providers", all_cities],
     }[csclu] || []
   end
 

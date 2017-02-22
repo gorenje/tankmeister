@@ -43,7 +43,7 @@ get '/nearest' do
   lookupcsc = params[:csc] || 'dnw'
 
   cities = case lookupcsc
-           when 'all', 'any'
+           when /all/
              CscProviders.cities(lookupcsc).
                map { |klz| klz.send(:all).nearest(my_location).first }
            else

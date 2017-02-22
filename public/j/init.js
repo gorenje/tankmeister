@@ -5,6 +5,16 @@ function getURLParameter(name) {
     null;
 }
 
+function changeProvider(){
+  csc = $('#provider_refresh').val();
+  if ( $('#anycar').is(':checked') ) { csc = csc + "_available"; }
+  $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
+  $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
+  if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
+  if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
+  updateMarkers(clToPosition());
+}
+
 $(document).ready(function(){
   setTimeout(showRetryButton, 5000);
 
@@ -104,14 +114,8 @@ $(document).ready(function(){
                 }});
   });
 
-  $('#provider_refresh').change(function(){
-    csc = $('#provider_refresh').val();
-    $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
-    $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
-    if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
-    if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
-    updateMarkers(clToPosition());
-  });
+  $('#provider_refresh').change(changeProvider);
+  $('#anycar').change(changeProvider);
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', function (event) {

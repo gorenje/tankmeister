@@ -40,7 +40,7 @@
           %p
           #cityselector
       #cscselectors.grid.selector__wrapper.hide
-        %h2.selector__title Choose your provider and start saving!
+        %h2.selector__title Select your provider and start saving!
         .selector__list.grid.grid--size-4
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
@@ -143,18 +143,21 @@
       #timestamp.settings__loader.hide
       %form#autoform
         .settings__provider
-          %label{ :for => "provider_refresh" } Provider:
           %select#provider_refresh
             %option{:value => "dnw"} DriveNow
             %option{:value => "ctg"} Car2Go
             %option{:value => "mcy"} Multicity
             %option{:value => "all"} All providers
-            %option{:value => "dnw_available"} DriveNow (any car)
-            %option{:value => "ctg_available"} Car2Go (any car)
-            %option{:value => "mcy_available"} Multicity (any car)
-            %option{:value => "any"} All providers (any car)
 
         .settings__menu
+          .settings__menu-item
+            %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
+            %label{ :for => "autoupdate" } Auto Update
+
+          .settings__menu-item
+            %input#anycar{ :type => :checkbox, :name => "anycar" }
+            %label{ :for => "anycar" } Any Car
+
           .settings__menu-item
             %input#autonotify{ :type => :checkbox, :name => "autonotify" }
             %label{ :for => "autonotify" } Radar
@@ -164,10 +167,6 @@
               %select#radiusselector
                 - [100,200,300,400,500,1000].each do |dist|
                   %option{:value => dist, :selected => (200==dist)}= "#{dist}m"
-
-          .settings__menu-item
-            %input#autoupdate{ :type => :checkbox, :name => "autoupdate" }
-            %label{ :for => "autoupdate" } Auto Update
 
   #map
 
