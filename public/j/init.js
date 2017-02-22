@@ -75,20 +75,13 @@ $(document).ready(function(){
      if(this.checked) {
        circle.setMap(map);
        circle.setCenter(current_location);
-       circle.setRadius(parseInt($('#radiusslider .active').html()));
+       if ( circle.getRadius() === undefined ) { circle.setRadius(0); }
 
        $('#autonotifyform').fadeIn();
        current_timer_id = setTimeout(autoNotification, 10000);
        new Dragdealer('radiusslider',{
-         steps: 6,
-         animationCallback: function(x, y) {
-           var step = this.getStep()[0];
-           $('#radiusslider li').removeClass('active');
-           $('#radiusslider .item' + step).addClass('active');
-         },
-         callback: function(x,y){
-           var val = $('#radiusslider .active').html();
-           if (circle) { circle.setRadius(parseInt(val)); }
+         animationCallback: function(x,y){
+           if (circle) { circle.setRadius(x*1000); }
          }
        });
      } else {
