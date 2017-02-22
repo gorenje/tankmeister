@@ -162,12 +162,16 @@
             %input#autonotify{ :type => :checkbox, :name => "autonotify" }
             %label{ :for => "autonotify" } Radar
 
-            #autonotifyform.hide
-              %label{ :for => "radiusselector" } Within:
-              %select#radiusselector
-                - [100,200,300,400,500,1000].each do |dist|
-                  %option{:value => dist, :selected => (200==dist)}= "#{dist}m"
-
+          #autonotifyform.hide
+            #radiusslider.dragdealer.radiusslider
+              %ul
+                %li.item1.active 100
+                %li.item2 200
+                %li.item3 300
+                %li.item4 400
+                %li.item5 500
+                %li.item6 1000
+              .handle
   #map
 
 

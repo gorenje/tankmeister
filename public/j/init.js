@@ -24,10 +24,6 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
-  $('#radiusselector').on('change', function(){
-     if (circle) { circle.setRadius(parseInt($('#radiusselector').val())); }
-  });
-
   $('#retrybutton').click(function(event){
     event.preventDefault();
     showPleaseWait();
@@ -78,10 +74,23 @@ $(document).ready(function(){
   $('#autonotify').change(function() {
      if(this.checked) {
        circle.setMap(map);
-       circle.setRadius(parseInt($('#radiusselector').val()));
+       circle.setCenter(current_location);
+       circle.setRadius(parseInt($('#radiusslider .active').html()));
 
        $('#autonotifyform').fadeIn();
        current_timer_id = setTimeout(autoNotification, 10000);
+       new Dragdealer('radiusslider',{
+         steps: 6,
+         animationCallback: function(x, y) {
+           var step = this.getStep()[0];
+           $('#radiusslider li').removeClass('active');
+           $('#radiusslider .item' + step).addClass('active');
+         },
+         callback: function(x,y){
+           var val = $('#radiusslider .active').html();
+           if (circle) { circle.setRadius(parseInt(val)); }
+         }
+       });
      } else {
        circle.setMap(null);
        $('#autonotifyform').fadeOut();

@@ -1,6 +1,6 @@
 function notifyCloseCars(car) {
   // distance is measured in meters
-  if ( car.distance < parseInt($('#radiusselector').val()) ) {
+  if ( car.distance < circle.getRadius() ) {
     Push.create(car.name, {
        body: "Car " + car.name + " is nearby (" +
                        car.distance.toFixed(0) + "m)",
