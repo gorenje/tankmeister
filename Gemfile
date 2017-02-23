@@ -16,6 +16,7 @@ gem 'haml'
 gem 'foreman'
 gem 'unicorn'
 gem 'timezone'
+gem 'mechanize'
 
 group :development do
   gem 'html2haml'
