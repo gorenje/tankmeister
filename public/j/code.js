@@ -278,7 +278,7 @@ function setUpMarkers(origin, city) {
 }
 
 function tryUpdateAgain() {
-  $('#provider_refresh').trigger('change');
+  changeProvider();
 }
 
 function updateMarkers(position) {

@@ -6,8 +6,6 @@ function getURLParameter(name) {
 }
 
 function changeProvider(){
-  csc = $('#provider_refresh').val();
-  if ( $('#anycar').is(':checked') ) { csc = csc + "_available"; }
   $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
   $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
   if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
@@ -22,6 +20,32 @@ $(document).ready(function(){
     event.preventDefault();
     $('#mapcontent').toggleClass('active');
     $(this).toggleClass('active');
+
+    var initial_step = 0;
+    $.each($('#providerslider li'), function(idx, obj){
+      initial_step += 1;
+      if ($(obj).data("csc") === csc.replace("_available","")) {
+        $(obj).addClass('active');
+        return false;
+      }
+    });
+
+    new Dragdealer('providerslider',{
+      steps: $('#providerslider li').length,
+      callback: function(x,y){
+        var step = this.getStep()[0];
+        $('#providerslider li').removeClass('active');
+        $('#providerslider .item' + step).addClass('active');
+
+        var new_csc = $('#providerslider .item' + step).data("csc");
+        if ( $('#anycar').is(':checked') ) { new_csc = new_csc + "_available"; }
+
+        if (csc !== new_csc ) {
+          csc = new_csc;
+          changeProvider();
+        }
+      }
+    }).setStep(initial_step);
   });
 
   $('#retrybutton').click(function(event){
@@ -108,7 +132,6 @@ $(document).ready(function(){
   $('.sltcsc').click(function(event) {
     csc = $(this).data('csc');
     event.preventDefault();
-    $('#provider_refresh').val(csc);
     $('#mainhowto').slideUp().
       fadeOut({ complete: function(){
                   $('#mainmap').slideDown().fadeIn();
@@ -116,8 +139,11 @@ $(document).ready(function(){
                 }});
   });
 
-  $('#provider_refresh').change(changeProvider);
-  $('#anycar').change(changeProvider);
+  $('#anycar').change(function(){
+    csc = csc.replace("_available","");
+    if ( $('#anycar').is(':checked') ) { csc += "_available"; }
+    changeProvider();
+  });
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', function (event) {
