@@ -38,13 +38,11 @@ module Enjoy
     end
 
     def marker_icon
-      "https://enjoy.eni.com/img/map/marker_" +
-        (is_scooter? ? "scooter":"car") + ".png?0.9.2"
+      "/images/enjoy/marker_" + (is_scooter? ? "scooter":"car") + ".png"
     end
 
     def image_url
-      "https://enjoy.eni.com/img/map/modal/prenotazione" +
-        (is_scooter? ? "scooter" : "auto") + ".png"
+      "/images/enjoy/prenotazione_" +(is_scooter? ? "scooter" : "auto") + ".png"
     end
 
     def fuel_in_percent
@@ -68,7 +66,7 @@ module Enjoy
     end
 
     def marker_icon
-      "https://enjoy.eni.com/img/map/marker_eni_station.png?0.9.2"
+      "/images/enjoy/marker_eni_station.png"
     end
   end
 
