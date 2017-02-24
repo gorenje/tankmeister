@@ -28,6 +28,17 @@ get '/images/car/drivenow/:type.svg' do
   end
 end
 
+get '/images/car/ejy/:type.svg' do
+  generate_svg "enjoy_car" do
+    @bgclr = "dd1616"
+    @is_scooter = params[:type] == "scooter"
+  end
+end
+
+get '/images/station/ejy/:type/:status.svg' do
+  generate_svg "enjoy_petrol_station"
+end
+
 get '/images/station/mcy/:type/:status.svg' do
   @bgclr = "bf0f7b"
   if params[:type] == "petrol"

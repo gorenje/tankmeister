@@ -38,7 +38,7 @@ module Enjoy
     end
 
     def marker_icon
-      "/images/enjoy/marker_" + (is_scooter? ? "scooter":"car") + ".png"
+      "/images/car/ejy/" + (is_scooter? ? "scooter":"car") + ".svg"
     end
 
     def image_url
@@ -66,7 +66,7 @@ module Enjoy
     end
 
     def marker_icon
-      "/images/enjoy/marker_eni_station.png"
+      "/images/station/ejy/petrol/marker.svg"
     end
   end
 
