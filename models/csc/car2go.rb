@@ -68,7 +68,7 @@ module Car2Go
     end
 
     def marker_icon
-      "/images/marker_car2go_tankstation.svg"
+      "/images/station/c2g/petrol/marker.svg"
     end
   end
 

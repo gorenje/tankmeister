@@ -41,9 +41,9 @@ end
 get '/images/station/c2g/:type/:status.svg' do
   @bgclr = "00ccff"
   if params[:type] == "petrol"
-    generate_svg("mc_petrolstation")
+    generate_svg("ctg_petrol_station")
   else
     @handclr = params[:status] == "crowded" ? "999" : "4b994f"
-    generate_svg("mc_electrostation")
+    generate_svg("ctg_electro_station")
   end
 end
