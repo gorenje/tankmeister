@@ -28,8 +28,18 @@ get '/images/car/drivenow/:type.svg' do
   end
 end
 
-get '/images/station/mc/:type/:status.svg' do
+get '/images/station/mcy/:type/:status.svg' do
   @bgclr = "bf0f7b"
+  if params[:type] == "petrol"
+    generate_svg("mc_petrolstation")
+  else
+    @handclr = params[:status] == "crowded" ? "999" : "4b994f"
+    generate_svg("mc_electrostation")
+  end
+end
+
+get '/images/station/c2g/:type/:status.svg' do
+  @bgclr = "00ccff"
   if params[:type] == "petrol"
     generate_svg("mc_petrolstation")
   else

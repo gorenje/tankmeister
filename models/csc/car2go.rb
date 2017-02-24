@@ -20,7 +20,7 @@ module Car2Go
     end
 
     def is_charging?
-      false
+      !!@data["charging"]
     end
 
     def address_line
@@ -72,6 +72,26 @@ module Car2Go
     end
   end
 
+  class ElectroFS < ElectroFS
+    def initialize(hsh)
+      hsh["latitude"]     = hsh["coordinates"][1]
+      hsh["longitude"]    = hsh["coordinates"][0]
+      hsh["address"]      = [hsh["name"]]
+      hsh["name"]         = "-"
+      super(hsh)
+    end
+
+    def marker_icon
+      "/images/station/c2g/electro/"+(is_crowded? ? "crowded" : "empty")+".svg"
+    end
+
+    def capacity_info
+      used,total = ["usedCapacity","totalCapacity"].map{|a|@data[a]}.map(&:to_i)
+      { :free => total - used, :total => total }
+    end
+  end
+
+
   class City < City
     def self.all
       Curlobj.
@@ -107,7 +127,15 @@ module Car2Go
           Car2Go::Car.new(hsh)
         end
 
-        resp[:electro_stations] = []
+        resp[:electro_stations] = Curlobj.
+          car2go_data_for("https://www.car2go.com/api/v2.1/parkingspots"+
+                          "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
+                          "&format=json&loc=" +
+                          CGI::escape(id))["placemarks"].
+          select { |hsh| hsh["chargingPole"] }.
+          map do |hsh|
+          Car2Go::ElectroFS.new(hsh)
+        end
 
         resp[:petrol_stations] = Curlobj.
           car2go_data_for("https://www.car2go.com/api/v2.1/gasstations"+

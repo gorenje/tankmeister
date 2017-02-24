@@ -80,7 +80,7 @@ module Multicity
     end
 
     def marker_icon
-      "/images/station/mc/electro/"+(is_crowded? ? "crowded" : "empty")+".svg"
+      "/images/station/mcy/electro/"+(is_crowded? ? "crowded" : "empty")+".svg"
     end
 
     def capacity_info
