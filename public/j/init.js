@@ -8,8 +8,8 @@ function getURLParameter(name) {
 function changeProvider(){
   $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
   $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
-  if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
-  if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
+  //if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
+  //if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
   updateMarkers(clToPosition());
 }
 
@@ -101,7 +101,7 @@ $(document).ready(function(){
        circle.setCenter(current_location);
        if ( circle.getRadius() === undefined ) { circle.setRadius(0); }
 
-       $('#autonotifyform').fadeIn();
+       $('#autonotifyform').slideDown().fadeIn();
        current_timer_id = setTimeout(autoNotification, 10000);
        new Dragdealer('radiusslider',{
          animationCallback: function(x,y){
@@ -110,7 +110,7 @@ $(document).ready(function(){
        });
      } else {
        circle.setMap(null);
-       $('#autonotifyform').fadeOut();
+       $('#autonotifyform').slideUp().fadeOut();
        if ( current_timer_id !== null ) {
          clearTimeout(current_timer_id);
          current_timer_id = null;

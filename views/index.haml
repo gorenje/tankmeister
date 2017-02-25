@@ -159,11 +159,7 @@
 
           .settings__menu-item
             %input#anycar{ :type => :checkbox, :name => "anycar" }
-            %label{ :for => "anycar" } Nearby Car
-
-          .settings__menu-item
-            %input#autonotify{ :type => :checkbox, :name => "autonotify" }
-            %label{ :for => "autonotify" } Radar
+            %label{ :for => "anycar" } Nearby Cars
 
           #autonotifyform.hide
             #radiusslider.dragdealer.radiusslider
@@ -174,6 +170,11 @@
                 %li.item4 750
                 %li.item5 1000
               .handle
+
+          .settings__menu-item
+            %input#autonotify{ :type => :checkbox, :name => "autonotify" }
+            %label{ :for => "autonotify" } Radar
+
   #map
 
 
