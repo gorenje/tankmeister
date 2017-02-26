@@ -133,6 +133,8 @@
       %a.settings__header-brand{:href => "/"}
         %svg
           %use{"xlink:href" => "#isologo"}
+      .settings__header-item
+        #timestamp.settings__loader.hide
       %a.settings__header-menu#mapmenu{:href => "#"}
         .settings__header-close
           %span
@@ -140,7 +142,7 @@
           %span
 
     .settings__content#mapcontent
-      #timestamp.settings__loader.hide
+      -# #timestamp.settings__loader.hide
       %form#autoform
         .settings__provider
           #providerslider.dragdealer.providerslider

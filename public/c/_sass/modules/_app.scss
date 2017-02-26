@@ -182,7 +182,7 @@
   }
 
   &__loader {
-    padding: $spacer-5 0;
+    padding: 0 0;
     margin-bottom: $spacer-15;
     color: rgba($color-black, .5);
     font-size: $font-size-16;
@@ -202,6 +202,11 @@
         height: 40px;
         fill: $color2;
       }
+    }
+    &-item {
+      position: absolute;
+      top: $spacer-10;
+      right: 40px;
     }
     &-menu {
       position: absolute;

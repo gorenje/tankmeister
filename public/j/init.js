@@ -108,6 +108,7 @@ $(document).ready(function(){
            if (circle) { circle.setRadius(x*1000); }
          }
        });
+       if ( !$('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
      } else {
        circle.setMap(null);
        $('#autonotifyform').slideUp().fadeOut();

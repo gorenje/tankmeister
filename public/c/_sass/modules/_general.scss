@@ -107,8 +107,8 @@ p.cardetails, p.fsdetails {
 }
 
 .loader_sml {
-  width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 30px;
 }
 
 .dragdealer {
@@ -144,12 +144,12 @@ p.cardetails, p.fsdetails {
   display: block;
   text-align: center;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
   line-height: 30px;
 }
 
 .dragdealer li.active {
-  color: #fff;
+  color: rgba(128,0,128,1);
 }
 
 .radiusslider li,

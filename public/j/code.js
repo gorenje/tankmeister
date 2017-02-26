@@ -283,7 +283,7 @@ function tryUpdateAgain() {
 
 function updateMarkers(position) {
   $('#timestamp').
-    html("<img class='loader_sml' src='/images/loader.svg'/> Loading...").
+    html("<img class='loader_sml' src='/images/loader.svg'/>").
     show();
   directionsDisplay.setDirections({routes: []});
 
@@ -300,7 +300,7 @@ function updateMarkers(position) {
     method: 'get',
     dataType: 'json'
   }).fail(function(){
-    $('#timestamp').html("Network error, <a href='#' onclick='tryUpdateAgain();'>try again.</a>");
+     $('#timestamp').html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_sml' src='/images/reloader.svg'/></a>");
   }).done(function(city){
     glb_city = city;
     $('#cityloader').hide();
@@ -312,7 +312,7 @@ function updateMarkers(position) {
       method: 'get',
       dataType: 'json'
     }).fail(function(){
-       $('#timestamp').html("Network error, <a href='#' onclick='tryUpdateAgain();'>try again.</a>");
+       $('#timestamp').html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_sml' src='/images/reloader.svg'/></a>");
     }).done(function(data){
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
@@ -343,7 +343,9 @@ function updateMarkers(position) {
        map.fitBounds(bounds);
        $('#carloader').hide();
        infowin.close();
-       $('#timestamp').html("Last update: " + data.tstamp).show();
+       $('#timestamp').
+          html(data.tstamp.split(" ")[0].split(":").slice(0,2).join(":")).
+          show();
     });
   });
 }
