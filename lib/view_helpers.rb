@@ -31,4 +31,8 @@ module ViewHelpers
     request.scheme == 'http' &&
       !ENV['HOSTS_WITH_NO_SSL'].split(",").map(&:strip).include?(request.host)
   end
+
+  def clock_fill(val)
+    val > @hour ? "rgba(4,64,87,0.2)" : "rgba(255,0,0,1)"
+  end
 end

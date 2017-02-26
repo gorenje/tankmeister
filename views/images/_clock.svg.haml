@@ -1,0 +1,22 @@
+!!! XML
+%svg{:height => "40", :width => "40", :xmlns => "http://www.w3.org/2000/svg", "xmlns:svg" => "http://www.w3.org/2000/svg"}
+  %g
+    %path#svg_1.loader.loader__circle{:d => "m20.201,5.169c-8.254001,0 -14.946,6.692 -14.946,14.946c0,8.255001 6.691999,14.946001 14.946,14.946001s14.945999,-6.691 14.945999,-14.946001c-0.000999,-8.254 -6.691999,-14.946 -14.945999,-14.946zm0,26.58c-6.425,0 -11.634,-5.208 -11.634,-11.634001c0,-6.425 5.209,-11.634 11.634,-11.634c6.424999,0 11.632999,5.209 11.632999,11.634c0,6.426001 -5.208,11.634001 -11.632999,11.634001z", :fill => "rgba(4,64,87,0.2)"}
+    %g#svg_8
+      %rect#t01{:transform => "rotate(30, 20, 20)",:fill => clock_fill(1), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "18.95307", :y => "0.858103"}
+      %rect#t02{:transform => "rotate(60, 20, 20)", :fill => clock_fill(2), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "18.899996", :y => "0.799999"}
+      %rect#t03{:fill => clock_fill(3), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "36.200002", :y => "17.950001"}
+      %rect#t04{:transform => "rotate(30, 20, 20)",:fill => clock_fill(4), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "36.353072", :y => "18.008105"}
+      %rect#t05{:transform => "rotate(60, 20, 20)", :fill => clock_fill(5), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "36.299998", :y => "17.950001"}
+      %rect#t06{:fill => clock_fill(6), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "18.8", :y => "36.2"}
+      %rect#t07{:transform => "rotate(30, 20, 20)",:fill => clock_fill(7), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "18.95307", :y => "36.258104"}
+      %rect#t08{:transform => "rotate(60, 20, 20)", :fill => clock_fill(8), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "18.899996", :y => "36.2"}
+      %rect#t09{:fill => clock_fill(9), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "1.200002", :y => "17.95"}
+      %rect#t10{:transform => "rotate(30, 20, 20)",:fill => clock_fill(10), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "1.353073", :y => "18.008104"}
+      %rect#t11{:transform => "rotate(60, 20, 20)", :fill => clock_fill(11), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "1.299999", :y => "17.95"}
+      %rect#t12{:fill => clock_fill(12), :height => "3", :stroke => "#000000", "stroke-width" => "0", :width => "3", :x => "18.8", :y => "0.799999"}
+
+    - (0..360).step(6).each do |deg|
+      - stroke = deg < @deg ? "rgba(0,0,255,1)" : "rgba(0,0,0,0)"
+      %g{:transform => "rotate(#{deg}, 20, 20)"}
+        %path{:d => "m20.300001,5.05c-0.00001,0.989275 -0.028734,1.834 -0.061068,2.758925l-0.038933,0.881075l0.049999,-0.690001", :fill => "none", :stroke => stroke, "stroke-dasharray" => "null", "stroke-linecap" => "null", "stroke-linejoin" => "null", "stroke-width" => "null"}

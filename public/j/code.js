@@ -343,8 +343,11 @@ function updateMarkers(position) {
        map.fitBounds(bounds);
        $('#carloader').hide();
        infowin.close();
+       var tmval = data.tstamp.split(" ")[0].split(":").slice(0,2);
        $('#timestamp').
-          html(data.tstamp.split(" ")[0].split(":").slice(0,2).join(":")).
+          html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_"+
+               "sml' src='/images/clock/" + tmval[0] + "/" + tmval[1] + 
+               ".svg'/></a>").
           show();
     });
   });

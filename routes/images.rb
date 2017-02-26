@@ -58,3 +58,11 @@ get '/images/station/c2g/:type/:status.svg' do
     generate_svg("ctg_electro_station")
   end
 end
+
+get '/images/clock/:hour/:min.svg' do
+  generate_svg("clock") do
+    @hour = params[:hour].to_i
+    @hour = @hour < 1 ? 12 : (@hour >= 13 ? (@hour - 12) : @hour)
+    @deg = ((params[:min].to_f / 60.0) * 360).to_i
+  end
+end
