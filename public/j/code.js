@@ -156,6 +156,39 @@ function mapStyle(){
   ];
 }
 
+function center_control(map) {
+  var centerControlDiv = document.createElement('div');
+
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.border = '2px solid #fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+  controlUI.style.cursor = 'pointer';
+  controlUI.title = 'Click to recenter the map';
+  centerControlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.style.height = '30px';
+  controlText.style.width = '30px';
+  controlText.innerHTML =
+    "<img width=30 height=30 src='/images/recenter.svg'/>";
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlUI.addEventListener('click', function() {
+    map.setCenter(youmarker.getPosition());
+  });
+
+  centerControlDiv.index = 1;
+  centerControlDiv.style['padding-top'] = '10px';
+  centerControlDiv.style['padding-right'] = '10px';
+
+  return centerControlDiv;
+}
+
 function setUpMap(position) {
   var lat = position.coords.latitude,
       lng = position.coords.longitude;
@@ -178,6 +211,7 @@ function setUpMap(position) {
      }
   });
 
+  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(center_control(map));
   map.setCenter(origin);
 
   circle = new google.maps.Circle({

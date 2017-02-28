@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+
+ <g>
+  <title>Layer 1</title>
+  <circle id="svg_1" r="5" cy="20" cx="20" stroke-width="0" stroke="#000000" fill="#000000"/>
+  <circle fill-opacity="0" id="svg_3" r="10" cy="20" cx="20" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="#000000"/>
+  <line fill="none" stroke="#000000" stroke-width="2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" fill-opacity="0" x1="20" y1="3.9" x2="20" y2="9.1" id="svg_2"/>
+  <line fill="none" stroke="#000000" stroke-width="2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" fill-opacity="0" x1="20" y1="30.9" x2="20" y2="36.1" id="svg_5"/>
+  <line id="svg_4" y2="20" x2="36.200003" y1="20" x1="30.900003" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none"/>
+  <line id="svg_6" y2="20" x2="9.149999" y1="20" x1="3.849998" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#000000" fill="none"/>
+ </g>
+</svg>
