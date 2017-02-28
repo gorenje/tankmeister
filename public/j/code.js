@@ -178,11 +178,6 @@ function setUpMap(position) {
      }
   });
 
-  // google.maps.event.addListener(map, 'zoom_changed', function() {
-  //   if (map.getZoom() < 11) map.setZoom(11);
-  //   if (map.getZoom() > 19) map.setZoom(19);
-  // });
-
   map.setCenter(origin);
 
   circle = new google.maps.Circle({
