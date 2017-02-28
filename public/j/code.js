@@ -223,12 +223,19 @@ function setUpMap(position) {
      zIndex: google.maps.Marker.MAX_ZINDEX - 3
   });
 
+  $('#timestamp').
+    html("<img class='loader_sml' src='/images/loader.svg'/>");
+
   $.ajax({
      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
      method: 'get',
      dataType: 'json'
   }).done(function(data){
     setUpMarkers(origin, data);
+  }).fail(function(){
+     $('#timestamp').
+       html("<a href='#' onclick='tryUpdateAgain();'>"+
+            "<img class='loader_sml' src='/images/reloader.svg'/></a>");
   });
 }
 
@@ -254,10 +261,8 @@ function setUpMarkers(origin, city) {
 
   var infoWinListener = infowin.addListener('domready', function(){
     $('#cityname').html(glb_city.name);
-    $('#carloader').show();
   });
   infowin.setContent(ym_base_content);
-  infowin.open(map, youmarker);
 
   directionsDisplay = new google.maps.DirectionsRenderer({
     suppressInfoWindows: true,
@@ -272,6 +277,10 @@ function setUpMarkers(origin, city) {
              "&cid=" + city.cityid + "&csc=" + csc,
     method: 'get',
     dataType: 'json'
+  }).fail(function(){
+    $('#timestamp').
+      html("<a href='#' onclick='tryUpdateAgain();'>" +
+           "<img class='loader_sml' src='/images/reloader.svg'/></a>");
   }).done(function(data){
     $.each(data.fs, function(idx, fs) {
       fsmarkers[idx] = newFsMarker({
@@ -301,8 +310,11 @@ function setUpMarkers(origin, city) {
 
     map.fitBounds(bounds);
     infoWinListener.remove();
-    $('#carloader').hide();
-    infowin.close();
+    var tmval = data.tstamp.split(" ")[0].split(":").slice(0,2);
+    $('#timestamp').
+      html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_"+
+           "sml' src='/images/clock/" + tmval[0] + "/" + tmval[1] + 
+           ".svg'/></a>");
   });
 }
 
@@ -312,8 +324,7 @@ function tryUpdateAgain() {
 
 function updateMarkers(position) {
   $('#timestamp').
-    html("<img class='loader_sml' src='/images/loader.svg'/>").
-    show();
+    html("<img class='loader_sml' src='/images/loader.svg'/>");
   directionsDisplay.setDirections({routes: []});
 
   var lat = position.coords.latitude,
@@ -329,7 +340,9 @@ function updateMarkers(position) {
     method: 'get',
     dataType: 'json'
   }).fail(function(){
-     $('#timestamp').html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_sml' src='/images/reloader.svg'/></a>");
+     $('#timestamp').
+       html("<a href='#' onclick='tryUpdateAgain();'>" +
+            "<img class='loader_sml' src='/images/reloader.svg'/></a>");
   }).done(function(city){
     glb_city = city;
     $('#cityloader').hide();
@@ -341,7 +354,9 @@ function updateMarkers(position) {
       method: 'get',
       dataType: 'json'
     }).fail(function(){
-       $('#timestamp').html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_sml' src='/images/reloader.svg'/></a>");
+       $('#timestamp').
+         html("<a href='#' onclick='tryUpdateAgain();'>"+
+              "<img class='loader_sml' src='/images/reloader.svg'/></a>");
     }).done(function(data){
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
@@ -376,8 +391,7 @@ function updateMarkers(position) {
        $('#timestamp').
           html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_"+
                "sml' src='/images/clock/" + tmval[0] + "/" + tmval[1] + 
-               ".svg'/></a>").
-          show();
+               ".svg'/></a>");
     });
   });
 }
