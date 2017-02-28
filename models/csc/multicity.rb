@@ -135,6 +135,10 @@ module Multicity
           Multicity::ElectroFS.new(hsh)
         end.reject { |a| a.is_full? }
       end
+    rescue Exception => e
+      puts "Exception for City: #{id} / #{name}"
+      puts e
+      EmptyCarDetails
     end
   end
 end

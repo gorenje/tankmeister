@@ -103,7 +103,6 @@ module DriveNow
     def car_details
       data = Curlobj.
         drivenow_data_for("https://api2.drive-now.com/cities/#{id}?expand=full")
-
       {}.tap do |resp|
         resp[:electro_stations] = data["chargingStations"]["items"].map do |hsh|
           DriveNow::ElectroFS.new(hsh)
@@ -125,6 +124,10 @@ module DriveNow
         end
         resp[:electro_stations].reject! { |fs| fs.is_full? }
       end
+    rescue Exception => e
+      puts "Exception for City: #{id} / #{name}"
+      puts e
+      EmptyCarDetails
     end
   end
 end

@@ -145,6 +145,10 @@ module Car2Go
           Car2Go::PetrolFS.new(hsh)
         end
       end
+    rescue Exception => e
+      puts "Exception for City: #{id} / #{name}"
+      puts e
+      EmptyCarDetails
     end
   end
 end

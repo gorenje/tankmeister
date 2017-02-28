@@ -2,6 +2,12 @@ class City
   attr_reader :location
   attr_reader :data
 
+  EmptyCarDetails = {
+    :electro_stations => [],
+    :cars             => [],
+    :petrol_stations  => []
+  }
+
   def initialize(hsh)
     @data = hsh
   end

@@ -126,6 +126,10 @@ module Enjoy
         end
         resp[:electro_stations] = []
       end
+    rescue Exception => e
+      puts "Exception for City: #{id} / #{name}"
+      puts e
+      EmptyCarDetails
     end
   end
 end
