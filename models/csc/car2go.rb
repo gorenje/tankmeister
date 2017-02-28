@@ -117,7 +117,7 @@ module Car2Go
       data["locationName"]
     end
 
-    def car_details
+    def obtain_car_details
       {}.tap do |resp|
         resp[:cars] = Curlobj.
           car2go_data_for("https://www.car2go.com/api/v2.1/vehicles"+
@@ -145,10 +145,6 @@ module Car2Go
           Car2Go::PetrolFS.new(hsh)
         end
       end
-    rescue Exception => e
-      puts "Exception for City: #{id} / #{name}"
-      puts e
-      EmptyCarDetails
     end
   end
 end

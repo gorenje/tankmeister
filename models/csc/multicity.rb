@@ -107,7 +107,7 @@ module Multicity
       data["id"]
     end
 
-    def car_details
+    def obtain_car_details
       {}.tap do |resp|
         resp[:cars] = Curlobj.
           multicity_data_for("https://www.multicity-carsharing.de"+
@@ -135,10 +135,6 @@ module Multicity
           Multicity::ElectroFS.new(hsh)
         end.reject { |a| a.is_full? }
       end
-    rescue Exception => e
-      puts "Exception for City: #{id} / #{name}"
-      puts e
-      EmptyCarDetails
     end
   end
 end

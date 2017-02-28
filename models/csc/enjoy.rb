@@ -102,7 +102,7 @@ module Enjoy
       data["id"]
     end
 
-    def car_details
+    def obtain_car_details
       {}.tap do |resp|
         agent = Mechanize.new
         agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -126,10 +126,6 @@ module Enjoy
         end
         resp[:electro_stations] = []
       end
-    rescue Exception => e
-      puts "Exception for City: #{id} / #{name}"
-      puts e
-      EmptyCarDetails
     end
   end
 end

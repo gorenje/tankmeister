@@ -100,7 +100,7 @@ module DriveNow
       data["id"]
     end
 
-    def car_details
+    def obtain_car_details
       data = Curlobj.
         drivenow_data_for("https://api2.drive-now.com/cities/#{id}?expand=full")
       {}.tap do |resp|
@@ -124,10 +124,6 @@ module DriveNow
         end
         resp[:electro_stations].reject! { |fs| fs.is_full? }
       end
-    rescue Exception => e
-      puts "Exception for City: #{id} / #{name}"
-      puts e
-      EmptyCarDetails
     end
   end
 end

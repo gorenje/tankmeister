@@ -27,4 +27,13 @@ class City
   def provider_name
     self.class.name.split(/::/).first
   end
+
+  def car_details
+    obtain_car_details
+  rescue Exception => e
+    puts "Exception for #{self.class.name} City: #{id} / #{name}"
+    puts e
+    puts e.backtrace
+    EmptyCarDetails
+  end
 end

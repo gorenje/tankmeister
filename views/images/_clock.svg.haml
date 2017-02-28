@@ -6,7 +6,6 @@
       - fill = hour > @hour ? "rgba(4,64,87,0.2)" : "#044057"
       %g{:transform => "rotate(#{hour*30}, 20, 20)"}
         %circle{:cx => "20", :cy => "2.3", :fill => fill, :r => "2", :stroke => "#000000", "stroke-dasharray" => "null", "stroke-linecap" => "null", "stroke-linejoin" => "null", "stroke-width" => "0"}
-
     - (0..360).step(6).each do |deg|
       - stroke = deg < @deg ? "#044057" : "rgba(0,0,0,0)"
       %g{:transform => "rotate(#{deg}, 20, 20)"}
