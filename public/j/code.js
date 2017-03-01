@@ -101,15 +101,11 @@ function newIcon(url) {
   };
 }
 
-function tryUpdateAgain() {
-  changeProvider();
-}
-
 function setTimeStampImage(path) {
   $('#timestamp').
     fadeOut(300,function(){
       $('#timestamp').
-        html("<a href='#' onclick='tryUpdateAgain();'><img class" +
+        html("<a href='#' onclick='updateLocation();'><img class" +
              "='loader_sml' src='"+path+"'/></a>").fadeIn(300);});
 }
 
@@ -168,7 +164,7 @@ function mapStyle(){
   ];
 }
 
-function center_control(map) {
+function centerControl(map) {
   var centerControlDiv = document.createElement('div');
 
   // Set CSS for the control border.
@@ -223,7 +219,8 @@ function setUpMap(position) {
      }
   });
 
-  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(center_control(map));
+  map.controls[google.maps.ControlPosition.RIGHT_TOP].
+    push(centerControl(map));
   map.setCenter(origin);
 
   circle = new google.maps.Circle({

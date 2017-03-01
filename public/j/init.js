@@ -8,8 +8,6 @@ function getURLParameter(name) {
 function changeProvider(){
   $.each(fsmarkers, function(idx, obj){ obj.setMap(null); });
   $.each(carmarkers, function(idx, obj){ obj.setMap(null); });
-  //if ( $('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
-  //if ( $('#autonotify').prop('checked') ) { $('#autonotify').click(); }
   updateMarkers(clToPosition());
 }
 
