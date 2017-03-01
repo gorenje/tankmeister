@@ -101,6 +101,18 @@ function newIcon(url) {
   };
 }
 
+function tryUpdateAgain() {
+  changeProvider();
+}
+
+function setTimeStampImage(path) {
+  $('#timestamp').
+    fadeOut(300,function(){
+      $('#timestamp').
+        html("<a href='#' onclick='tryUpdateAgain();'><img class" +
+             "='loader_sml' src='"+path+"'/></a>").fadeIn(300);});
+}
+
 function mapStyle(){
   return [
     {
@@ -223,8 +235,7 @@ function setUpMap(position) {
      zIndex: google.maps.Marker.MAX_ZINDEX - 3
   });
 
-  $('#timestamp').
-    html("<img class='loader_sml' src='/images/loader.svg'/>");
+  setTimeStampImage('/images/loader.svg');
 
   $.ajax({
      url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
@@ -233,9 +244,7 @@ function setUpMap(position) {
   }).done(function(data){
     setUpMarkers(origin, data);
   }).fail(function(){
-     $('#timestamp').
-       html("<a href='#' onclick='tryUpdateAgain();'>"+
-            "<img class='loader_sml' src='/images/reloader.svg'/></a>");
+    setTimeStampImage('/images/reloader.svg');
   });
 }
 
@@ -278,9 +287,7 @@ function setUpMarkers(origin, city) {
     method: 'get',
     dataType: 'json'
   }).fail(function(){
-    $('#timestamp').
-      html("<a href='#' onclick='tryUpdateAgain();'>" +
-           "<img class='loader_sml' src='/images/reloader.svg'/></a>");
+    setTimeStampImage('/images/reloader.svg');
   }).done(function(data){
     $.each(data.fs, function(idx, fs) {
       fsmarkers[idx] = newFsMarker({
@@ -311,20 +318,12 @@ function setUpMarkers(origin, city) {
     map.fitBounds(bounds);
     infoWinListener.remove();
     var tmval = data.tstamp.split(" ")[0].split(":").slice(0,2);
-    $('#timestamp').
-      html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_"+
-           "sml' src='/images/clock/" + tmval[0] + "/" + tmval[1] + 
-           ".svg'/></a>");
+    setTimeStampImage("/images/clock/" + tmval[0] + "/" + tmval[1] + ".svg");
   });
 }
 
-function tryUpdateAgain() {
-  changeProvider();
-}
-
 function updateMarkers(position) {
-  $('#timestamp').
-    html("<img class='loader_sml' src='/images/loader.svg'/>");
+  setTimeStampImage('/images/loader.svg');
   directionsDisplay.setDirections({routes: []});
 
   var lat = position.coords.latitude,
@@ -333,20 +332,14 @@ function updateMarkers(position) {
   var origin = new google.maps.LatLng(lat,lng);
   youmarker.setPosition(origin);
 
-  $('#cityloader').show();
-
   $.ajax({
     url: "/city?lat=" + lat + "&lng=" + lng + "&csc=" + csc,
     method: 'get',
     dataType: 'json'
   }).fail(function(){
-     $('#timestamp').
-       html("<a href='#' onclick='tryUpdateAgain();'>" +
-            "<img class='loader_sml' src='/images/reloader.svg'/></a>");
+     setTimeStampImage('/images/reloader.svg');
   }).done(function(city){
     glb_city = city;
-    $('#cityloader').hide();
-    $('#carloader').show();
 
     $.ajax({
       url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid +
@@ -354,9 +347,7 @@ function updateMarkers(position) {
       method: 'get',
       dataType: 'json'
     }).fail(function(){
-       $('#timestamp').
-         html("<a href='#' onclick='tryUpdateAgain();'>"+
-              "<img class='loader_sml' src='/images/reloader.svg'/></a>");
+       setTimeStampImage('/images/reloader.svg');
     }).done(function(data){
        var bounds = new google.maps.LatLngBounds(origin, origin);
 
@@ -385,13 +376,9 @@ function updateMarkers(position) {
        });
 
        map.fitBounds(bounds);
-       $('#carloader').hide();
        infowin.close();
        var tmval = data.tstamp.split(" ")[0].split(":").slice(0,2);
-       $('#timestamp').
-          html("<a href='#' onclick='tryUpdateAgain();'><img class='loader_"+
-               "sml' src='/images/clock/" + tmval[0] + "/" + tmval[1] + 
-               ".svg'/></a>");
+       setTimeStampImage("/images/clock/" + tmval[0] + "/" + tmval[1] + ".svg");
     });
   });
 }
