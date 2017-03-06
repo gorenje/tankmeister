@@ -46,6 +46,51 @@ $(document).ready(function(){
     }).setStep(initial_step);
   });
 
+  $('#btn-auto-update').click(function(event){
+    if ( $('#btn-auto-update').toggleClass('on').hasClass('on') ) {
+      current_auto_update_timer_id = setTimeout(autoUpdateCars, 30000);
+    } else {
+      if ( current_auto_update_timer_id !== null ) {
+        clearTimeout(current_auto_update_timer_id);
+        current_auto_update_timer_id = null;
+      }
+    }
+  });
+
+  $('#btn-radar').click(function(event){
+    if ( $('#btn-radar').toggleClass('on').hasClass('on') ) {
+      circle.setMap(map);
+      circle.setCenter(current_location);
+      if ( circle.getRadius() === undefined ) { circle.setRadius(0); }
+
+      $('#autonotifyform').slideDown().fadeIn();
+      current_timer_id = setTimeout(autoNotification, 10000);
+      new Dragdealer('radiusslider',{
+        animationCallback: function(x,y){
+          if (circle) { circle.setRadius(x*1000); }
+        }
+      });
+      if ( !$('#btn-auto-update').toggleClass('on').hasClass('on') ) {
+        $('#btn-auto-update').click();
+      }
+    } else {
+      circle.setMap(null);
+      $('#autonotifyform').slideUp().fadeOut();
+      if ( current_timer_id !== null ) {
+        clearTimeout(current_timer_id);
+        current_timer_id = null;
+      }
+    }
+  });
+
+  $('#btn-closest-car').click(function(event){
+    csc = csc.replace("_available","");
+    if ( $('#btn-closest-car').toggleClass('on').hasClass('on') ) {
+      csc += "_available";
+    }
+    changeProvider();
+  });
+
   $('#retrybutton').click(function(event){
     event.preventDefault();
     showPleaseWait();
@@ -93,41 +138,6 @@ $(document).ready(function(){
      });
   });
 
-  $('#autonotify').change(function() {
-     if(this.checked) {
-       circle.setMap(map);
-       circle.setCenter(current_location);
-       if ( circle.getRadius() === undefined ) { circle.setRadius(0); }
-
-       $('#autonotifyform').slideDown().fadeIn();
-       current_timer_id = setTimeout(autoNotification, 10000);
-       new Dragdealer('radiusslider',{
-         animationCallback: function(x,y){
-           if (circle) { circle.setRadius(x*1000); }
-         }
-       });
-       if ( !$('#autoupdate').prop('checked') ) { $('#autoupdate').click(); }
-     } else {
-       circle.setMap(null);
-       $('#autonotifyform').slideUp().fadeOut();
-       if ( current_timer_id !== null ) {
-         clearTimeout(current_timer_id);
-         current_timer_id = null;
-       }
-     }
-  });
-
-  $('#autoupdate').change(function() {
-     if(this.checked) {
-       current_auto_update_timer_id = setTimeout(autoUpdateCars, 30000);
-     } else {
-       if ( current_auto_update_timer_id !== null ) {
-         clearTimeout(current_auto_update_timer_id);
-         current_auto_update_timer_id = null;
-       }
-     }
-  });
-
   $('.sltcsc').click(function(event) {
     csc = $(this).data('csc');
     event.preventDefault();
@@ -136,12 +146,6 @@ $(document).ready(function(){
                   $('#mainmap').slideDown().fadeIn();
                   setUpMap(clToPosition());
                 }});
-  });
-
-  $('#anycar').change(function(){
-    csc = csc.replace("_available","");
-    if ( $('#anycar').is(':checked') ) { csc += "_available"; }
-    changeProvider();
   });
 
   if ('serviceWorker' in navigator) {
