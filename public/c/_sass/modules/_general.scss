@@ -169,8 +169,9 @@ p.cardetails, p.fsdetails {
 #btn-auto-update, #btn-radar, #btn-closest-car {
   fill: rgba(255, 255, 255, 0.3);
   stroke: rgba(0, 0, 0, 0.7);
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
 
   &.on {
     stroke: rgba(128,0,128,1);
