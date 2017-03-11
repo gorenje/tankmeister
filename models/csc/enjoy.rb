@@ -107,18 +107,19 @@ module Enjoy
 
         agent.get("https://enjoy.eni.com/en/#{id}/map/")
 
-        resp[:cars] = JSON(agent.post("https://enjoy.eni.com/ajax/"+
-                                      "retrieve_vehicles", {}).body).
+        resp[:cars] = agent.
+          jpost("https://enjoy.eni.com/ajax/retrieve_vehicles", {}).
           map do |hsh|
           Enjoy::Car.new(hsh)
         end
 
         resp[:petrol_stations] =
-          JSON(agent.post('https://enjoy.eni.com/ajax/retrieve_pois',
-                          {}).body).select { |hsh| hsh["poiTypeId"] == 2 }.
+          agent.jpost('https://enjoy.eni.com/ajax/retrieve_pois',{}).
+          select { |hsh| hsh["poiTypeId"] == 2 }.
           map do |hsh|
           Enjoy::PetrolFS.new(hsh)
         end
+
         resp[:electro_stations] = []
       end
     end

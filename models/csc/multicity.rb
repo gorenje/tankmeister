@@ -89,18 +89,6 @@ module Multicity
   end
 
   class City < City
-
-    module ExtendWithMulticity
-      def jpost(url, data)
-        JSON(post(url,data).body)
-      end
-    end
-
-    def self.mechanize_agent
-      ::City.mechanize_agent.send(:extend, ExtendWithMulticity)
-    end
-
-
     def self.all
       [Multicity::City.new("name" => "Berlin, Deutschland", "id" => "403037",
                            "lat" => 52.5166667, "lng" => 13.4)]

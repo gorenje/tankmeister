@@ -12,6 +12,10 @@ class City
     def json(*args)
       JSON(get(*args).body)
     end
+
+    def jpost(url, data)
+      JSON(post(url,data).body)
+    end
   end
 
   def self.mechanize_agent(user_agent = :use_mozilla)
