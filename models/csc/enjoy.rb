@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-require 'mechanize'
 
 module Enjoy
   class Car < Car
@@ -104,22 +103,18 @@ module Enjoy
 
     def obtain_car_details
       {}.tap do |resp|
-        agent = Mechanize.new
-        agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        agent.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) '+
-          'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.117 '+
-          'Safari/537.36'
+        agent = City.mechanize_agent
 
         agent.get("https://enjoy.eni.com/en/#{id}/map/")
 
         resp[:cars] = JSON(agent.post("https://enjoy.eni.com/ajax/"+
-                                      "retrieve_vehicles" , {}).body).
+                                      "retrieve_vehicles", {}).body).
           map do |hsh|
           Enjoy::Car.new(hsh)
         end
 
         resp[:petrol_stations] =
-          JSON(agent.post('https://enjoy.eni.com/ajax/retrieve_pois' ,
+          JSON(agent.post('https://enjoy.eni.com/ajax/retrieve_pois',
                           {}).body).select { |hsh| hsh["poiTypeId"] == 2 }.
           map do |hsh|
           Enjoy::PetrolFS.new(hsh)

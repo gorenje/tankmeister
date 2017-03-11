@@ -6,10 +6,10 @@ require 'sinatra/reloader'
 require 'cgi'
 require 'json'
 require 'digest/md5'
-require 'curb'
 require 'zlib'
 require 'stringio'
 require 'haml'
+require 'mechanize'
 
 if File.exists?(".env")
   require 'dotenv'

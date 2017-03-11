@@ -2,11 +2,11 @@ require 'rubygems'
 require 'bundler/setup'
 require 'rake'
 require 'rake/testtask'
-require 'curb'
 require 'zlib'
 require 'stringio'
 require 'pry'
 require 'json'
+require 'mechanize'
 
 if File.exists?(".env")
   require 'dotenv'

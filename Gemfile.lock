@@ -10,7 +10,6 @@ GEM
   specs:
     backports (3.6.8)
     coderay (1.1.1)
-    curb (0.9.3)
     domain_name (0.5.20170223)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -90,7 +89,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  curb
   dotenv!
   foreman
   geokit

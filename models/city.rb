@@ -8,6 +8,23 @@ class City
     :petrol_stations  => []
   }
 
+  module ExtendWithJson
+    def json(*args)
+      JSON(get(*args).body)
+    end
+  end
+
+  def self.mechanize_agent(user_agent = :use_mozilla)
+    Mechanize.new.tap do |agent|
+      agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      if user_agent == :use_mozilla
+        agent.user_agent_alias = 'Linux Mozilla'
+      else
+        agent.user_agent = user_agent
+      end
+    end.send(:extend, City::ExtendWithJson)
+  end
+
   def initialize(hsh)
     @data = hsh
   end

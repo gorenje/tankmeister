@@ -94,10 +94,10 @@ module Car2Go
 
   class City < City
     def self.all
-      Curlobj.
-        car2go_data_for("https://www.car2go.com/api/v2.1/locations?"+
-                        "oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-                        "&format=json")["location"].map do |hsh|
+      mechanize_agent.
+        json("https://www.car2go.com/api/v2.1/locations?"+
+             "oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
+             "&format=json")["location"].map do |hsh|
         Car2Go::City.new(hsh)
       end
     end
@@ -119,33 +119,34 @@ module Car2Go
 
     def obtain_car_details
       {}.tap do |resp|
-        resp[:cars] = Curlobj.
-          car2go_data_for("https://www.car2go.com/api/v2.1/vehicles"+
-                          "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-                          "&format=json&loc=" +
-                          CGI::escape(id))["placemarks"].map do |hsh|
+        resp[:cars] = City.mechanize_agent.
+          json("https://www.car2go.com/api/v2.1/vehicles"+
+               "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
+               "&format=json&loc=" +
+               CGI::escape(id))["placemarks"].map do |hsh|
           Car2Go::Car.new(hsh)
         end
 
-        resp[:electro_stations] = Curlobj.
-          car2go_data_for("https://www.car2go.com/api/v2.1/parkingspots"+
-                          "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-                          "&format=json&loc=" +
-                          CGI::escape(id))["placemarks"].
+        resp[:electro_stations] = City.mechanize_agent.
+          json("https://www.car2go.com/api/v2.1/parkingspots"+
+               "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
+               "&format=json&loc=" +
+               CGI::escape(id))["placemarks"].
           select { |hsh| hsh["chargingPole"] }.
           map do |hsh|
           Car2Go::ElectroFS.new(hsh)
         end
 
-        resp[:petrol_stations] = Curlobj.
-          car2go_data_for("https://www.car2go.com/api/v2.1/gasstations"+
-                          "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-                          "&format=json&loc=" +
-                          CGI::escape(id))["placemarks"].map do |hsh|
+        resp[:petrol_stations] = City.mechanize_agent.
+          json("https://www.car2go.com/api/v2.1/gasstations"+
+               "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
+               "&format=json&loc=" +
+               CGI::escape(id))["placemarks"].map do |hsh|
           Car2Go::PetrolFS.new(hsh)
         end
       end
     end
   end
 end
+
 CscProviders.register("ctg", "Car2Go", Car2Go::City)

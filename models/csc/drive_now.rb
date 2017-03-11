@@ -79,10 +79,20 @@ module DriveNow
   end
 
   class City < City
+    module ExtendWithDN
+      def json_dn(url)
+        json(url, [], nil, {'X-Api-Key' => ENV['DRIVE_NOW_API_KEY']})
+      end
+    end
+
+    def self.mechanize_agent(user_agent)
+      ::City.mechanize_agent(user_agent).send(:extend, ExtendWithDN)
+    end
+
     def self.all
-      Curlobj.
-        drivenow_data_for("https://api2.drive-now.com/"+
-                          "cities?expand=cities")["items"].map do |hsh|
+      mechanize_agent("Android App Version 3.18.0").
+        json_dn("https://api2.drive-now.com/"+
+                "cities?expand=cities")["items"].map do |hsh|
         DriveNow::City.new(hsh)
       end
     end
@@ -101,8 +111,9 @@ module DriveNow
     end
 
     def obtain_car_details
-      data = Curlobj.
-        drivenow_data_for("https://api2.drive-now.com/cities/#{id}?expand=full")
+      data = self.class.mechanize_agent("Android App Version 3.18.0").
+        json_dn("https://api2.drive-now.com/cities/#{id}?expand=full")
+
       {}.tap do |resp|
         resp[:electro_stations] = data["chargingStations"]["items"].map do |hsh|
           DriveNow::ElectroFS.new(hsh)

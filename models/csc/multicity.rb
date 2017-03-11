@@ -89,6 +89,18 @@ module Multicity
   end
 
   class City < City
+
+    module ExtendWithMulticity
+      def jpost(url, data)
+        JSON(post(url,data).body)
+      end
+    end
+
+    def self.mechanize_agent
+      ::City.mechanize_agent.send(:extend, ExtendWithMulticity)
+    end
+
+
     def self.all
       [Multicity::City.new("name" => "Berlin, Deutschland", "id" => "403037",
                            "lat" => 52.5166667, "lng" => 13.4)]
@@ -109,33 +121,30 @@ module Multicity
 
     def obtain_car_details
       {}.tap do |resp|
-        resp[:cars] = Curlobj.
-          multicity_data_for("https://www.multicity-carsharing.de"+
-                             "/_denker-mc.php").map do |hsh|
+        resp[:cars] = self.class.mechanize_agent.
+          json("https://www.multicity-carsharing.de"+
+               "/_denker-mc.php").map do |hsh|
           Multicity::Car.new(hsh)
         end
 
-        opts = {
-          :post => true,
-          :data => {
-            :name => "url",
-            :value => ("/gasstations?lat=#{@location.lat}&lon="+
-                       "#{@location.lng}&dist=50000")
-          }
+        data = {
+          "url" => ("/gasstations?lat=#{@location.lat}&lon="+
+                    "#{@location.lng}&dist=50000")
         }
-        resp[:petrol_stations] = Curlobj.
-          multicity_data_for("https://www.multicity-carsharing.de/"+
-                             "_denker-mob.php",opts).map do |hsh|
+        resp[:petrol_stations] = self.class.mechanize_agent.
+          jpost("https://www.multicity-carsharing.de/"+
+                "_denker-mob.php",data).map do |hsh|
           Multicity::PetrolFS.new(hsh)
         end
 
-        resp[:electro_stations] = Curlobj.
-          multicity_data_for("https://www.multicity-carsharing.de/rwe_utf8/"+
-                             "json.php?max=10000")["marker"].map do |hsh|
+        resp[:electro_stations] = self.class.mechanize_agent.
+          json("https://www.multicity-carsharing.de/rwe_utf8/"+
+               "json.php?max=10000")["marker"].map do |hsh|
           Multicity::ElectroFS.new(hsh)
         end.reject { |a| a.is_full? }
       end
     end
   end
 end
+
 CscProviders.register("mcy", "Multicity", Multicity::City)
