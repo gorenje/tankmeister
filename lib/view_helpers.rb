@@ -31,4 +31,12 @@ module ViewHelpers
     request.scheme == 'http' &&
       !ENV['HOSTS_WITH_NO_SSL'].split(",").map(&:strip).include?(request.host)
   end
+
+  def http_fallback(url)
+    begin
+      City.mechanize_agent.json(url)
+    rescue => e
+      City.mechanize_agent.json(url.sub(/^https/,"http"))
+    end
+  end
 end

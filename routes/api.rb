@@ -70,14 +70,14 @@ end
 
 get '/standingtime' do
   content_type :json
+  url = "https://#{ENV['CARSTATS_HOST']}/standingtime?lp=" +
+    CGI::escape(params[:lp])
+
   secs, mins =
     begin
-      t = City.mechanize_agent.
-        json("https://#{ENV['CARSTATS_HOST']}/" +
-             "standingtime?lp=" +
-             CGI::escape(params[:lp]))["time"]
+      t = http_fallback(url)["time"]
       [t.to_i, (t/60.0).ceil]
-    rescue Exception => e
+    rescue => e
       ["...","..."]
     end
 
@@ -90,10 +90,9 @@ end
 
 get '/color' do
   content_type :json
+  url = "https://#{ENV['CARSTATS_HOST']}/avgstime?lp="+CGI::escape(params[:lp])
   clr = begin
-          t = City.mechanize_agent.
-            json("https://#{ENV['CARSTATS_HOST']}/"+
-                 "avgstime?lp="+CGI::escape(params[:lp]))["time"]
+          t = http_fallback(url)["time"]
           st = params[:st].to_i
           st >= t ? "red" : (st < (t*0.50) ? "green" : "orange")
         rescue Exception => e
