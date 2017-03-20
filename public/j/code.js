@@ -280,7 +280,7 @@ function setUpMarkers(origin, city) {
 
   $.ajax({
     url:  "/nearest?lat=" + origin.lat() + "&lng=" + origin.lng() + 
-             "&cid=" + city.cityid + "&csc=" + csc,
+             "&cid=" + city.cityid + "&csc=" + csc + "&lmt=" + car_counter,
     method: 'get',
     dataType: 'json'
   }).fail(function(){
@@ -340,7 +340,7 @@ function updateMarkers(position) {
 
     $.ajax({
       url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid +
-               "&csc=" + csc,
+               "&csc=" + csc + "&lmt=" + car_counter,
       method: 'get',
       dataType: 'json'
     }).fail(function(){

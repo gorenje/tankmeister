@@ -11,7 +11,7 @@ function getCarAndCityData(position){
   }).done(function(city){
     $.ajax({
       url: "/nearest?lat=" + lat + "&lng=" + lng + "&cid=" + city.cityid + 
-               "&csc=" + csc,
+               "&csc=" + csc + "&lmt=" + car_counter,
       method: 'get',
       dataType: 'json'
     }).done(function(data){

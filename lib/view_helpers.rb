@@ -10,13 +10,15 @@ module ViewHelpers
   end
 
   def map_car_details_to_result_hash(data, my_location, params)
+    lmt = (params[:lmt] || 3).to_i - 1
+
     nearest_cars = if params[:csc] =~ /_available/
                      data[:cars]
                    else
                      data[:cars].
                        select { |c| c.needs_fuelling? }.
                        reject { |c| c.is_charging? }
-                   end.nearest(my_location)[0..2]
+                   end.nearest(my_location)[0..lmt]
 
     fuelstations = nearest_cars.map do |car|
       (car.is_electro? ? data[:electro_stations] : data[:petrol_stations]).
