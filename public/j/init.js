@@ -36,7 +36,9 @@ $(document).ready(function(){
         $('#providerslider .item' + step).addClass('active');
 
         var new_csc = $('#providerslider .item' + step).data("csc");
-        if ( $('#anycar').is(':checked') ) { new_csc = new_csc + "_available"; }
+        if ( $('#btn-closest-car').hasClass('on') ) {
+          new_csc = new_csc + "_available";
+        }
 
         if (csc !== new_csc ) {
           csc = new_csc;
@@ -105,8 +107,8 @@ $(document).ready(function(){
   });
 
   $(document).on('updatedlocation', function(){
-     if (circle) { circle.setCenter(current_location); }
-     if (youmarker) { youmarker.setPosition(current_location); }
+    if (circle) { circle.setCenter(current_location); }
+    if (youmarker) { youmarker.setPosition(current_location); }
   });
 
   $(document).on('setmapheight.onlyonce', function(){
