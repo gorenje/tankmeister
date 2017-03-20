@@ -161,6 +161,8 @@
               %use{"xlink:href" => "#button-closest-car"}
             %svg#btn-radar
               %use{"xlink:href" => "#button-radar"}
+            %svg#btn-car-counter
+              %use{"xlink:href" => "#button-car-counter-3"}
 
           #autonotifyform.hide
             #radiusslider.dragdealer.radiusslider
@@ -184,7 +186,7 @@
   ga('send', 'pageview');
 
   var map, infowin, youmarker, ym_base_content, csc, glb_city, circle,
-      carmarkers = [], fsmarkers = [], directionsDisplay;
+      carmarkers = [], fsmarkers = [], directionsDisplay, car_counter = 3;
 
 - ["notify","geolocation","code","autoupdate","nav","google","init"].each do |filename|
   %script{:async => "", :defer => "defer", :src => "/j/#{filename}.js"}
@@ -224,3 +226,8 @@
           %line{:fill => "none", :stroke => "#000000", "stroke-width" => "2", :x1 => "23.44686", :x2 => "26.44686", :y1 => "4.845", :y2 => "8.245"}
           %line{:fill => "none", :stroke => "#000000", "stroke-width" => "2", :transform => "rotate(90, 24.9469, 8.55501)", :x1 => "23.44686", :x2 => "26.44686", :y1 => "6.855", :y2 => "10.255"}
     %circle{:cx => "15", :cy => "15", :r => "13.5", "stroke-width" => "2"}
+  - [1,2,3,4,5,6,7,8,9].each do |cnt|
+    %symbol{ :id => "button-car-counter-#{cnt}", :viewbox => "0 0 30 30" }
+      %g
+        %circle{:cx => "15", :cy => "15", :fill => "#000000", "fill-opacity" => "0", :r => "14", :stroke => "#000000", "stroke-width" => "2"}
+        %text{:fill => "#000000", "font-family" => "Sans-serif", "font-size" => "24", "font-weight" => "bold", :stroke => "#000000", "stroke-dasharray" => "null", "stroke-linecap" => "null", "stroke-linejoin" => "null", "stroke-width" => "0", "text-anchor" => "middle", :transform => "matrix(1, 0, 0, 0.823391, 0, -5.85879)", :x => "14.6", "xml:space" => "preserve", :y => "33.56422"}= cnt

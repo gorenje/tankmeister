@@ -93,6 +93,12 @@ $(document).ready(function(){
     changeProvider();
   });
 
+  $('#btn-car-counter').click(function(event){
+    car_counter += 1;
+    if ( car_counter > 9 ) { car_counter = 1; }
+    $(this).html("<use xlink:href='#button-car-counter-"+car_counter+"'/>");
+  });
+
   $('#retrybutton').click(function(event){
     event.preventDefault();
     showPleaseWait();
