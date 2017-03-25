@@ -16,7 +16,7 @@ module Car2Go
     end
 
     def needs_fuelling?
-      @data["fuel"] <= 25
+      @data["fuel"] <= 20
     end
 
     def is_charging?
