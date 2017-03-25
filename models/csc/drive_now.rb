@@ -26,7 +26,11 @@ module DriveNow
     end
 
     def image_url
-      @data["carImageUrl"].gsub(/\{density\}/, "hdpi")
+      @data["carImageBaseUrl"].
+        gsub(/assets\/cars\//, "assets/cars/_fastlane/").
+        gsub(/\{density\}/, "ldpi").
+        gsub(/\{model\}/, @data["modelIdentifier"]).
+        gsub(/\{color\}/, @data["color"])
     end
 
     def marker_icon
