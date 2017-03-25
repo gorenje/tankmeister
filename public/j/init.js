@@ -72,7 +72,7 @@ $(document).ready(function(){
           if (circle) { circle.setRadius(x*1000); }
         }
       });
-      if ( !$('#btn-auto-update').toggleClass('on').hasClass('on') ) {
+      if ( !$('#btn-auto-update').hasClass('on') ) {
         $('#btn-auto-update').click();
       }
     } else {
