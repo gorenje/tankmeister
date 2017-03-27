@@ -78,10 +78,10 @@ module Car2Go
 
   class ElectroFS < ElectroFS
     def initialize(hsh)
-      hsh["latitude"]     = hsh["coordinates"][1]
-      hsh["longitude"]    = hsh["coordinates"][0]
-      hsh["address"]      = [hsh["name"]]
-      hsh["name"]         = "-"
+      hsh["latitude"]  = hsh["coordinates"][1]
+      hsh["longitude"] = hsh["coordinates"][0]
+      hsh["address"]   = [hsh["name"]]
+      hsh["name"]      = "-"
       super(hsh)
     end
 
