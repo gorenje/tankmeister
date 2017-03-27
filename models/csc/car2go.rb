@@ -35,6 +35,10 @@ module Car2Go
       @data["vin"]
     end
 
+    def image_url
+      "/images/c2g/#{URI::escape(@data["city_location"])}/#{URI::escape(vin)}"
+    end
+
     def latlng
       [location.lat, location.lng].join(",")
     end
@@ -93,6 +97,27 @@ module Car2Go
 
 
   class City < City
+    def self.image_details(loc)
+      City.mechanize_agent.
+        json("https://www.car2go.com/caba/customer/vehicles/"+
+             "#{URI::escape(loc)}?oauth_consumer_key="+
+             "#{ENV['CAR2GO_CONSUMER_KEY']}&format=json")["vehicle"]
+    end
+
+    def self.image_url_for(loc,vin)
+      car_details = image_details(loc).select { |car| car["vin"] == vin}.first
+
+      if car_details.nil?
+        "public/images/transparent.png"
+      else
+        lky = car_details["secondaryColor"] || car_details["primaryColor"]
+        clr = Car2GoColorLookup[lky[0..2]]
+        age = Car2GoHardwareLookup[car_details["hardwareVersion"]] || ""
+        mdl = Car2GoModelLookup[car_details["model"]]
+        "public/images/car2go/#{mdl}_#{age}#{clr}.png"
+      end
+    end
+
     def self.all
       mechanize_agent.
         json("https://www.car2go.com/api/v2.1/locations?"+
@@ -124,6 +149,7 @@ module Car2Go
                "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
                "&format=json&loc=" +
                CGI::escape(id))["placemarks"].map do |hsh|
+          hsh.merge!("city_location" => id)
           Car2Go::Car.new(hsh)
         end
 

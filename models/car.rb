@@ -21,6 +21,10 @@ class Car
     "/images/transparent.png"
   end
 
+  def provider
+    self.class.name.split(/::/).first.downcase
+  end
+
   def address_line
     false
   end

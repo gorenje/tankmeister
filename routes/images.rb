@@ -66,3 +66,8 @@ get '/images/clock/:hour/:min.svg' do
     @deg = ((params[:min].to_f / 60.0) * 360).to_i
   end
 end
+
+get '/images/c2g/:location/:vin' do
+  content_type "image/png"
+  File.read(Car2Go::City.image_url_for(params[:location], params[:vin]))
+end

@@ -407,6 +407,25 @@
       margin-bottom: $spacer-15;
     }
   }
+  &.cardetails {
+    .carimage {
+      &.drivenow {
+        width: 237px;
+        height: 139px;
+      }
+      &.multicity {
+        width: 179px;
+        height: 89px;
+      }
+      &.enjoy {
+        width: 168px;
+      }
+      &.car2go {
+        width: 187px;
+        height: 75px;
+      }
+    }
+  }
 }
 
 // Imprint
