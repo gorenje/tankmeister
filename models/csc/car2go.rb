@@ -12,11 +12,11 @@ module Car2Go
     end
 
     def name
-      @data["name"]
+      license_plate
     end
 
     def needs_fuelling?
-      @data["fuel"] <= 20
+      fuel_in_percent <= 20
     end
 
     def is_charging?
@@ -97,7 +97,7 @@ module Car2Go
 
 
   class City < City
-    def self.image_details(loc)
+    def self.vehicle_details(loc)
       City.mechanize_agent.
         json("https://www.car2go.com/caba/customer/vehicles/"+
              "#{URI::escape(loc)}?oauth_consumer_key="+
@@ -105,7 +105,7 @@ module Car2Go
     end
 
     def self.image_url_for(loc,vin)
-      car_details = image_details(loc).select { |car| car["vin"] == vin}.first
+      car_details = vehicle_details(loc).select {|car| car["vin"] == vin}.first
 
       if car_details.nil?
         "public/images/transparent.png"
@@ -143,31 +143,30 @@ module Car2Go
     end
 
     def obtain_car_details
+      auth = "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}&" +
+        "format=json&loc=#{CGI::escape(id)}"
+
       {}.tap do |resp|
         resp[:cars] = City.mechanize_agent.
-          json("https://www.car2go.com/api/v2.1/vehicles"+
-               "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-               "&format=json&loc=" +
-               CGI::escape(id))["placemarks"].map do |hsh|
+          json("https://www.car2go.com/api/v2.1/"+
+               "vehicles"+auth)["placemarks"].
+          map do |hsh|
           hsh.merge!("city_location" => id)
           Car2Go::Car.new(hsh)
         end
 
         resp[:electro_stations] = City.mechanize_agent.
-          json("https://www.car2go.com/api/v2.1/parkingspots"+
-               "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-               "&format=json&loc=" +
-               CGI::escape(id))["placemarks"].
+          json("https://www.car2go.com/api/v2.1/"+
+               "parkingspots"+auth)["placemarks"].
           select { |hsh| hsh["chargingPole"] }.
           map do |hsh|
           Car2Go::ElectroFS.new(hsh)
         end
 
         resp[:petrol_stations] = City.mechanize_agent.
-          json("https://www.car2go.com/api/v2.1/gasstations"+
-               "?oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-               "&format=json&loc=" +
-               CGI::escape(id))["placemarks"].map do |hsh|
+          json("https://www.car2go.com/api/v2.1/"+
+               "gasstations"+auth)["placemarks"].
+          map do |hsh|
           Car2Go::PetrolFS.new(hsh)
         end
       end
