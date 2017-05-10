@@ -89,6 +89,18 @@ module Multicity
   end
 
   class City < City
+    module ExtendWithMulticity
+      def multicity_broken_json(*args)
+        JSON(get(*args).body.
+             force_encoding("ISO-8859-1").
+             sub(/^[[:space:]+]\},[[:space:]+]\],/,"}],"))
+      end
+    end
+
+    def self.mechanize_agent
+      ::City.mechanize_agent.send(:extend, ExtendWithMulticity)
+    end
+
     def self.all
       [Multicity::City.new("name" => "Berlin, Deutschland", "id" => "403037",
                            "lat" => 52.5166667, "lng" => 13.4)]
@@ -126,7 +138,7 @@ module Multicity
         end
 
         resp[:electro_stations] = self.class.mechanize_agent.
-          json("https://www.multicity-carsharing.de/rwe_utf8/"+
+          multicity_broken_json("https://www.multicity-carsharing.de/rwe_utf8/"+
                "json.php?max=10000")["marker"].map do |hsh|
           Multicity::ElectroFS.new(hsh)
         end.reject { |a| a.is_full? }
