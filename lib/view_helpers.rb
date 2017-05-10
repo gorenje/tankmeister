@@ -11,6 +11,7 @@ module ViewHelpers
 
   def map_car_details_to_result_hash(data, my_location, params)
     lmt = (params[:lmt] || 3).to_i - 1
+    lmt = lmt > 8 ? 8 : (lmt < 0 ? 2 : lmt)
 
     nearest_cars = if params[:csc] =~ /_available/
                      data[:cars]
