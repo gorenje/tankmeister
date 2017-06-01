@@ -44,6 +44,7 @@ $spacer-80: 80px;
 // Colors
 $color-white: #fff;
 $color-black: #000;
+$color-red: #f00;
 $color-link: #0080BD;
 $color-link-hover: lighten($color-link, 8%);
 $color1: #383838;
@@ -75,6 +76,10 @@ $media-sizes: (
   medium: 970px,
   large: 1024px
 );
+
+.red {
+  color: $color-red;
+}
 
 $media-devices: (
   iphone6Plus: (w: 414px, h: 736px , pr: 3),

@@ -43,10 +43,12 @@
         %h2.selector__title Select your provider and start saving!
         .selector__list.grid.grid--size-4
           .grid__column
-            .sltcsc.selector__list-item{:href => "#", "data-csc" => "dnw"}
+            .sltcsc.selector__list-item.disabled{:href => "#", "data-csc" => "dnw"}
               DriveNow
               %span.selector__note
                 (+30 mins bonus)
+              %span.selector__note.red
+                Temp. Disabled
           .grid__column
             .sltcsc.selector__list-item{:href => "#", "data-csc" => "ctg"}
               Car2Go
