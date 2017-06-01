@@ -94,7 +94,7 @@ module DriveNow
     end
 
     def self.all
-      mechanize_agent("Android App Version 4.0.0").
+      mechanize_agent("Android-4.2.0").
         json_dn("https://api2.drive-now.com/"+
                 "cities?expand=cities")["items"].map do |hsh|
         DriveNow::City.new(hsh)
@@ -115,7 +115,7 @@ module DriveNow
     end
 
     def obtain_car_details
-      data = self.class.mechanize_agent("Android App Version 4.0.0").
+      data = self.class.mechanize_agent("Android-4.2.0").
         json_dn("https://api2.drive-now.com/cities/#{id}?expand=full")
 
       {}.tap do |resp|
