@@ -1,7 +1,26 @@
 module DriveNow
   class Car < Car
     def initialize(hsh)
-      super(hsh)
+      rest = {}.tap do |ch|
+        ch["fuelLevelInPercent"] = hsh["obj"]["fuelState"]
+        ch["fuelLevel"]          = hsh["obj"]["fuelState"] / 100.0
+        ch["licensePlate"]       = hsh["obj"]["sign"]
+        ch["id"]                 = hsh["obj"]["vin"]
+        ch["color"]              = hsh["obj"]["color"]
+        ch["modelIdentifier"]    = hsh["obj"]["model"].gsub(/ /, "_")
+        ch["latitude"]           = hsh["loc"].last
+        ch["longitude"]          = hsh["loc"].first
+        ch["carImageBaseUrl"] = "https://prod.drive-now-content.com/"+
+          "fileadmin/user_upload_global/assets/cars/_fastlane/"+
+          "{model}/{color}/{density}/car.png"
+        ch["fuelType"] = case hsh["obj"]["engineType"]
+                         when "electric" then "E"
+                         when "petrol"   then "P"
+                         when "diesel"   then "D"
+                         end
+      end
+
+      super(hsh["obj"].merge(rest))
       @location = Geokit::LatLng.new(@data["latitude"], @data["longitude"])
     end
 
@@ -10,7 +29,7 @@ module DriveNow
     end
 
     def name
-      "%s (%s)" % [@data["licensePlate"], @data["name"]]
+      "%s" % @data["licensePlate"]
     end
 
     def needs_fuelling?
@@ -18,11 +37,7 @@ module DriveNow
     end
 
     def is_charging?
-      !!@data["isCharging"]
-    end
-
-    def address_line
-      @data["address"].join(", ")
+      false
     end
 
     def image_url
@@ -48,53 +63,6 @@ module DriveNow
 
     def license_plate
       @data["licensePlate"]
-    end
-
-    def cleanliness
-      case @data["innerCleanliness"]
-      when "VERY_CLEAN" then "4/4"
-      when "CLEAN"      then "4/3"
-      when "REGULAR"    then "4/2"
-      else
-        "4/1"
-      end
-    end
-  end
-
-  class CarJumpCar < DriveNow::Car
-    def initialize(hsh)
-      rest = {}.tap do |ch|
-        ch["fuelLevelInPercent"] = hsh["obj"]["fuelState"]
-        ch["fuelLevel"]          = hsh["obj"]["fuelState"] / 100.0
-        ch["licensePlate"]       = hsh["obj"]["sign"]
-        ch["id"]                 = hsh["obj"]["vin"]
-        ch["color"]              = hsh["obj"]["color"]
-        ch["modelIdentifier"]    = hsh["obj"]["model"].gsub(/ /, "_")
-        ch["latitude"]           = hsh["loc"].last
-        ch["longitude"]          = hsh["loc"].first
-        ch["carImageBaseUrl"] = "https://prod.drive-now-content.com/"+
-          "fileadmin/user_upload_global/assets/cars/_fastlane/"+
-          "{model}/{color}/{density}/car.png"
-        ch["fuelType"] = case hsh["obj"]["engineType"]
-                         when "electric" then "E"
-                         when "petrol"   then "P"
-                         when "diesel"   then "D"
-                         end
-      end
-
-      super(hsh["obj"].merge(rest))
-    end
-
-    def is_charging?
-      false
-    end
-
-    def address_line
-      false
-    end
-
-    def name
-      "%s" % @data["licensePlate"]
     end
 
     def cleanliness
@@ -198,7 +166,7 @@ module DriveNow
                   "engineType=diesel,petrol,gas,electric,")["vehicles"].
           select { |hsh| hsh["provider"] == "drivenow" }.
           map do |hsh|
-          DriveNow::CarJumpCar.new(hsh)
+          DriveNow::Car.new(hsh)
         end
 
         resp[:cars].
