@@ -33,6 +33,10 @@
       "description": "Car2Go oauth consumer key.",
       "required": true
     },
+    "CARJUMP_SECRET": {
+      "description": "Car Jump Secret token - used for DriveNow.",
+      "required": true
+    },
     "ACME_KEY[ONE]": {
       "description": "Let's encrypt key (this is the longer one)",
       "required": false
