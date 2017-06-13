@@ -61,6 +61,53 @@ module DriveNow
     end
   end
 
+  class CarJumpCar < DriveNow::Car
+    def initialize(hsh)
+      rest = {}.tap do |ch|
+        ch["fuelLevelInPercent"] = hsh["obj"]["fuelState"]
+        ch["fuelLevel"]          = hsh["obj"]["fuelState"] / 100.0
+        ch["licensePlate"]       = hsh["obj"]["sign"]
+        ch["id"]                 = hsh["obj"]["vin"]
+        ch["color"]              = hsh["obj"]["color"]
+        ch["modelIdentifier"]    = hsh["obj"]["model"].gsub(/ /, "_")
+        ch["latitude"]           = hsh["loc"].last
+        ch["longitude"]          = hsh["loc"].first
+        ch["carImageBaseUrl"] = "https://prod.drive-now-content.com/"+
+          "fileadmin/user_upload_global/assets/cars/_fastlane/"+
+          "{model}/{color}/{density}/car.png"
+        ch["fuelType"] = case hsh["obj"]["engineType"]
+                         when "electric" then "E"
+                         when "petrol"   then "P"
+                         when "diesel"   then "D"
+                         end
+      end
+
+      super(hsh["obj"].merge(rest))
+    end
+
+    def is_charging?
+      false
+    end
+
+    def address_line
+      false
+    end
+
+    def name
+      "%s" % @data["licensePlate"]
+    end
+
+    def cleanliness
+      case @data["innerCleanliness"]
+      when "good" then "4/4"
+      when "ok"   then "4/3"
+      when "bad"  then "4/2"
+      else
+        "4/1"
+      end
+    end
+  end
+
   class ElectroFS < ElectroFS
     AssumedCapacity = 2
 
@@ -85,7 +132,15 @@ module DriveNow
   class City < City
     module ExtendWithDN
       def json_dn(url)
-        json(url, [], nil, {'X-Api-Key' => ENV['DRIVE_NOW_API_KEY']})
+        json(url, [], nil, {'X-Api-Key' => ENV["DRIVE_NOW_API_KEY"]})
+      end
+
+      def cj_token
+        Base64.encode64(ENV['CARJUMP_SECRET']).strip
+      end
+
+      def json_cj(url)
+        json(url, [], nil, {'Authorization' => "Basic #{cj_token}"})
       end
     end
 
@@ -116,7 +171,8 @@ module DriveNow
 
     def obtain_car_details
       data = self.class.mechanize_agent("Android-4.2.0").
-        json_dn("https://api2.drive-now.com/cities/#{id}?expand=full")
+        json_dn("https://api2.drive-now.com/cities/#{id}?expand="+
+                "chargingStations,petrolStations,cities")
 
       {}.tap do |resp|
         resp[:electro_stations] = data["chargingStations"]["items"].map do |hsh|
@@ -127,8 +183,22 @@ module DriveNow
           PetrolFS.new(hsh)
         end
 
-        resp[:cars] = data["cars"]["items"].map do |hsh|
-          DriveNow::Car.new(hsh)
+        if !location.valid?
+          @location = Geokit::LatLng.new(data["latitude"], data["longitude"])
+        end
+
+        maxPt, minPt = [@location.endpoint(315,20000),
+                        @location.endpoint(135,20000)]
+
+        resp[:cars] = self.class.mechanize_agent("okhttp/3.7.0").
+          json_cj("https://backend.carjump.de/v2/?status=1&"+
+                  "minLat=#{minPt.lat}&minLng=#{minPt.lng}&"+
+                  "maxLat=#{maxPt.lat}&maxLng=#{maxPt.lng}&"+
+                  "provider=driveNow&"+
+                  "engineType=diesel,petrol,gas,electric,")["vehicles"].
+          select { |hsh| hsh["provider"] == "drivenow" }.
+          map do |hsh|
+          DriveNow::CarJumpCar.new(hsh)
         end
 
         resp[:cars].
