@@ -1,0 +1,8 @@
+.env
+.env.*
+.git
+.gitignore
+.ruby-*
+.dockerignore
+Dockerfile
+docker-compose.yaml

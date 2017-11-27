@@ -64,19 +64,35 @@ Car2Go API
 They have a very good [description](https://github.com/car2go/openAPI),
 including applinks (aka deeplinks).
 
+Car2Go does not accept third parties any longer. So to obtain their key,
+a similar approach as free2move is required: persistence.
+
+CarJump / Free2Move API
+---
+
+Since DriveNow did indeed shutdown their API (or rather made it far more
+difficult to access it), we now use Free2Moves' API (which is also,
+unfortunately, liable to change at any moment).
+
+For this, the ```CARJUMP_SECRET``` environment variable has to be set. To
+obtain this key, a certain amount of persistence is required.
+
 Running Locally
 ---
 
-To run this locally, simply do the following:
+You will need to obtain API keys for all the above services, else locally
+the application will not work. See [docker-compose.yaml](docker-compose.yaml)
+to see what is required.
 
-```
-bundle
-rake appjson:to_dotenv
-$EDITOR .env
-foreman start web
-```
+Then install [Docker](https://docker.com) and then do the following:
 
-Then ```open -a Firefox http://localhost:5000```
+    docker-compose build
+    docker-compose up
+
+Then you can access the application:
+
+    open -a Firefox http://localhost:3001
+
 
 Let's Encrypt Support
 ---

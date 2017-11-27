@@ -1,0 +1,14 @@
+version: '2'
+services:
+  tankmeister:
+    build: .
+    ports:
+      - "3001:3001"
+    hostname: tankmeister
+    environment:
+      - GOOGLE_API_KEY=missingkey
+      - CAR2GO_CONSUMER_KEY=missingkey
+      - CARJUMP_SECRET=missingkey
+      - HOSTS_WITH_NO_SSL=localhost
+      - RACK_ENV=development
+      - PORT=3001
