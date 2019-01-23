@@ -189,7 +189,7 @@
       carmarkers = [], fsmarkers = [], directionsDisplay, car_counter = 3;
 
 - ["notify","geolocation","code","autoupdate","nav","google","init"].each do |filename|
-  %script{:async => "", :defer => "defer", :src => "/j/#{filename}.js"}
+  %script{:async => "", :defer => "defer", :src => "/j/#{filename}.js?r=#{rand}"}
 
 %svg{:style => "display: none;", :version => "1.1", "xml:space" => "preserve", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink"}
   %symbol#logo{:viewbox => "0 0 200 26.3"}

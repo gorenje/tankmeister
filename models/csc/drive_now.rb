@@ -117,10 +117,14 @@ module DriveNow
     end
 
     def self.all
-      mechanize_agent("Android-4.2.0").
-        json_dn("https://api2.drive-now.com/"+
-                "cities?expand=cities")["items"].map do |hsh|
-        DriveNow::City.new(hsh)
+      begin
+        mechanize_agent("Android-4.2.0").
+          json_dn("https://api2.drive-now.com/"+
+                  "cities?expand=cities")["items"].map do |hsh|
+          DriveNow::City.new(hsh)
+        end
+      rescue Mechanize::ResponseCodeError
+        []
       end
     end
 

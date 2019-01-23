@@ -5,13 +5,14 @@
     %meta{:name => "apple-mobile-web-app-capable", :content => "yes"}
     %meta{:name => "apple-mobile-web-app-title", :content => "Tankmeister" }
     %meta{:name => "apple-mobile-web-app-status-bar-style", :content => "blue" }
+    %meta{:name => "theme-color", :content => "blue" }
     %meta{:charset => "utf-8"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %meta{:content => "Collect Bonus Minutes by fuelling cars and save money. Search for a car nearby and find the most convenient one for you that will let you collect bonus minutes!", :name => "description"}/
     %meta{:content => "DriveNow, car2go, multicity, fuel, tank, tankstelle, bonus minutes", :name => "keywords"}/
     %title Tankmeister
     %link{:charset => "utf-8", :href => "/c/main.css", :rel => "stylesheet"}/
-    %link{:rel => "manifest", :href => "/manifest.webapp" }
+    %link{:rel => "manifest", :href => "/manifest.webapp?r=#{rand}" }
     %script{ :src => "//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" }
     %script{ :src => "//cdnjs.cloudflare.com/ajax/libs/push.js/0.0.13/push.min.js" }
     %script{ :src => "//cdnjs.cloudflare.com/ajax/libs/dragdealer/0.9.8/dragdealer.min.js" }

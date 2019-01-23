@@ -40,5 +40,6 @@
       "description": "Needed to get location of the user."
     }
   },
+  "theme_color": "blue",
   "messages": [{"notification": "/"}]
 }

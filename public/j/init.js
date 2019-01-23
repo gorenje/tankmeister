@@ -139,8 +139,10 @@ $(document).ready(function(){
        method: 'get',
        dataType: 'json'
      }).done(function(data) {
-        $('#locationsign').text('You are located in ' +
+       if (data.results && data.results[6]) {
+         $('#locationsign').text('You are located in ' +
                                 data.results[6].formatted_address);
+       }
      }).fail(function(){
         $('#locationsign').text('Please, enable your location settings');
      });
@@ -157,10 +159,19 @@ $(document).ready(function(){
   });
 
   if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/j/sw.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
     navigator.serviceWorker.addEventListener('message', function (event) {
       var data = JSON.parse(event.data);
-      if ( data.action === 'notificationclick' && 
-           data.link !== 'undefined' && 
+      if ( data.action === 'notificationclick' &&
+           data.link !== 'undefined' &&
            data.link !== null ) {
         window.open("https://tankmeister.de/reserve/" + btoa(data.link)).
                focus();

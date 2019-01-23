@@ -119,11 +119,15 @@ module Car2Go
     end
 
     def self.all
-      mechanize_agent.
-        json("https://www.car2go.com/api/v2.1/locations?"+
-             "oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
-             "&format=json")["location"].map do |hsh|
-        Car2Go::City.new(hsh)
+      begin
+        mechanize_agent.
+          json("https://www.car2go.com/api/v2.1/locations?"+
+               "oauth_consumer_key=#{ENV['CAR2GO_CONSUMER_KEY']}"+
+               "&format=json")["location"].map do |hsh|
+          Car2Go::City.new(hsh)
+        end
+      rescue Mechanize::UnauthorizedError
+        nil
       end
     end
 

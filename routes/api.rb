@@ -24,7 +24,7 @@ get '/cities' do
 
   iploc = Geokit::LatLng.new(data["latitude"], data["longitude"])
 
-  @cities = CscProviders.cities("all").map(&:all).flatten.nearest(iploc)[0..4]
+  @cities = CscProviders.cities("all").map(&:all).flatten.compact.nearest(iploc)[0..4]
 
   { :html => haml(:"_cities_selector", :layout => false) }.to_json
 end
