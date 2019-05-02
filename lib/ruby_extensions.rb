@@ -1,6 +1,7 @@
 class Array
   def nearest(location)
-    map do |obj|
+    return self if location.nil?
+    compact.map do |obj|
       [obj, obj.distance_to(location)]
     end.sort_by do |_,dist|
       dist
