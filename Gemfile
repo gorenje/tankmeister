@@ -1,7 +1,7 @@
 # -*- ruby -*-
 source 'http://rubygems.org'
 
-ruby '2.2.5'
+ruby '2.6.3'
 
 gem 'rake', '10.5.0'
 
